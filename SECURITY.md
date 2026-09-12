@@ -7,7 +7,7 @@ This repository contains instruction text for Grok Bot Bots and two local valida
 - Instructions that could lead a Bot to bypass an approval boundary, take an external action without approval, answer another Bot's approval request, or expand its own authority.
 - Prompt-injection weaknesses: text in a source, file or another Bot's message that the instructions would treat as authority.
 - Credentials, secrets or private data committed to the repository.
-- Problems in `validation/structural_check.py` or `validation/generate_setup.py`.
+- Problems in `root-agent-template/validation/structural_check.py` or `root-agent-template/validation/generate_setup.py`.
 
 Vulnerabilities in Grok Bot itself should be reported to its vendor, not here.
 

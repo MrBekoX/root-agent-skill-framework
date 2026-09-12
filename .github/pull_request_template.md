@@ -10,8 +10,8 @@ old line → new line
 
 ## Validation
 
-- [ ] Ran `python validation/generate_setup.py`
-- [ ] `python validation/structural_check.py` reports `FAIL 0`
+- [ ] Ran `python validation/generate_setup.py` inside `root-agent-template/`
+- [ ] `python validation/structural_check.py` inside `root-agent-template/` reports `FAIL 0`
 - [ ] If a template in `templates/` changed, its copy in `skills/roster-management.md` changed too
 - [ ] If the recipient-resolution block changed, it is identical in `route-and-dispatch.md` and `lead-handoff.md`
 
