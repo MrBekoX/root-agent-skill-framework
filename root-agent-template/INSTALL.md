@@ -6,7 +6,7 @@ For remote-control convenience, [SETUP-INSTRUCTIONS.md](SETUP-INSTRUCTIONS.md) c
 
 ## 1. Set the description
 
-Open the intended Bot's profile, set its name to **Root Agent**, and paste the full contents of [description.md](description.md) into Description. Save and reopen it to verify that all text is present. If the Bot already exists, use it rather than creating a duplicate. [Create and manage Bots](https://docs.x.ai/grok-bot/bots).
+Open the intended Bot's profile, set its name to **Root Agent**, and paste the full contents of [description.md](description.md) into Description. Save and reopen it to verify that all text is present. A truncated host save is a failed setup. Do not shorten a skill body to fit a host limit, and do not keep a shortened variant beside the full text. If the Bot already exists, use it rather than creating a duplicate. [Create and manage Bots](https://docs.x.ai/grok-bot/bots).
 
 ## 2. Save and enable the skills
 
