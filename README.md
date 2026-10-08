@@ -120,7 +120,7 @@ sequenceDiagram
 
 > Root does not send specialist kickoffs for this domain. You compose and send them.
 
-**The readback gate:** the domain stays `handoff-pending` until the Lead returns a dispatch plan stating which member receives which deliverable. Until then, Root does not report the domain as "delegated" and does not start writing tasks to the members in the Lead's place.
+**The readback gate:** the domain stays `handoff-pending` until the Lead's readback shows it can see the current handoff package and roster by naming the member references and deliverables from that package. A Lead that cannot see the package or roster does not start a first run, does not assign a member, and does not invent the missing roster. Until the readback counts, Root does not call the domain delegated and does not send specialist kickoffs for it.
 
 | Management state | Meaning |
 | --- | --- |
