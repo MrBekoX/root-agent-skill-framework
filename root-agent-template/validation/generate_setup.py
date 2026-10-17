@@ -18,9 +18,9 @@ def norm(s: str) -> str:
 check = (ROOT / "validation" / "structural_check.py").read_text(encoding="utf-8")
 m = re.search(r"SKILLS = \[(.*?)\]", check, re.S)
 SKILLS = re.findall(r'"([^"]+)"', m.group(1))
-assert len(SKILLS) == 16, SKILLS
+assert len(SKILLS) == 17, SKILLS
 
-count_word = "sixteen"
+count_word = "seventeen"
 
 header = f"""# Root Agent — current setup instructions
 

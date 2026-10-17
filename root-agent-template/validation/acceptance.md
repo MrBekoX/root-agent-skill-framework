@@ -26,7 +26,7 @@ Scope clarification from the user: distribution uses the desktop app's native Sh
 | Scope is banded, never silently narrowed; a Lead's expansion needs a verdict | scope-guard, lead-handoff | C49, C50 |
 | Stalls are classified and resumed or transferred under a checklist | blocker-escalation, work-control | C51, C52 |
 | Cross-task view and undamaged result carry are distinct from task closure | portfolio-status, result-relay, user-report | C53, C54 |
-| Six content categories per skill | All sixteen skill files | Local structural review plus saved skill readback |
+| Six content categories per skill | All seventeen skill files | Local structural review plus saved skill readback |
 | No undocumented import or installed/tested claims | README.md, INSTALL.md, this file | Source review; maintain live evidence separately |
 
 ## Added feature coverage
@@ -112,7 +112,7 @@ Every case below currently has status **NOT RUN** in Grok Bot. For destructive o
 
 ## Local checks
 
-Check that all sixteen skills contain the required six sections, description references resolve, local links exist, the extracted specialist and Lead templates match their embedded canonical blocks, all description templates end in the exact approval sentence, the recipient-resolution block is byte-identical in route-and-dispatch and lead-handoff, no skill still claims Root Agent prompts every assigned Bot, and superseded name/budget rules do not remain as active instructions. Re-run `python validation/structural_check.py` from `root-agent-template/` for the same source assertions; it does not execute C01–C54. Check that prompt composition, routing, review, state ownership and reporting agree about the current task/prompt/artifact revision and the single sender. These checks establish source consistency only; they do not execute Grok Bot behavior.
+Check that all seventeen skills contain the required six sections, description references resolve, local links exist, the extracted specialist and Lead templates match their embedded canonical blocks, all description templates end in the exact approval sentence, the recipient-resolution block is byte-identical in route-and-dispatch and lead-handoff, no skill still claims Root Agent prompts every assigned Bot, and superseded name/budget rules do not remain as active instructions. Re-run `python validation/structural_check.py` from `root-agent-template/` for the same source assertions; it does not execute C01–C54. Check that prompt composition, routing, review, state ownership and reporting agree about the current task/prompt/artifact revision and the single sender. These checks establish source consistency only; they do not execute Grok Bot behavior.
 
 ### Current ten-skill source review — 10 September 2026
 
