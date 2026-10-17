@@ -132,7 +132,7 @@ sequenceDiagram
 
 ---
 
-## The 16 skills
+## The 17 skills
 
 | Phase | Skill | What it does |
 | --- | --- | --- |
@@ -152,6 +152,7 @@ sequenceDiagram
 | Reporting | [`portfolio-status`](root-agent-template/skills/portfolio-status.md) | At-a-glance status across multiple tasks and domains |
 | Reporting | [`result-relay`](root-agent-template/skills/result-relay.md) | Carries a deliverable to the user with its evidence paths, without rewriting it |
 | Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; closes only when every criterion has evidence |
+| Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Closes deleted or cancelled work, stops tracking it, deletes its own files after a saved list and the user's approval |
 
 Every skill uses the same six sections: *When to use, Required inputs and access, Sequence of work, Validate the result, What to return, What requires approval.*
 
@@ -167,7 +168,7 @@ Every skill uses the same six sections: *When to use, Required inputs and access
 
 **Every stage has one owner, and every file has one writer.** The same work is never given to two Bots.
 
-**Capacity.** No permanent 20-Bot budget applies; the platform's current limit is what counts. For reference: about 50 Bots per account and 6 Bots per group; these are not guaranteed quotas. The roster is kept as small as the work allows. A domain team is at most 1 Lead + 5 Specialists, with no nested teams. A Reviewer inside the team takes one Specialist seat.
+**Capacity.** No permanent 20-Bot budget applies; the platform's current limit is what counts. For reference: about 50 Bots per account and 6 Bots per group; these are not guaranteed quotas. The roster is sized flexibly to the work's difficulty and complexity. A domain team is 1 Lead plus as many Specialists as the work needs, with no fixed headcount, within the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. A Reviewer inside the team takes one Specialist seat.
 
 ---
 
@@ -223,11 +224,11 @@ Bot memory is not a source of truth: current data is reopened before any decisio
 ```text
 root-agent-template/            Canonical source — everything that goes to Grok Bot
   description.md                Root Agent profile description
-  skills/                       16 skill bodies
+  skills/                       17 skill bodies
   templates/
     lead-description.md         Canonical Lead description
     specialist-description.md   Canonical Specialist / Reviewer description
-  SETUP-INSTRUCTIONS.md         Description + 16 skills in one file (generated)
+  SETUP-INSTRUCTIONS.md         Description + 17 skills in one file (generated)
   INSTALL.md                    Setup and sharing
   validation/
     structural_check.py         Source consistency checks
@@ -251,7 +252,7 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 
 1. Open the Root Agent conversation in the Grok Bot desktop app.
 2. Attach [`root-agent-template/SETUP-INSTRUCTIONS.md`](root-agent-template/SETUP-INSTRUCTIONS.md) from the composer.
-3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 16 skills and enable them for itself, then reopen the saved records to verify them.
+3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 17 skills and enable them for itself, then reopen the saved records to verify them.
 
 For details and sharing (**Share template**), see [`root-agent-template/INSTALL.md`](root-agent-template/INSTALL.md). Optional skills for Lead Bots are in [`lead-template/`](lead-template/README.md). A Bot cannot register skills for another Bot, so these skills are installed on a Lead Bot by hand.
 
