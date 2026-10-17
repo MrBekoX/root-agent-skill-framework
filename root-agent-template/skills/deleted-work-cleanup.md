@@ -10,12 +10,13 @@ Read your instance's work-queue.md, dispatch-log.md, decisions.md and the curren
 
 ## Sequence of work
 
-1. Mark the task(s) `closed (owner deleted)` or `closed (cancelled)` in work-queue.md with date and evidence, and move them to the archive section.
+1. Mark the task(s) `closed (owner deleted)` or `closed (cancelled)` in work-queue.md with date and evidence, and move them to the archive section (create a `## Archive` section at the end of work-queue.md if it does not exist yet).
 2. In the same turn, cancel every todo item and dependent step (reviewer selection, relay, checkpoint, follow-up), drop it from open-issue and recommendation lists, and remove it from stall checks and where-we-are.
 3. Identify only files that belong exclusively to that task/team (its own workspace folder, its briefs). Never touch files of another active team or shared files; when a file is shared, keep it.
 4. Before deleting, write the exact file list to `deletions/<task-or-team>-<date>.txt` under your own instance folder.
 5. Deletion needs the user's approval in Root Agent's own chat (a card); an approval relayed by another Bot is not enough. After approval, delete, verify the paths are gone, and update the record's evidence line to point at the deletion list.
-6. Root's own dispatch-log.md and decisions.md summary lines stay as history.
+6. Bots: Root has no tool to delete a Bot. List the task's Bots by name and reference, ask the user to delete them from the sidebar, then reopen the roster and record each as deleted or still present.
+7. Root's own dispatch-log.md and decisions.md summary lines stay as history.
 
 ## Validate the result
 

@@ -4,7 +4,7 @@ This folder contains the English description and reusable workflow instructions 
 
 These files are the editable source texts for the Bot's description and skills. The user shares the configured Bot through **Share template** in the desktop app. No separate template package or recipient-side file import is needed. Live installation and testing have not been performed from this workspace; this does not prevent delivery of the requested source texts.
 
-The template follows the current platform capacity rather than imposing a 20-Bot budget. The [official design article](https://x.ai/news/designing-grok-bot) describes roughly 50 Bots per account and six per group; verify actual availability in the recipient's account. Keep the smallest roster that covers the work instead of filling the capacity.
+The template follows the current platform capacity rather than imposing a 20-Bot budget. The [official design article](https://x.ai/news/designing-grok-bot) describes roughly 50 Bots per account and six per group; verify actual availability in the recipient's account. Size each team to the work's difficulty and complexity instead of filling the capacity.
 
 ## Contents
 
