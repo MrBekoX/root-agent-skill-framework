@@ -4,14 +4,14 @@ Rules for people and AI agents changing this repository. `AGENTS.md` and `CLAUDE
 
 ## What this repository is
 
-Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile description, sixteen skills, canonical Lead and Specialist descriptions, and two validation scripts. This is a prompt and skill engineering project, not an application. The texts are pasted into Grok Bot or given to a Bot as a setup attachment. Nothing in this repository runs a live Bot.
+Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile description, seventeen skills, canonical Lead and Specialist descriptions, and two validation scripts. This is a prompt and skill engineering project, not an application. The texts are pasted into Grok Bot or given to a Bot as a setup attachment. Nothing in this repository runs a live Bot.
 
 ## The model the texts must preserve
 
 - Root Agent is the single entry point. It clarifies the request, bands the scope, sizes the structure, creates the Bots the work needs and delegates. It does not execute research, code, content or analysis, except tier 0 work: no external effects, one deliverable, roughly ten minutes.
-- Tiers: **0** Root Agent itself; **1** one Specialist managed by Root Agent; **2** one Lead plus two to five Specialists, managed by the Lead; **3** one Lead per domain.
+- Tiers: **0** Root Agent itself; **1** one Specialist managed by Root Agent; **2** one Lead plus as many Specialists as the work's difficulty and complexity need, managed by the Lead; **3** one Lead per domain.
 - In a Lead-managed domain the Lead writes and sends its members' task prompts. Root Agent keeps roster creation, reviewer selection and accountability for the whole request.
-- A domain team is at most one Lead and five Specialists, with no nested teams. Use the platform's current capacity; do not reintroduce a fixed Bot budget.
+- A domain team is one Lead plus Specialists sized flexibly to the work, with no fixed headcount, subject to the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. Use the platform's current capacity; do not reintroduce a fixed Bot budget.
 - Recurring work binds to the Bot that executes it, never to Root Agent.
 - Do not propose changes that make Root Agent execute work, own routines, or answer another Bot's approval request.
 
@@ -20,7 +20,7 @@ Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile des
 ```text
 root-agent-template/     Everything that goes to Grok Bot (canonical source)
   description.md         Root Agent profile description
-  skills/                Sixteen skill bodies
+  skills/                Seventeen skill bodies
   templates/             Canonical Lead and Specialist descriptions
   SETUP-INSTRUCTIONS.md  Generated; never edit by hand
   validation/            structural_check.py, generate_setup.py, acceptance.md

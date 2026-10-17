@@ -37,6 +37,7 @@ SKILLS = [
     "portfolio-status",
     "result-relay",
     "user-report",
+    "deleted-work-cleanup",
 ]
 RESOLUTION_FIRST = "Recipient resolution (identical text in route-and-dispatch and lead-handoff)"
 RESOLUTION_LAST = "Never send the same work unit through both."

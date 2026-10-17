@@ -8,7 +8,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 
 ## Contents
 
-- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all sixteen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
+- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all seventeen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
 - [Description](description.md): paste its complete contents into the Bot's description.
 - [Canonical specialist description](templates/specialist-description.md): for a Specialist or Reviewer. The same template is embedded in roster-management, so the saved skill carries it without relying on this repository.
 - [Canonical Lead description](templates/lead-description.md): for a Lead. Also embedded in roster-management. A Lead created from it manages its own domain and briefs its own members.
@@ -20,7 +20,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 
 Root Agent keeps a prioritized work queue with dependencies and effort checkpoints, routes using evidence of each Bot's capabilities, and diagnoses stalled work. Important deliverables can have a separate review stage. Decisions retain their reasons and revisit conditions; conversational status views show current work, user decisions and next actions. First use starts with one useful outcome rather than a long setup interview.
 
-Root Agent sizes the structure to the work rather than to the request's wording: tier 0 it does itself, tier 1 is one Specialist it manages directly, tier 2 is a Lead plus two to five Specialists managed by that Lead, and tier 3 is one Lead per domain. The user never has to design a team.
+Root Agent sizes the structure to the work rather than to the request's wording: tier 0 it does itself, tier 1 is one Specialist it manages directly, tier 2 is a Lead plus as many Specialists as the work's difficulty and complexity need, managed by that Lead, and tier 3 is one Lead per domain. The user never has to design a team.
 
 Root Agent writes the role-specific description for every Bot it creates, and the task prompt for every recipient it addresses directly: a tier 0 or tier 1 owner, a Lead receiving a handoff package, a new Bot's setup or access-check stage, and an out-of-team independent Reviewer. In a tier 2 or tier 3 structure the Lead composes and sends its own members' prompts. Root Agent keeps roster creation, the review gate and accountability for the whole request. route-and-dispatch sends what Root Agent manages itself; lead-handoff sends to a Lead, and only treats a domain as delegated once that Lead returns a readback naming its dispatch plan. Private task prompts are not part of the public configuration.
 
@@ -55,4 +55,4 @@ No live Bot, routine or public share link has been created by this repository wo
 
 The files in this folder are the canonical source. Root Agent uses the current platform capacity rather than a fixed Bot budget and creates necessary specialists under the user's standing authorization; group changes and consequential external actions still need their own authorization. Only Root Agent is distributed. The instruction language is English; conversation replies follow the user's language.
 
-The description belongs in Grok Bot's profile description field and the sixteen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.
+The description belongs in Grok Bot's profile description field and the seventeen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.
