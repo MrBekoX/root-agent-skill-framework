@@ -21,7 +21,7 @@ Read the accepted brief, current account roster and ownership/capability evidenc
    Tier 1 - one domain, one accountable deliverable, no independent review required
             -> one Specialist. Root Agent manages it directly through this skill.
    Tier 2 - two or more parallel work units in one domain, or an independent review is required
-            -> one Lead plus two to five Specialists. The Lead manages the domain.
+            -> one Lead plus as many Specialists as the work needs (no fixed headcount). The Lead manages the domain.
    Tier 3 - two or more distinct domains
             -> one Lead per domain. Each Lead manages its own domain; Root Agent
                manages the dependencies and the integrated acceptance between them.
