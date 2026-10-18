@@ -8,10 +8,14 @@ not simulate the C-numbered behavioral cases.
 """
 from __future__ import annotations
 
+import os
 import pathlib
+import posixpath
 import re
 import runpy
+import stat
 import sys
+from urllib.parse import unquote
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SENT = "Sending messages, publishing, deleting, purchasing, and production or account changes always require approval."
@@ -122,9 +126,61 @@ def hygiene_hits(src: str) -> list[str]:
     return [label for pattern, label in HYGIENE_PATTERNS if re.search(pattern, src)]
 
 
+def repository_inventory(repo: pathlib.Path) -> tuple[list[pathlib.Path], set[str]]:
+    """Inventory local entries without following symlinks or Windows reparse points."""
+    markdown = []
+    paths = {os.path.normcase(".")}
+    pending = [repo]
+    while pending:
+        for path in sorted(pending.pop().iterdir()):
+            if path.name == ".git":
+                continue
+            relative = path.relative_to(repo).as_posix()
+            metadata = path.lstat()
+            if (stat.S_ISLNK(metadata.st_mode)
+                    or getattr(metadata, "st_file_attributes", 0) & 0x400):
+                raise ValueError(f"repository redirect is not allowed: {relative}")
+            if stat.S_ISDIR(metadata.st_mode):
+                paths.add(os.path.normcase(relative))
+                pending.append(path)
+            elif stat.S_ISREG(metadata.st_mode):
+                paths.add(os.path.normcase(relative))
+                if path.suffix.lower() == ".md":
+                    markdown.append(path)
+    return sorted(markdown), paths
+
+
+def relative_link_target(source: str, target: str) -> str | None:
+    """Classify hrefs using strings only; never probe a document-selected path."""
+    if target.startswith("<") and target.endswith(">"):
+        target = target[1:-1]
+    if target.startswith("#"):
+        return None
+    # Split the actual fragment first so an encoded '#' can remain filename text.
+    target = unquote(target.split("#", 1)[0])
+    windows = pathlib.PureWindowsPath(target)
+    if ("\0" in target or windows.drive or windows.root
+            or pathlib.PurePosixPath(target).is_absolute()):
+        raise ValueError("network, absolute or invalid link target")
+    if re.match(r"[a-z][a-z0-9+.-]*:", target, re.I):
+        return None
+    relative = posixpath.normpath(posixpath.join(
+        posixpath.dirname(source), target.replace("\\", "/")))
+    if relative == ".." or relative.startswith("../"):
+        raise ValueError("link target escapes the repository")
+    return os.path.normcase(relative)
+
+
 def main() -> int:
     passes.clear()
     fails.clear()
+    try:
+        _markdown, _repository_paths = repository_inventory(ROOT.parent)
+    except (OSError, ValueError) as exc:
+        print("PASS 0  FAIL 1")
+        print(f"  FAIL cannot safely inventory repository: {exc}")
+        return 1
+    ok("repository inputs are local regular files without redirects")
     # Fail once with actionable missing paths before subsequent reads can crash.
     _required = [ROOT / p for p in ["description.md", "SETUP-INSTRUCTIONS.md", "INSTALL.md", "README.md",
                  "templates/specialist-description.md", "templates/lead-description.md",
@@ -629,25 +685,27 @@ def main() -> int:
         else:
             fail(f"{_rel} case ranges {sorted(_ranges)} != {_range}")
 
-    # Relative Markdown links resolve.
-    _link_re = re.compile(r"\]\(([^)\s]+)\)")
+    # Check hrefs against the local inventory, never via href-selected filesystem calls.
+    _link_re = re.compile(r"\]\((<[^>\r\n]+>|[^)\s]+)\)")
     _checked = 0
     _broken = []
-    for _md in sorted(REPO.rglob("*.md")):
-        if ".git" in _md.parts:
-            continue
+    for _md in _markdown:
         _text = _md.read_text(encoding="utf-8")
         _text = re.sub(r"````.*?````", "", _text, flags=re.S)
         _text = re.sub(r"```.*?```", "", _text, flags=re.S)
         for _target in _link_re.findall(_text):
-            if re.match(r"[a-z][a-z0-9+.-]*:", _target) or _target.startswith("#"):
+            try:
+                _path = relative_link_target(_md.relative_to(REPO).as_posix(), _target)
+            except ValueError as exc:
+                _broken.append(f"{_md.relative_to(REPO)}: {exc}")
                 continue
-            _path = _target.split("#", 1)[0]
+            if _path is None:
+                continue
             _checked += 1
-            if not (_md.parent / _path).exists():
+            if _path not in _repository_paths:
                 _broken.append(f"{_md.relative_to(REPO)} -> {_target}")
     if _broken:
-        fail(f"broken relative links: {_broken}")
+        fail(f"unsafe or broken relative links: {_broken}")
     else:
         ok(f"{_checked} relative Markdown links resolve")
 

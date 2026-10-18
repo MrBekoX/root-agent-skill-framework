@@ -30,3 +30,5 @@ Only the latest commit on `main` is maintained.
 ## Rules for contributions
 
 Never put passwords, API keys, tokens, verification codes, personal data or internal URLs into descriptions or skills. Bots handle credentials through Grok Bot's secure entry or computer takeover, never through chat or instruction text.
+
+Keep local analysis, execution logs and task inputs outside versioned source. Ignore rules are a convenience, not a secret scanner: inspect the complete staged diff and any release assets before publication. Public commit identifiers, integrity hashes, generic workspace patterns and demonstrably synthetic test values are not credentials. If a real credential is exposed, remove it from current distribution and revoke or rotate it; deleting a working-tree file does not erase Git history or existing downloads.

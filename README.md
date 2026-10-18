@@ -12,6 +12,12 @@ The canonical source is the [`root-agent-template/`](root-agent-template/) folde
 
 ---
 
+## Repository maintenance
+
+- **Offline validation:** Markdown links are checked against a local repository inventory. Network paths, absolute paths, escapes and filesystem redirects fail before they can cause external filesystem access.
+- **Distribution hygiene:** development analysis and execution reports are removed from the repository; local task inputs, credential files and future reports are ignored or excluded from archives. The core template, descriptions, GitHub templates and regression tests remain part of the maintained source.
+- **Compatibility:** seven new regressions cover unsafe link forms, local redirects, normal relative links, filenames with spaces and uppercase Markdown extensions. Canonical Bot descriptions, skills and approval boundaries are unchanged.
+
 ## What changed in 0.3.2
 
 - **Onboarding and tiers:** clear tasks start immediately under existing scoped authority. Tier selection accounts for independent review before allowing the short tier 0 exception; local and unready work do not require invented dispatch records.
@@ -22,7 +28,7 @@ The canonical source is the [`root-agent-template/`](root-agent-template/) folde
 - **Distribution and checks:** full template-content and recipient-setup checks, stronger local validators, thirteen tool regression tests, and acceptance definitions through C82. All live cases remain NOT RUN.
 - **Desktop compatibility:** Grok Bot v0.68.1 intentionally removed the desktop `/` skill menu; mobile retains it. Setup and acceptance now use supported library/catalog evidence and do not diagnose its absence as an installation failure. See the [release notes](https://x.ai/changelog/bot#v0.68.1), [platform explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932) and [setup guidance](root-agent-template/INSTALL.md#2-save-and-enable-the-skills), checked on 19 October 2026. Profile and skill bodies are unchanged by this compatibility correction.
 
-See the [changelog](CHANGELOG.md), [detailed analysis](analysis/ROOT-AGENT-ANALYSIS-2026-10-18.md), [complete behavior changes](analysis/PR-DESCRIPTION.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md).
+See the [changelog](CHANGELOG.md), [0.3.2 behavior changes](https://github.com/MrBekoX/root-agent-skill-framework/pull/6) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md).
 
 ---
 
@@ -271,7 +277,6 @@ root-agent-template/            Canonical description, skill and role sources
 lead-template/                  Optional skill pack for Lead Bots
 descriptions/                   Versioned copies of Bot descriptions
 tests/                          Local validation-tool regression tests
-analysis/                       Dated analysis, behavior changes and local evidence
 SETUP-INSTRUCTIONS PROMPT.md    GitHub self-install/upgrade and verified old-version cleanup
 ACCEPTANCE-TEST-PROMPT.md       Read-only post-installation acceptance prompt
 VERSION, CHANGELOG.md           Current version and release notes
@@ -297,7 +302,7 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 2. Attach [`root-agent-template/SETUP-INSTRUCTIONS.md`](root-agent-template/SETUP-INSTRUCTIONS.md) from the composer.
 3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 18 skills and enable them for itself, then reopen the saved records to verify them.
 
-For setup and sharing (**Share template**), see the [instructions](root-agent-template/INSTALL.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md). [Optional Lead skills](lead-template/README.md) use supported library/availability controls; cross-Bot registration is not assumed. The canonical Lead description carries required behavior without them. Updating sources does not update the existing share link; its packaged version must be checked separately. See the [Turkish analysis](analysis/ROOT-AGENT-ANALYSIS-2026-10-18.md) for official requirements, findings and length measurements. No official 6000-character limit was verified, and none is enforced locally.
+For setup and sharing (**Share template**), see the [instructions](root-agent-template/INSTALL.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md). [Optional Lead skills](lead-template/README.md) use supported library/availability controls; cross-Bot registration is not assumed. The canonical Lead description carries required behavior without them. Updating sources does not update the existing share link; its packaged version must be checked separately. No official 6000-character limit was verified, and none is enforced locally.
 
 ---
 
@@ -345,8 +350,8 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 165, FAIL 0 (version 0.3.2). The count grows as checks are added; the script itself fails if this line falls out of date.
-- **Local tools are regression-tested:** thirteen synthetic-fixture tests passed for the 0.3.2 validation tools. The [recorded output](analysis/validation-final.txt) distinguishes these from live workflow tests.
+- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.2). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Local tools are regression-tested:** twenty synthetic-fixture tests passed for the current validation tools. These exercise local tooling and do not establish live Bot behavior.
 - **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 - **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.
 
