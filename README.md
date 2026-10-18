@@ -6,7 +6,7 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
-**Current source version: [0.3.2](VERSION)** — 18 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+**Current source version: [0.3.2](VERSION)** — 19 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
 
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
 
@@ -20,6 +20,7 @@ The canonical source is the [`root-agent-template/`](root-agent-template/) folde
 - **Stop and cleanup:** archive cancelled scope promptly while tracking actual stop acknowledgements, writer release and routine pause separately. Cleanup rechecks exclusive ownership and the unchanged approved file list.
 - **Privacy and reporting:** minimize or redact sensitive evidence, preserve explicit forgetting, and use an accessible artifact or attributed inline content when attachments are unavailable.
 - **Distribution and checks:** full template-content and recipient-setup checks, stronger local validators, thirteen tool regression tests, and acceptance definitions through C82. All live cases remain NOT RUN.
+- **Desktop compatibility:** Grok Bot v0.68.1 intentionally removed the desktop `/` skill menu; mobile retains it. Setup and acceptance now use supported library/catalog evidence and do not diagnose its absence as an installation failure. See the [release notes](https://x.ai/changelog/bot#v0.68.1), [platform explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932) and [setup guidance](root-agent-template/INSTALL.md#2-save-and-enable-the-skills), checked on 19 October 2026. Profile and skill bodies are unchanged by this compatibility correction.
 
 See the [changelog](CHANGELOG.md), [detailed analysis](analysis/ROOT-AGENT-ANALYSIS-2026-10-18.md), [complete behavior changes](analysis/PR-DESCRIPTION.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md).
 
@@ -333,7 +334,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
-| 0.3.2 | 18 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82 and local tool regressions |
+| 0.3.2 | 19 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82, local tool regressions, GitHub setup/read-only acceptance prompts and desktop menu compatibility |
 | 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
 | 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
 | 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |

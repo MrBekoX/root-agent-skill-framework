@@ -4,7 +4,7 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
-## [0.3.2] - 2026-10-18
+## [0.3.2] - 2026-10-19
 
 Source-level workflow corrections and template-sharing preparation; not live-tested. All User overlay text and final approval sentences are preserved. The complete reviewable `old line → new line` list is in [the prepared PR description](analysis/PR-DESCRIPTION.md).
 
@@ -24,6 +24,8 @@ Source-level workflow corrections and template-sharing preparation; not live-tes
 - Exact ordered skill sections, raw-byte recipient comparison, optional Lead payload hygiene, graceful missing-source failures, dated release headings and complete generated-header drift checks.
 - Generator resolves paths from its script, validates the static registry without optimization-sensitive asserts, renders before writing and atomically replaces the snapshot.
 - Added isolated local tool regressions and C63–C82 acceptance definitions, all live NOT RUN. Added a Turkish evidence report and user sharing checklist, distinguishing source checks, save/readback, template details and recipient testing.
+- Added the repository-root `SETUP-INSTRUCTIONS PROMPT.md` for pinned-commit GitHub installation/upgrade and scoped cleanup, and `ACCEPTANCE-TEST-PROMPT.md` for read-only installation checks, one bounded response and isolated scenarios.
+- Finalized desktop compatibility guidance on 19 October 2026: Grok Bot v0.68.1 intentionally removed the desktop `/` menu while mobile retains it. Setup, acceptance, both READMEs and the sharing checklist distinguish expected menu absence from actual registration, availability and duplicate-resolution evidence. No canonical profile or skill body changed for this correction. See the [platform release notes](https://x.ai/changelog/bot#v0.68.1) and [forum explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932).
 - Official sources checked on 18 October 2026; no 6000-character rule was verified or encoded as a platform limit. No live Bot, message, routine, account connection or template publication was performed.
 
 ## [0.3.1] - 2026-10-18
