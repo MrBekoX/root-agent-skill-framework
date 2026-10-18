@@ -4,9 +4,15 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+### Repository maintenance
+- Keep Markdown link validation offline: reject network, absolute and repository-escaping targets before any link-selected filesystem access. Validate against a local inventory and reject symlinks and Windows reparse points before reading source files.
+- Preserve ordinary relative files, directories, fragments and external URL handling; validate angle-delimited and percent-encoded filenames with spaces and uppercase Markdown extensions. Added seven focused security and compatibility regressions.
+- Remove the six development-only analysis/report files from the repository. Keep local task inputs, credentials and future analysis output ignored; exclude local reports from source archives.
+- A full current-source review and reachable-history credential scan identified no genuine embedded credentials. Synthetic tests, generic path labels, public links and hashes are not secrets. The canonical profile, eighteen Root skills, two optional Lead skills and role templates are unchanged.
+
 ## [0.3.2] - 2026-10-19
 
-Source-level workflow corrections and template-sharing preparation; not live-tested. All User overlay text and final approval sentences are preserved. The complete reviewable `old line → new line` list is in [the prepared PR description](analysis/PR-DESCRIPTION.md).
+Source-level workflow corrections and template-sharing preparation; not live-tested. All User overlay text and final approval sentences are preserved. The reviewable `old line → new line` list is in [PR #6](https://github.com/MrBekoX/root-agent-skill-framework/pull/6).
 
 ### Fixed
 - Reuse standing creation authority during onboarding; a clear task no longer waits for optional setup questions. Missing storage uses explicit conversation-only state.
