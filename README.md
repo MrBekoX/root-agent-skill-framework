@@ -261,6 +261,7 @@ root-agent-template/            Canonical description, skill and role sources
     lead-description.md         Canonical Lead description
     specialist-description.md   Canonical Specialist / Reviewer description
   SETUP-INSTRUCTIONS.md         Description + 18 skills in one file (generated)
+  SETUP-INSTRUCTIONS-PROMPT.md  GitHub self-install/upgrade and verified old-version cleanup
   INSTALL.md                    Setup and sharing
   SHARING-CHECKLIST.md           User checks before native template sharing
   validation/
@@ -284,7 +285,9 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 
 **From the shared template:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P), inspect the template details and choose **Add to Grok Bot**. Check the full description and required skills against the current sources; the share link's packaged version has not been verified here. The recipient initializes its own instance/workspace and verifies its own connections. The publisher's repository, scripts, custom MCP servers and logins are not runtime prerequisites.
 
-**From source**, for example after changing the texts:
+**Self-install from GitHub:** attach [SETUP-INSTRUCTIONS-PROMPT.md](root-agent-template/SETUP-INSTRUCTIONS-PROMPT.md) to the existing Root Agent conversation. It asks Root to fetch the latest `main` once, install the complete configuration from that commit, verify actual saved contents, and then remove only proven obsolete Root-only installation artifacts. Private work records, User overlays, shared skills and unrelated Bots are preserved. Supported controls and platform approvals still apply; this setup flow has not been live-tested.
+
+**From an attached source snapshot**, for example after changing the texts:
 
 1. Open the Root Agent conversation in the Grok Bot desktop app.
 2. Attach [`root-agent-template/SETUP-INSTRUCTIONS.md`](root-agent-template/SETUP-INSTRUCTIONS.md) from the composer.
