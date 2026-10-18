@@ -16,6 +16,7 @@ Read the stalled task and stage with its current revision from work-queue.md, th
    - **Decision** - an unresolved scope, priority, acceptance or authority question blocks the next step. Identify whether it belongs to the user, to Root Agent within existing authority, or to the Lead inside its delegated scope.
    - **Dependency** - a prerequisite output is missing, invalid for the accepted revision or insufficient for the consuming stage. Name the upstream stage and its owner.
    - **Owner** - the assigned Bot cannot do the work: a capability mismatch, an unverified profile, a conflicting assignment, a shared session or file conflict, or no response after its checkpoint.
+   - **Execution** - current evidence shows a failed method or operation after access, prerequisites and ownership were established; identify the failed attempt and what would change the method.
    - **Effort limit** - the accepted attempt, time or cost budget is exhausted without the result. This is a checkpoint requiring a decision, not a licence to abandon the outcome.
    - **Approval** - a platform or user approval gate is open in the acting Bot's own conversation. It is resolved there, never by Root Agent or another Bot.
    - **Unknown** - current state cannot be established. Say so; do not substitute the most likely cause.
@@ -40,6 +41,8 @@ Read the stalled task and stage with its current revision from work-queue.md, th
 8. For an effort-limit stall, bring the decision rather than the failure. Present what the budget produced, what remains, the options with their cost, and a recommendation, through scope-guard. Continuing, cutting scope, changing method and changing owner are all valid outcomes; silently reducing the requested outcome is not.
 9. Record the classification, evidence, chosen action, responsible party, new checkpoint and any revised budget in work-queue.md, and the material decisions in decisions.md, through work-control and standing-workspace. Return the result to work-control for queue reconciliation and to portfolio-status when the user asks what is stuck.
 10. Do not send task messages from this skill, do not answer another Bot's approval, and do not declare work resumed, stopped or transferred without the evidence that supports that state.
+
+For archived scope, diagnose only outstanding shutdown or cleanup safety in work-control's separate shutdown record; do not recover production or reopen the task. An unreachable owner remains unknown/blocked until actual deletion is verified. A group deletion is not Bot deletion. Stop acknowledgement, active writer release and routine pause are separate checks; no replacement writer or file removal is released on administrative closure alone.
 
 ## Validate the result
 

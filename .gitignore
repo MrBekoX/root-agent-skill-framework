@@ -5,3 +5,5 @@ Desktop.ini
 .idea/
 .vscode/
 issues.txt
+__pycache__/
+*.pyc
