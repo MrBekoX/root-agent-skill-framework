@@ -12,7 +12,7 @@ The canonical source is the [`root-agent-template/`](root-agent-template/) folde
 
 ## What is Root Agent?
 
-Root Agent is the user's single entry point. The user writes what they want and never has to create a Bot or design a team for each job. Root Agent clarifies the request, chooses and builds **the smallest structure** the work needs, hands management to the right place, verifies delivery, and brings the result back to the user with its evidence.
+Root Agent is the user's single entry point. The user writes what they want and never has to create a Bot or design a team for each job. Root Agent clarifies the request, sizes and builds **the structure the work needs**, flexibly matched to its difficulty and complexity, hands management to the right place, verifies delivery, and brings the result back to the user with its evidence.
 
 **It does not do the actual work itself.** Specialists carry out research, code, content and analysis. The one exception: work with no external effects, a single deliverable and roughly 10 minutes of effort.
 
@@ -31,9 +31,10 @@ Root Agent is the user's single entry point. The user writes what they want and 
 
 ```mermaid
 flowchart TD
+    GS["getting-started<br/>first conversation only: one question at a time"] -.-> P
     P["User request"] --> IC["intake-clarify<br/>outcome, scope, sources, external effects"]
     IC --> SG["scope-guard<br/>P0 / P1 / deferred, effort bound"]
-    SG --> WC["work-control<br/>queue, priority, dependencies"]
+    SG --> WC["work-control<br/>queue, priority, dependencies, checkpoint-due"]
     WC --> RD{"route-and-dispatch<br/>which tier?"}
     RD -->|"Tier 0"| T0["Root does it itself"]
     RD -->|"Tier 1-3"| RM["roster-management + access-probe<br/>find or create the owner, prove access"]
@@ -41,7 +42,7 @@ flowchart TD
     HAS -->|"No"| T1["route-and-dispatch<br/>Root assigns the Specialist directly"]
     HAS -->|"Yes"| LH["lead-handoff<br/>handoff package goes to the Lead"]
     LH --> RB{"Did the Lead<br/>return a readback?"}
-    RB -->|"No"| BE["blocker-escalation<br/>state stays handoff-pending"]
+    RB -->|"No, or not quoted verbatim"| BE["blocker-escalation<br/>state stays handoff-pending"]
     RB -->|"Yes"| LM["Lead writes and sends Specialist tasks<br/>returns one integrated result"]
     T1 --> QR["quality-review<br/>independent Reviewer if required, chosen by Root"]
     LM --> QR
@@ -60,10 +61,10 @@ Root Agent chooses the structure based on **the work itself**, not on how the re
 | --- | --- | --- | --- |
 | **0** | No external effects, one deliverable, ~10 minutes | No Bot | Root does it itself |
 | **1** | One domain, one accountable deliverable, no independent review required | 1 Specialist | **Root**, directly |
-| **2** | 2+ parallel work units in one domain **or** independent review required | 1 Lead + 2–5 Specialists | **The Lead** |
+| **2** | 2+ parallel work units in one domain **or** independent review required | 1 Lead + as many Specialists as the work needs (no fixed headcount, within the actual group limit) | **The Lead** |
 | **3** | 2+ distinct domains | 1 Lead per domain | Each **Lead** manages its own domain; Root manages across domains |
 
-If the work grows, the tier goes up. Taking management back from a Lead is not a "tier downgrade"; it is a recorded, explicit ownership transfer.
+There is no fixed team size. A domain team that would exceed the platform's actual group limit is split into separate Lead-managed teams, and the user is told; teams are never nested. If the work grows, the tier goes up. Taking management back from a Lead is not a "tier downgrade"; it is a recorded, explicit ownership transfer.
 
 ---
 
@@ -106,8 +107,8 @@ sequenceDiagram
     R->>R: intake, scope-guard, tier 2 or 3
     R->>L: lead-handoff package
     Note over R: handoff-pending
-    L-->>R: Readback and dispatch plan
-    Note over R: lead-managed
+    L-->>R: Readback naming member refs and deliverables
+    Note over R: quoted verbatim in dispatch-log, then lead-managed
     L->>S: Task prompts
     S-->>L: Output and evidence
     L-->>R: Integrated domain result
@@ -120,7 +121,7 @@ sequenceDiagram
 
 > Root does not send specialist kickoffs for this domain. You compose and send them.
 
-**The readback gate:** the domain stays `handoff-pending` until the Lead's readback shows it can see the current handoff package and roster by naming the member references and deliverables from that package. A Lead that cannot see the package or roster does not start a first run, does not assign a member, and does not invent the missing roster. Until the readback counts, Root does not call the domain delegated and does not send specialist kickoffs for it.
+**The readback gate:** the domain stays `handoff-pending` until the Lead's readback shows it can see the current handoff package and roster by naming the member references and deliverables from that package. A Lead that cannot see the package or roster does not start a first run, does not assign a member, and does not invent the missing roster. The readback counts only when Root records a verbatim quote of the Lead's message with its timestamp and sender; a status string or a paraphrase does not. Every package carries a `checkpoint-due` date (default 7 days); if no readback arrives by then, Root resends the package once or escalates. Until the readback counts, Root does not call the domain delegated and does not send specialist kickoffs for it.
 
 | Management state | Meaning |
 | --- | --- |
@@ -138,9 +139,9 @@ sequenceDiagram
 | --- | --- | --- |
 | Intake | [`intake-clarify`](root-agent-template/skills/intake-clarify.md) | Establishes the outcome; asks only questions that change the next step |
 | Planning | [`scope-guard`](root-agent-template/skills/scope-guard.md) | Bands the request into P0 / P1 / deferred, sets the effort bound, rules on expansion proposals |
-| Planning | [`work-control`](root-agent-template/skills/work-control.md) | Queue, priority, dependencies, stage state and next step |
-| Roster | [`roster-management`](root-agent-template/skills/roster-management.md) | Creates the needed Leads and Specialists; carries the canonical Lead and Specialist descriptions |
-| Roster | [`access-probe`](root-agent-template/skills/access-probe.md) | Proves read / write / auth access separately for each operation |
+| Planning | [`work-control`](root-agent-template/skills/work-control.md) | Queue, priority, dependencies, stage state and next step; `checkpoint-due` and `stalled?`; archives closed or cancelled work; effort report of measured counts |
+| Roster | [`roster-management`](root-agent-template/skills/roster-management.md) | Creates the needed Leads and Specialists; carries the canonical Lead and Specialist descriptions; keeps a measured performance card per Bot |
+| Roster | [`access-probe`](root-agent-template/skills/access-probe.md) | Proves read / write / auth access separately for each operation; read-only connector health scan on request |
 | Dispatch | [`team-prompting`](root-agent-template/skills/team-prompting.md) | Writes role descriptions, task briefs, handoff packages and review prompts |
 | Dispatch | [`route-and-dispatch`](root-agent-template/skills/route-and-dispatch.md) | Sets the tier, resolves the recipient, sends the work Root manages itself |
 | Dispatch | [`lead-handoff`](root-agent-template/skills/lead-handoff.md) | Delegates domain management to a Lead; does not count a handoff without a readback |
@@ -151,9 +152,9 @@ sequenceDiagram
 | Learning | [`learning-loop`](root-agent-template/skills/learning-loop.md) | Preserves decisions; applies evidenced corrections to the right process |
 | Reporting | [`portfolio-status`](root-agent-template/skills/portfolio-status.md) | At-a-glance status across multiple tasks and domains |
 | Reporting | [`result-relay`](root-agent-template/skills/result-relay.md) | Carries a deliverable to the user with its evidence paths, without rewriting it |
-| Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; closes only when every criterion has evidence |
-| Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Closes deleted or cancelled work, stops tracking it, deletes its own files after a saved list and the user's approval |
-| Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | First conversation: short intro, one question at a time, first useful result |
+| Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; decision digest and effort report; closes only when every criterion has evidence |
+| Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Closes deleted or cancelled work, stops tracking it, deletes its own files after a saved list and the user's approval in Root's own chat |
+| Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | First conversation: short intro, one question at a time starting with the first concrete goal, first useful result |
 
 Every skill uses the same six sections: *When to use, Required inputs and access, Sequence of work, Validate the result, What to return, What requires approval.*
 
@@ -168,6 +169,14 @@ Every skill uses the same six sections: *When to use, Required inputs and access
 **Stalled work is classified.** Causes: access, decision, dependency, owner, effort limit, approval, unknown. A failed approach is not retried without new evidence or a new method. Default limits: at most one safe repair attempt after an execution failure, and at most two repair + re-review cycles in review.
 
 **Every stage has one owner, and every file has one writer.** The same work is never given to two Bots.
+
+**Overdue work is flagged, not assumed.** Every queue record and handoff package carries a `checkpoint-due` date (default 7 days after dispatch). On every turn, whatever woke it, Root compares open records with today; an overdue record without newer evidence becomes `stalled?` and goes to blocker-escalation. "In progress" needs fresh owner evidence inside the checkpoint window. This check rides on turns that already happen; it is not a routine.
+
+**Every send leaves evidence.** Each dispatch gets a `dispatch-log.md` line with the tool's verbatim result in the same turn. A state change cites that line; otherwise the task is `not-dispatched` or `unverified`. Tasks opened in the same turn are dispatched and confirmed separately.
+
+**Measured, never invented.** Effort reports and performance cards show only logged counts (Bots, dispatches, Lead turns, review rounds, repair cycles, retries, calendar time; deliveries, first-pass review rate, stalls). Missing values read `not logged`; a new Bot reads `none yet`. There are no token or money figures without a real platform meter, and no scores or rankings. The decision digest is built from `decisions.md` only, and missing fields read `not recorded`.
+
+**Closed work leaves the board.** Cancelled work, or work whose owner Bot was deleted, is closed and moved to the queue's `## Archive` section in the same turn, with its todo items and dependent steps. `deleted-work-cleanup` deletes its files only after saving the exact file list and getting the user's approval in Root's own chat. Root cannot delete Bots; it asks the user to delete them from the sidebar and rereads the roster.
 
 **Capacity.** No permanent 20-Bot budget applies; the platform's current limit is what counts. For reference: about 50 Bots per account and 6 Bots per group; these are not guaranteed quotas. The roster is sized flexibly to the work's difficulty and complexity. A domain team is 1 Lead plus as many Specialists as the work needs, with no fixed headcount, within the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. A Reviewer inside the team takes one Specialist seat.
 
@@ -210,11 +219,12 @@ Root Agent keeps its coordination records on the Grok Bot cloud computer under `
 | `user-profile.md` | Form of address and language preference |
 | `roster-draft.md` | A capability card per Bot: role, ownership, access state, observed work, limits |
 | `domains.md` | Domain owner, folder, Lead and management state, the Lead's dispatch plan |
-| `work-queue.md` | Tasks, revisions, stage owners, states, effort, review requirement |
+| `work-queue.md` | Tasks, revisions, stage owners, states, `checkpoint-due`, effort, review requirement; closed work in a `## Archive` section |
 | `decisions.md` | Decisions, rationale, authority, alternatives, revisit condition |
-| `dispatch-log.md` | Every message sent and its evidence (shared record of both sending skills) |
+| `dispatch-log.md` | Every message sent with the tool's verbatim result, and every readback quoted verbatim (shared record of both sending skills) |
 | `prompts/<task-id>/` | Task prompt revisions |
 | `learning.md` | Corrections and validation results |
+| `deletions/` | The exact file list saved before any approved cleanup deletion |
 
 Bot memory is not a source of truth: current data is reopened before any decision with consequences.
 
@@ -234,9 +244,10 @@ root-agent-template/            Canonical source — everything that goes to Gro
   validation/
     structural_check.py         Source consistency checks
     generate_setup.py           Generator for SETUP-INSTRUCTIONS.md
-    acceptance.md               Behavior scenarios (C01–C54)
+    acceptance.md               Behavior scenarios (C01–C62)
 lead-template/                  Optional skill pack for Lead Bots
 descriptions/                   Versioned copies of Bot descriptions
+VERSION, CHANGELOG.md           Current version and release notes
 AGENTS.md, CLAUDE.md            Writing rules for contributors and AI agents
 CONTRIBUTING.md, SECURITY.md,
 CODE_OF_CONDUCT.md, LICENSE     Project policies
@@ -276,15 +287,32 @@ The check verifies that:
 - The recipient-resolution block is identical in both sending skills
 - The snapshot matches the sources
 - Texts sent to the Bot contain no URLs, email addresses, user names or absolute paths
+- The description, both README files and the contributor guides name or count every skill in `skills/`
+- `VERSION` matches the newest `CHANGELOG.md` entry
+- Behavioral case IDs are unique and consecutive, and every relative Markdown link resolves
 
 Every behavior-changing line is listed as `old line → new line` in the pull request description.
 
 ---
 
+## Version history
+
+The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](CHANGELOG.md).
+
+| Version | Date | What changed |
+| --- | --- | --- |
+| 0.1.0 | 12–13 Sep 2026 | First public release: 16 Root skills, tiers 0–3, Lead handoff, independent review gate, routines bound through their owner |
+| 0.2.0 | 17 Oct 2026 | Flexible team sizing with no fixed headcount, User overlay, `checkpoint-due` (default 7 days) and `stalled?`, verbatim-quoted readbacks, mandatory dispatch evidence, new `deleted-work-cleanup` skill |
+| 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |
+| 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
+| 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
+
+---
+
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 80, FAIL 0.
-- **Live behavior is untested:** scenarios C01–C54 are NOT RUN. No live Bot, skill registration, routine or share preview was created from this repository.
+- **Source texts are consistent:** `structural_check.py` → PASS 152, FAIL 0 (version 0.3.1). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Live behavior is untested:** scenarios C01–C62 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 
 ---
 

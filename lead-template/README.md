@@ -16,7 +16,7 @@ Bir Bot başka bir Bot'a skill kaydedip enable edemez. Root Agent yalnızca desc
 
 1. Lead Bot'u Root Agent yaratır ve kanonik Lead description'ı uygular. Kaydedilen profili yeniden açıp doğrula; son satır birebir korunmalı.
 2. İstersen `skills/` altındaki iki gövdeyi Grok Bot'un skill kütüphanesine kaydet ve **yalnızca o Lead Bot için** enable et. Root Agent'a veya Uzman'lara enable etme.
-3. Lead'in ilk işi, Root Agent'ın handoff paketine **readback** dönmektir: devredilen kapsam, hangi üyeye ne gideceği, ulaşılamayan üyeler ve ilk checkpoint. Readback gelmeden Root Agent alanı devredilmiş saymaz.
+3. Lead'in ilk işi, Root Agent'ın handoff paketine **readback** dönmektir: paketi ve roster'ı gördüğünü, paketteki üye referanslarını ve teslimleri adlandırarak gösterir; ulaşılamayan üyeleri ve ilk checkpoint'i (`checkpoint-due`) bildirir. Root Agent bu readback'i Lead'in mesajından birebir alıntı, zaman ve gönderen bilgisiyle kaydeder. Bu readback gelmeden alan `handoff-pending` kalır; Root Agent alanı devredilmiş saymaz.
 
 ## Sınırlar
 

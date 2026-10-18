@@ -20,7 +20,7 @@ Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile des
 ```text
 root-agent-template/     Everything that goes to Grok Bot (canonical source)
   description.md         Root Agent profile description
-  skills/                Seventeen skill bodies
+  skills/                Eighteen skill bodies
   templates/             Canonical Lead and Specialist descriptions
   SETUP-INSTRUCTIONS.md  Generated; never edit by hand
   validation/            structural_check.py, generate_setup.py, acceptance.md
@@ -30,7 +30,7 @@ descriptions/            Paste-ready copies of Bot descriptions
 
 ## Skill files
 
-- One skill per file in `root-agent-template/skills/`, named with a kebab-case English slug.
+- One skill per file in `root-agent-template/skills/`, named with a kebab-case English slug. A new skill is added to the `SKILLS` list in `structural_check.py`, the skill-list sentence in `description.md` (and its copy in `descriptions/root-agent.md`), both README skill tables, and the skill count everywhere it is stated; the check fails otherwise.
 - Exactly six sections: `When to use`, `Required inputs and access`, `Sequence of work`, `Validate the result`, `What to return`, `What requires approval`.
 - Instruction text is English. Bots reply in the user's language.
 - A saved skill must be self-contained: it cannot rely on reading this repository. Refer to other skills by name only.
@@ -65,6 +65,10 @@ cd root-agent-template
 python validation/generate_setup.py     # regenerate SETUP-INSTRUCTIONS.md
 python validation/structural_check.py   # must report 0 FAIL
 ```
+
+## Versions
+
+- `VERSION` holds the current version. Every release adds a matching dated entry at the top of `CHANGELOG.md`, newest first; `structural_check.py` fails when they differ.
 
 ## Changing behavior
 
