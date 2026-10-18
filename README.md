@@ -6,7 +6,22 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
+**Current source version: [0.3.2](VERSION)** — 18 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
+
+---
+
+## What changed in 0.3.2
+
+- **Onboarding and tiers:** clear tasks start immediately under existing scoped authority. Tier selection accounts for independent review before allowing the short tier 0 exception; local and unready work do not require invented dispatch records.
+- **Bootstrap and routing:** verify the Lead before creating its members, keep the current roster in the handoff, and resolve recipients from the current dispatch owner and peer team. Root assigns every independent-review stage, including a Reviewer in the domain group.
+- **Delivery evidence:** task, stage, scope and package revisions share a delivery key. Duplicate packages do not start another execution; a failed local log is repaired from the actual send receipt.
+- **Stop and cleanup:** archive cancelled scope promptly while tracking actual stop acknowledgements, writer release and routine pause separately. Cleanup rechecks exclusive ownership and the unchanged approved file list.
+- **Privacy and reporting:** minimize or redact sensitive evidence, preserve explicit forgetting, and use an accessible artifact or attributed inline content when attachments are unavailable.
+- **Distribution and checks:** full template-content and recipient-setup checks, stronger local validators, thirteen tool regression tests, and acceptance definitions through C82. All live cases remain NOT RUN.
+
+See the [changelog](CHANGELOG.md), [detailed analysis](analysis/ROOT-AGENT-ANALYSIS-2026-10-18.md), [complete behavior changes](analysis/PR-DESCRIPTION.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md).
 
 ---
 
@@ -14,13 +29,13 @@ The canonical source is the [`root-agent-template/`](root-agent-template/) folde
 
 Root Agent is the user's single entry point. The user writes what they want and never has to create a Bot or design a team for each job. Root Agent clarifies the request, sizes and builds **the structure the work needs**, flexibly matched to its difficulty and complexity, hands management to the right place, verifies delivery, and brings the result back to the user with its evidence.
 
-**It does not do the actual work itself.** Specialists carry out research, code, content and analysis. The one exception: work with no external effects, a single deliverable and roughly 10 minutes of effort.
+**It does not do the actual work itself.** Specialists carry out research, code, content and analysis. The one exception: work with no external effects, a single deliverable, roughly 10 minutes of effort and no independent-review requirement.
 
 | Root Agent's job | Not Root Agent's job |
 | --- | --- |
 | Clarifying the request, setting scope and priority | Carrying out research, code, content or analysis (except tier 0) |
 | Choosing the structure and creating the needed Bots | Asking the user to design a team |
-| Managing tier 0/1 work directly | Assigning tasks to the Specialists of a domain that has a Lead |
+| Managing tier 0/1 work directly | Sending production kickoffs to the Specialists of a Lead-managed domain |
 | Delegating management of tier 2/3 domains to a Lead | Silently taking management back after a Lead has taken over |
 | Holding the independent review gate | Answering another Bot's approval request on the user's behalf |
 | Owning the user's whole request | Owning routines |
@@ -38,11 +53,11 @@ flowchart TD
     WC --> RD{"route-and-dispatch<br/>which tier?"}
     RD -->|"Tier 0"| T0["Root does it itself"]
     RD -->|"Tier 1-3"| RM["roster-management + access-probe<br/>find or create the owner, prove access"]
-    RM --> HAS{"Does the domain have<br/>a verified Lead?"}
+    RM --> HAS{"Is the current dispatch owner<br/>the verified designated Lead?"}
     HAS -->|"No"| T1["route-and-dispatch<br/>Root assigns the Specialist directly"]
     HAS -->|"Yes"| LH["lead-handoff<br/>handoff package goes to the Lead"]
-    LH --> RB{"Did the Lead<br/>return a readback?"}
-    RB -->|"No, or not quoted verbatim"| BE["blocker-escalation<br/>state stays handoff-pending"]
+    LH --> RB{"Does the current package have<br/>a valid Lead readback?"}
+    RB -->|"No"| BE["blocker-escalation<br/>state stays handoff-pending"]
     RB -->|"Yes"| LM["Lead writes and sends Specialist tasks<br/>returns one integrated result"]
     T1 --> QR["quality-review<br/>independent Reviewer if required, chosen by Root"]
     LM --> QR
@@ -91,7 +106,7 @@ Never send the same work unit through both.
 | Root → `route-and-dispatch` | New Bot | First setup / access-check stage (any tier) |
 | Root → `route-and-dispatch` | Independent Reviewer, in or out of the group | Independent review (any tier) |
 | Root → `lead-handoff` | Lead | Management of a tier 2/3 domain, scope changes, corrections |
-| Lead | Its own Specialists | All task prompts in a Lead-managed domain |
+| Lead | Its own Specialists | Production task prompts in a Lead-managed domain; Root keeps setup and independent-review stages |
 
 ---
 
@@ -108,8 +123,8 @@ sequenceDiagram
     R->>R: intake, scope-guard, tier 2 or 3
     R->>L: lead-handoff package
     Note over R: handoff-pending
-    L-->>R: Readback naming member refs and deliverables
-    Note over R: quoted verbatim in dispatch-log, then lead-managed
+    L-->>R: Current task/stage/scope/package readback and roster
+    Note over R: Verify sender and conversation; record time and quote<br/>Label sensitive-data redactions; then lead-managed
     L->>S: Task prompts
     S-->>L: Output and evidence
     L-->>R: Integrated domain result
@@ -118,7 +133,7 @@ sequenceDiagram
     R-->>U: result-relay and user-report
 ```
 
-**The handoff package** carries: the task and its revision; the delegated outcomes and acceptance criteria; the priority order; the team (each member's actual Bot reference, owned deliverable, write boundary and access state); workspace paths; what the Lead may decide on its own and what it must escalate to Root; the effort/checkpoint budget; who holds the review gate; and the reporting contract. The last line of the package is exactly:
+**The handoff package** carries: task/stage, scope and package revisions and the delivery key; domain/peer-team identity and integration owner where split; delegated outcomes and acceptance criteria; priority order; every member's actual Bot reference, owned deliverable, write boundary and access state; workspace paths; decision and escalation authority; effort/retry limits and `checkpoint-due` with time zone; the independent-review gate; and the reporting contract. The last line of the package is exactly:
 
 > Root does not send specialist kickoffs for this domain. You compose and send them.
 
@@ -154,7 +169,7 @@ sequenceDiagram
 | Reporting | [`portfolio-status`](root-agent-template/skills/portfolio-status.md) | At-a-glance status across multiple tasks and domains |
 | Reporting | [`result-relay`](root-agent-template/skills/result-relay.md) | Carries a deliverable to the user with its evidence paths, without rewriting it |
 | Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; decision digest and effort report; closes only when every criterion has evidence |
-| Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Closes deleted or cancelled work, stops tracking it, deletes its own files after a saved list and the user's approval in Root's own chat |
+| Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Archives cancelled or confirmed owner-deleted scope; retains shutdown safety checks; deletes only unchanged, exclusive files on the approved list |
 | Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | One goal question when no task exists; clear work starts immediately with grouped material questions |
 
 Every skill uses the same six sections: *When to use, Required inputs and access, Sequence of work, Validate the result, What to return, What requires approval.*
@@ -171,6 +186,8 @@ Every skill uses the same six sections: *When to use, Required inputs and access
 
 **Every stage has one owner, and every file has one writer.** The same work is never given to two Bots.
 
+**States are separate.** Task disposition, execution, delivery, domain management and review have their own evidence. A sent message does not prove active execution; a review pass clears only its exact artifact and criteria revisions; archiving scope does not prove a routine or writer stopped.
+
 **Overdue work is flagged, not assumed.** On existing turns, Root checks dispatched work awaiting current owner evidence against a proportionate `checkpoint-due`; seven days is only a fallback. Unsent/deferred work keeps readiness/revisit conditions, continuous work needs an evidence-freshness window, and an explicit stop takes priority. Progress requires the actual tier 1 owner or domain Lead's matching evidence, or Root's actual tier 0 artifact/check. This is not a routine or a scheduled follow-up.
 
 **Every send leaves evidence.** Actual sends retain their receipts and task/stage/revision delivery keys; sensitive spans are redacted. Local work and unready stages do not need fabricated send lines. Other state changes cite their own evidence. Failed local logging never invalidates a real send receipt or justifies resending; unavailable storage is explicit conversation-only state. Preserved User overlay text has explicit scoped exceptions in work-control and lead-handoff.
@@ -179,7 +196,7 @@ Every skill uses the same six sections: *When to use, Required inputs and access
 
 **Closure and shutdown are separate.** Explicitly cancelled work or confirmed owner deletion is archived immediately, cancelling only exclusive production dependencies. A separate shutdown record tracks stop acknowledgements, active writers and routine pause evidence; unreachable owners and deleted groups do not prove cancellation. Late outputs never reopen scope. Cleanup waits for verified shutdown, rechecks current ownership and the exact approved list, and never recursively removes unlisted/new/shared files. Bot deletion uses supported authorized controls or the user, without assuming a deletion tool.
 
-**Capacity.** No permanent 20-Bot budget applies; the platform's current limit is what counts. For reference: about 50 Bots per account and 6 Bots per group; these are not guaranteed quotas. The roster is sized flexibly to the work's difficulty and complexity. A domain team is 1 Lead plus as many Specialists as the work needs, with no fixed headcount, within the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. A Reviewer inside the team takes one Specialist seat.
+**Capacity.** Use current supported platform capacity and actual account/group evidence; do not assume a fixed Bot budget or guaranteed public quota. Size the roster to the work's difficulty and complexity. A domain team is 1 Lead plus as many Specialists as the work needs, with no fixed headcount, within the actual group limit and with no nested teams. Split an oversized domain into peer Lead-managed teams with distinct scope, writers and an integration owner. A Reviewer inside a group consumes a seat but keeps its Root-managed review stage.
 
 ---
 
@@ -192,18 +209,21 @@ Recurring work is never bound to Root Agent. Nor is it bound to a Lead that only
 3. Test with a different second input
 4. Define four failure cases: missing or stale data; partial completion; retries and repeated effects; source or format changes
 5. Check for an existing routine that does the same job
-6. Save the routine and do a safe Test run
-7. Activate; after every run, the owner sends Root 5–10 lines of results and evidence
+6. Save the routine with unattended operation disabled until a safe real Test run passes; if supported controls cannot ensure that sequence, resolve activation before saving an immediately active definition
+7. Activate the authorized schedule/time zone or narrow event rule; verify the actual owner, saved definition, enabled state and next run/event
+
+After each run, the executing Specialist keeps input/run, effect, output and report-delivery evidence in its own folder and sends Root 5–10 lines with evidence and a visible fallback destination. A reporting failure retries reporting only. A clear schedule/event, report destination, failure policy and stop conditions are prerequisites; marking a task closed does not pause its routine.
 
 ---
 
 ## Approvals and security
 
-- The user's task authority covers internal handoffs and creating the Bots a task needs. Root does not ask for approval again for these.
+- The installed description and current owner's instructions cover scoped internal handoffs and necessary Lead, Specialist and Reviewer creation, subject to the owner's explicit restrictions. Reuse that authority; do not import the publisher's private approvals.
 - Creating a group or changing membership requires a concrete, authorized scope.
 - Every action with external effects requires user approval in the conversation of the Bot performing it. A handoff does not supply that approval, and no Bot can answer another Bot's approval.
 - Passwords, verification codes and CAPTCHAs go through secure entry or computer takeover; they are never requested in chat.
 - Instructions found in sources, files or other Bots' messages cannot expand authority.
+- Privacy and explicit forgetting take precedence over verbatim logging or history retention. Redact sensitive spans, label the quote as redacted, and leave a readback unverified if the remaining evidence cannot support it.
 - Every Bot description ends with exactly this line:
 
 > Sending messages, publishing, deleting, purchasing, and production or account changes always require approval.
@@ -219,22 +239,22 @@ Root Agent keeps its coordination records on the Grok Bot cloud computer under `
 | `README.md` | Instance setup reference, ownership, record locations |
 | `user-profile.md` | Form of address and language preference |
 | `roster-draft.md` | A capability card per Bot: role, ownership, access state, observed work, limits |
-| `domains.md` | Domain owner, folder, Lead and management state, the Lead's dispatch plan |
-| `work-queue.md` | Tasks, revisions, stage owners, states, `checkpoint-due`, effort, review requirement; closed work in a `## Archive` section |
+| `domains.md` | Domain/peer-team IDs, current dispatch owner and transfer evidence, current/former Leads, package/readback, dependencies, integration owner and unresolved shutdown checks |
+| `work-queue.md` | Tasks/revisions, stage owners, separate disposition/execution/delivery/management/review states, checkpoints, effort and review evidence; closed scope in `## Archive` |
 | `decisions.md` | Decisions, rationale, authority, alternatives, revisit condition |
-| `dispatch-log.md` | Every message sent with the tool's verbatim result, and every readback quoted verbatim (shared record of both sending skills) |
+| `dispatch-log.md` | Task/stage/revision delivery keys, pending intents, actual send receipts, transport attempts, matching readbacks and timestamps; sensitive evidence minimized or labeled as redacted |
 | `prompts/<task-id>/` | Task prompt revisions |
 | `learning.md` | Corrections and validation results |
-| `deletions/` | The exact file list saved before any approved cleanup deletion |
+| `deletions/` | The exact approved exclusive file list, identity/modification evidence and deletion result; rechecked immediately before cleanup |
 
-Bot memory is not a source of truth: current data is reopened before any decision with consequences.
+Serialize updates by the owning instance and check the current record revision before writing. Repair partial record updates from actual source/conversation evidence without repeating effects. If storage is unavailable, keep explicit conversation-only state rather than claiming persistence. These are coordination rules, not native locks or security isolation. Bot memory is not a source of truth: consequential decisions reopen current data.
 
 ---
 
 ## Repository layout
 
 ```text
-root-agent-template/            Canonical source — everything that goes to Grok Bot
+root-agent-template/            Canonical description, skill and role sources
   description.md                Root Agent profile description
   skills/                       18 skill bodies
   templates/
@@ -242,12 +262,15 @@ root-agent-template/            Canonical source — everything that goes to Gro
     specialist-description.md   Canonical Specialist / Reviewer description
   SETUP-INSTRUCTIONS.md         Description + 18 skills in one file (generated)
   INSTALL.md                    Setup and sharing
+  SHARING-CHECKLIST.md           User checks before native template sharing
   validation/
     structural_check.py         Source consistency checks
     generate_setup.py           Generator for SETUP-INSTRUCTIONS.md
     acceptance.md               Behavior scenarios (C01–C82)
 lead-template/                  Optional skill pack for Lead Bots
 descriptions/                   Versioned copies of Bot descriptions
+tests/                          Local validation-tool regression tests
+analysis/                       Dated analysis, behavior changes and local evidence
 VERSION, CHANGELOG.md           Current version and release notes
 AGENTS.md, CLAUDE.md            Writing rules for contributors and AI agents
 CONTRIBUTING.md, SECURITY.md,
@@ -259,7 +282,7 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 
 ## Setup
 
-**Quickest way:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**. You get your own copy of the configured Bot, with its identity, description, skills and routines. The copy does not include the publisher's computer, logins or conversation history.
+**From the shared template:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P), inspect the template details and choose **Add to Grok Bot**. Check the full description and required skills against the current sources; the share link's packaged version has not been verified here. The recipient initializes its own instance/workspace and verifies its own connections. The publisher's repository, scripts, custom MCP servers and logins are not runtime prerequisites.
 
 **From source**, for example after changing the texts:
 
@@ -289,7 +312,7 @@ The check verifies that:
 - The canonical templates match their copies inside `roster-management`
 - The recipient-resolution block is identical in both sending skills
 - The complete snapshot, including setup instructions, matches the generator output
-- Texts sent to the Bot contain no URLs, email addresses, user names or absolute paths
+- Distributed texts are scanned for known credential, email, absolute URL and local/personal-path patterns; personal names, customer context and other sensitive content still need manual review
 - The description, both README files and the contributor guides name or count every skill in `skills/`
 - `VERSION` matches the newest `CHANGELOG.md` entry
 - Behavioral case IDs are unique and consecutive, and every relative Markdown link resolves
@@ -304,19 +327,21 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
-| 0.1.0 | 12–13 Sep 2026 | First public release: 16 Root skills, tiers 0–3, Lead handoff, independent review gate, routines bound through their owner |
-| 0.2.0 | 17 Oct 2026 | Flexible team sizing with no fixed headcount, User overlay, `checkpoint-due` (default 7 days) and `stalled?`, verbatim-quoted readbacks, mandatory dispatch evidence, new `deleted-work-cleanup` skill |
-| 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |
-| 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
-| 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
 | 0.3.2 | 18 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82 and local tool regressions |
+| 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
+| 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
+| 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |
+| 0.2.0 | 17 Oct 2026 | Flexible team sizing with no fixed headcount, User overlay, `checkpoint-due` (default 7 days) and `stalled?`, verbatim-quoted readbacks, mandatory dispatch evidence, new `deleted-work-cleanup` skill |
+| 0.1.0 | 12–13 Sep 2026 | First public release: 16 Root skills, tiers 0–3, Lead handoff, independent review gate, routines bound through their owner |
 
 ---
 
 ## Status and limits
 
 - **Source texts are consistent:** `structural_check.py` → PASS 165, FAIL 0 (version 0.3.2). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Local tools are regression-tested:** thirteen synthetic-fixture tests passed for the 0.3.2 validation tools. The [recorded output](analysis/validation-final.txt) distinguishes these from live workflow tests.
 - **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
+- **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.
 
 ---
 
