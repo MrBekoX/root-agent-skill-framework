@@ -7,3 +7,17 @@ Desktop.ini
 issues.txt
 __pycache__/
 *.pyc
+
+# Local task inputs, review output and credentials do not belong in public sources.
+/analysis/
+/security-reports/
+/ROOT-AGENT-ANALYSIS-PROMPT.md
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+/credentials.json
+/.aws/
+/.ssh/

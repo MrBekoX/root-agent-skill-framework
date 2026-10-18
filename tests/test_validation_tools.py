@@ -8,11 +8,13 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
 import unittest
 from unittest import mock
+from types import SimpleNamespace
 
 REPO = Path(__file__).resolve().parents[1]
 VALIDATION = REPO / "root-agent-template" / "validation"
@@ -40,6 +42,61 @@ def temporary_directory():
 
 
 class SourceContracts(unittest.TestCase):
+    def test_link_targets_reject_network_absolute_and_escape_forms_without_io(self):
+        targets = ["//audit.invalid/share/file", r"\\audit.invalid\share\file",
+                   r"/\audit.invalid\share\file", r"\/audit.invalid/share/file",
+                   r"\\?\UNC\audit.invalid\share\file", r"\\.\pipe\sample",
+                   r"C:\private\file", "C:/private/file", "C:relative.md",
+                   r"\rooted.md", "/outside.md", "../../outside.md",
+                   "%2f%2faudit.invalid/share/file", "%5c%5caudit.invalid/share/file",
+                   "%43%3Arelative.md", "%2e%2e/%2e%2e/outside.md", "file%00.md"]
+        with mock.patch.object(Path, "exists", side_effect=AssertionError("filesystem probe")), \
+                mock.patch.object(Path, "resolve", side_effect=AssertionError("path resolution")), \
+                mock.patch.object(Path, "lstat", side_effect=AssertionError("metadata probe")):
+            for target in targets:
+                with self.subTest(target=target), self.assertRaises(ValueError):
+                    check.relative_link_target("docs/README.md", target)
+
+    def test_link_targets_preserve_relative_files_directories_fragments_and_spaces(self):
+        targets = {"../README.md#intro": "README.md", "../": ".",
+                   "./guide.md": "docs/guide.md", "<../My Guide.md>": "My Guide.md",
+                   "../My%20Guide.md": "My Guide.md", "../part%23one.md#section": "part#one.md",
+                   "guide.md?literal": "docs/guide.md?literal"}
+        for target, expected in targets.items():
+            with self.subTest(target=target):
+                self.assertEqual(check.relative_link_target("docs/README.md", target),
+                                 os.path.normcase(expected))
+        for target in ("#intro", "https://example.invalid/page", "HTTPS://example.invalid/page",
+                       "mailto:example@example.invalid"):
+            self.assertIsNone(check.relative_link_target("docs/README.md", target))
+
+    def test_inventory_rejects_symlinks_and_reparse_points_before_descending(self):
+        with temporary_directory() as temporary:
+            root = Path(temporary)
+            redirect = root / "redirect"
+            redirect.mkdir()
+            for mode, attributes in ((stat.S_IFLNK, 0), (stat.S_IFDIR, 0x400)):
+                metadata = SimpleNamespace(st_mode=mode, st_file_attributes=attributes)
+                with mock.patch.object(Path, "lstat", return_value=metadata) as probe, \
+                        self.assertRaisesRegex(ValueError, "redirect"):
+                    check.repository_inventory(root)
+                self.assertEqual(probe.call_count, 1)
+
+    def test_inventory_keeps_only_local_entries_and_skips_git_metadata(self):
+        with temporary_directory() as temporary:
+            root = Path(temporary)
+            (root / "docs").mkdir()
+            (root / "docs" / "guide.md").write_text("# Guide\n", encoding="utf-8")
+            (root / "My Guide.md").write_text("# Guide\n", encoding="utf-8")
+            (root / "GUIDE.MD").write_text("# Guide\n", encoding="utf-8")
+            (root / ".git").mkdir()
+            (root / ".git" / "private.md").write_text("ignored\n", encoding="utf-8")
+            markdown, paths = check.repository_inventory(root)
+            self.assertEqual({p.relative_to(root).as_posix() for p in markdown},
+                             {"docs/guide.md", "My Guide.md", "GUIDE.MD"})
+            self.assertIn(os.path.normcase("docs"), paths)
+            self.assertNotIn(os.path.normcase(".git/private.md"), paths)
+
     def test_sections_reject_duplicate_extra_reordered_and_fenced_only(self):
         correct = "\n\n".join(check.HEADINGS)
         self.assertEqual(check.skill_headings(correct), check.HEADINGS)
@@ -114,6 +171,29 @@ class ToolProcessRegressions(unittest.TestCase):
         command.append(str(self.root / "validation" / f"{name}.py"))
         return subprocess.run(command, cwd=self.temporary.name, capture_output=True,
                               encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"}, timeout=45)
+
+    def test_structural_links_reject_unsafe_targets_without_tracebacks(self):
+        with (self.folder / "README.md").open("a", encoding="utf-8") as stream:
+            stream.write("\n[network](//audit.invalid/share/check)\n[escape](../outside.md)\n")
+        result = self.run_tool("structural_check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("unsafe or broken relative links", result.stdout)
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_structural_links_accept_spaces_and_in_repository_parents(self):
+        (self.folder / "My Guide.md").write_text("# Guide\n", encoding="utf-8")
+        with (self.root / "README.md").open("a", encoding="utf-8") as stream:
+            stream.write("\n[guide](<../My Guide.md>)\n[encoded](../My%20Guide.md)\n"
+                         "[parent](../README.md#intro)\n[external](HTTPS://example.invalid/)\n")
+        result = self.run_tool("structural_check")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_structural_links_validate_uppercase_markdown(self):
+        (self.folder / "GUIDE.MD").write_text("[broken](missing.md)\n", encoding="utf-8")
+        result = self.run_tool("structural_check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("unsafe or broken relative links", result.stdout)
+        self.assertIn("GUIDE.MD", result.stdout)
 
     def test_generator_from_unrelated_directory_is_deterministic(self):
         self.assertEqual(self.run_tool("generate_setup").returncode, 0)
