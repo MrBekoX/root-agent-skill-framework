@@ -14,22 +14,24 @@ Read the accepted brief and current task revision in work-queue.md, the domain r
 
    ```text
    Recipient resolution (identical text in route-and-dispatch and lead-handoff)
-   Open domains.md for this work unit's domain.
-     Domain has a verified Lead (actual Bot reference plus profile readback)? -> lead-handoff
-     No verified Lead?                                                        -> route-and-dispatch
+   Open domains.md for this work unit's domain and peer team.
+     Explicit transfer made Root the current dispatch owner?                 -> route-and-dispatch
+     Otherwise current designated Lead has actual reference/profile readback? -> lead-handoff
+     No current verified Lead?                                               -> route-and-dispatch
    Always route-and-dispatch, regardless of any Lead:
      (a) a newly created Bot's one-time setup or access-check stage
-     (b) an out-of-team independent Reviewer stage
-   An unverified Lead is not a Lead: use route-and-dispatch and record the gap.
+     (b) any independent Reviewer stage, including a Reviewer in the domain group
+   An unverified or former Lead is not the current Lead: record the gap or transfer evidence.
    Never send the same work unit through both.
    ```
 
-2. Confirm the structure actually calls for a Lead. Tiers 2 and 3, as route-and-dispatch defines them, are managed by a Lead; tiers 0 and 1 are not. If the work turns out to need one owner and no independent review, return it to route-and-dispatch instead of creating a Lead layer over a single Specialist. If the work grew past one owner while Root Agent was managing it directly, reconcile the active assignments first, then delegate the remaining scope; do not leave a Specialist holding a Root kickoff for work you are now delegating.
+2. Confirm the structure actually calls for a Lead. Tiers 2 and 3, as route-and-dispatch defines them, are managed by a Lead; tiers 0 and 1 are not. Before any management transfer, work that needs one owner and no independent review may return to route-and-dispatch. An already Lead-managed domain keeps its Lead until an explicit ownership transfer reconciles active work. If the work grew past one owner while Root Agent was managing it directly, reconcile the active assignments first, then delegate the remaining scope; do not leave a Specialist holding a Root kickoff for work you are now delegating.
 3. Verify the team before delegating it. Each member must have an actual Bot reference, a saved-profile readback, one owned deliverable, an explicit file writer boundary and a recorded access-readiness value from access-probe. A member whose required access is `needs-user-access`, `unavailable` or `unverified` is delegated with that limitation stated, and its source-dependent production stays gated. Do not hand a Lead a roster containing proposed roles described as if they existed.
 4. Compose the handoff package through team-prompting. Fill every field with real values; mark a genuinely inapplicable field explicitly rather than leaving a placeholder. Keep the final line exactly as written.
 
    ```text
-   Task and revision: actual task reference and current scope revision.
+    Task and revision: actual task and stage reference, current scope revision, package revision and delivery key.
+    Domain and team: actual peer-team reference and Lead, nonoverlapping scope/writers, and the integration owner when capacity split this domain across teams.
    Delegated outcomes: the concrete results this domain owns, each with its acceptance criteria and required evidence.
    Out of scope: work that belongs to another domain, to Root Agent, or to a later cut.
    Priority order: the sequence to work in and the reason, including which outcomes are the accepted cut and which were deferred.
@@ -37,7 +39,7 @@ Read the accepted brief and current task revision in work-queue.md, the domain r
    Workspace: the domain folder, the Lead's own record location, and the one-writer-per-file rule.
    Decision authority: what the Lead may decide, sequence, re-assign or repair inside this scope without asking.
    Escalation: what must come back to Root Agent instead - scope change, new owner, external effect, access failure, effort limit reached, conflicting ownership.
-   Effort and checkpoints: the inherited effort, retry and checkpoint budget, and what changed evidence permits another attempt.
+    Effort and checkpoints: the inherited effort, retry and checkpoint budget, explicit checkpoint-due with time zone, and what changed evidence permits another attempt.
    Review gate: whether an independent review is required, who owns selecting the reviewer, and the artifact revision rule. Root Agent keeps reviewer selection and dispatch.
    Timing: actual deadline and time zone if given, or no committed deadline. Never invent an ETA.
    Reporting contract: what to report, on which events, to which destination, in what evidence format, normally 5-10 lines.
@@ -55,6 +57,12 @@ Read the accepted brief and current task revision in work-queue.md, the domain r
 11. Carry the verified result to the user through result-relay, and reconcile the domain's state into work-queue.md and domains.md through work-control. For several domains or Leads at once, use portfolio-status rather than composing a separate view here.
 12. Record the transfer itself in decisions.md: which domain, which Lead, the delegated scope and revision, the authority boundary, the readback evidence and the condition under which management returns to Root Agent.
 13. Delivery confirmation (User overlay — preserved verbatim through canonical framework updates.) A send is never recorded without the actual SendToAgent result: log its outcome in dispatch-log.md in the same turn, and a task with no send line is `not-dispatched`, never `handoff-pending` or `lead-managed`. After the send, the state stays `handoff-pending` until the Lead's actual readback arrives. Record the readback in dispatch-log.md and domains.md only with a verbatim quote from the Lead's message, its timestamp and sender id; a readback status without that quote, or copied from another task's record, is invalid. If no readback arrives by `checkpoint-due`, resend the same package once (logged) or escalate via blocker-escalation.
+
+### Delivery and revision safeguards
+
+These explicit exceptions govern step 13 while preserving its overlay text. SendToAgent means the supported Bot messaging operation actually available in the recipient's app, not a guaranteed tool name. If Bot messaging is disabled or unsupported, report the blocked capability without inventing a send. Use one delivery key per task, stage, recipient, purpose and package revision. A transport resend retains that key and cannot authorize a second execution. Inspect the destination and prior effects first; allow at most one transport resend for that key, otherwise escalate. A successful send with a failed local log is `sent (record repair pending)` with its actual conversation receipt, never evidence for another kickoff. When durable storage is unavailable, keep the same evidence in explicit conversation-only state; do not claim a saved log.
+
+A valid readback must identify the current task, stage, scope and package revision and come from the verified Lead in the destination conversation after that package was sent. Old or out-of-order replies remain history and cannot release the new revision. A revised package requires a new matching readback for its changed scope; prior accepted management history remains recorded separately while affected new work waits. An exact duplicate package asks only for the prior readback or current status, not another member assignment. Apply standing-workspace's privacy exception to quoted evidence; redact secrets and mark the quote as redacted.
 
 ## Validate the result
 

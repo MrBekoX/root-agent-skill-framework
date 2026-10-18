@@ -10,13 +10,13 @@ Bu klasör, Root Agent'ın kurduğu **Lead** Bot'ları için kaynak metinleri tu
 | `lead-dispatch` skill | [`skills/lead-dispatch.md`](skills/lead-dispatch.md) | Hayır. Elle kurulur, derinlik katar. |
 | `lead-integrate` skill | [`skills/lead-integrate.md`](skills/lead-integrate.md) | Hayır. Elle kurulur, derinlik katar. |
 
-Bir Bot başka bir Bot'a skill kaydedip enable edemez. Root Agent yalnızca description yazabilir, bu yüzden Lead'in dispatch yeteneği kanonik description içinde eksiksiz tanımlıdır. Buradaki iki skill o davranışı prosedüre dönüştürür ve ancak kullanıcı elle kurarsa devreye girer.
+Bot'lar arası skill kaydı veya enable etme kabiliyeti varsayılmaz; güncel uygulamanın desteklediği library ve Bot kullanılabilirliği kontrolleri doğrulanır. Zorunlu dispatch, revision/duplicate, stop ve routine sınırları kanonik Lead description içinde bulunur. Buradaki iki skill ancak kurulmuş ve kullanılabilirliği doğrulanmışsa devreye girer; tek birinin eksik olması zorunlu davranışları durdurmaz.
 
 ## Kurulum
 
-1. Lead Bot'u Root Agent yaratır ve kanonik Lead description'ı uygular. Kaydedilen profili yeniden açıp doğrula; son satır birebir korunmalı.
+1. Root Agent önce Lead'i yaratır ve profilini doğrular, sonra üyeleri gerçek Lead referansıyla oluşturur. Değişken üye roster'ı kalıcı description'a değil handoff'a konur. Ayrı setup/access-check, production roster'ı oluşmadan Lead'in kendi klasörünü başlatabilir. Son onay satırı birebir korunur.
 2. İstersen `skills/` altındaki iki gövdeyi Grok Bot'un skill kütüphanesine kaydet ve **yalnızca o Lead Bot için** enable et. Root Agent'a veya Uzman'lara enable etme.
-3. Lead'in ilk işi, Root Agent'ın handoff paketine **readback** dönmektir: paketi ve roster'ı gördüğünü, paketteki üye referanslarını ve teslimleri adlandırarak gösterir; ulaşılamayan üyeleri ve ilk checkpoint'i (`checkpoint-due`) bildirir. Root Agent bu readback'i Lead'in mesajından birebir alıntı, zaman ve gönderen bilgisiyle kaydeder. Bu readback gelmeden alan `handoff-pending` kalır; Root Agent alanı devredilmiş saymaz.
+3. Production handoff'unda Lead, güncel task/stage/scope/package revision ve delivery key ile üyeleri, teslimleri ve checkpoint'i doğrulayan **readback** döner. Yanıt aynı alıcı konuşmasından gelmelidir; eski revision ve duplicate paket yeni execution başlatmaz. Root Agent zamanı ve göndereni kaydeder; hassas veri varsa alıntıyı redakte edilmiş diye işaretler. Geçerli readback olmadan devredilen yeni kapsam bekler.
 
 ## Sınırlar
 

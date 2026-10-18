@@ -4,6 +4,28 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.2] - 2026-10-18
+
+Source-level workflow corrections and template-sharing preparation; not live-tested. All User overlay text and final approval sentences are preserved. The complete reviewable `old line → new line` list is in [the prepared PR description](analysis/PR-DESCRIPTION.md).
+
+### Fixed
+- Reuse standing creation authority during onboarding; a clear task no longer waits for optional setup questions. Missing storage uses explicit conversation-only state.
+- Resolve tier precedence, local tier 0 work and unsent/unready stages without fabricated Bot messages. Preserve Lead ownership until an explicit transfer.
+- Verify a Lead before its members; current member rosters belong in handoffs, while scoped initialization may precede production access.
+- Keep every independent-review stage with Root Agent, including Reviewers in a domain group, with artifact and criteria revisions bound together.
+- Correlate delivery keys, current package readbacks and bounded transport retries; failed local logging never justifies duplicate execution.
+- Separate administrative closure from actual shutdown, writer release and routine pause. Unreachable owners and group deletion do not imply Bot deletion; late outputs cannot reopen stopped work, and shared dependencies survive unrelated cancellation.
+- Recheck exclusive ownership and unchanged approved paths before cleanup; do not recursively delete expanded folders. Privacy and explicit forgetting override verbatim evidence/history retention.
+- Keep routine execution on Specialists; make required Lead duties self-contained without optional skills; retain run/effect and reporting evidence with a default Root destination for tier 1 partial results.
+- Represent unknown/stalled/pending status, provide an accessible fallback for failed attachments, and define metric populations, timestamp samples and review-rate denominators.
+- Correct current requirement mappings and remove unsupported blanket cross-Bot skill-installation claims from setup documentation.
+
+### Tooling and distribution
+- Exact ordered skill sections, raw-byte recipient comparison, optional Lead payload hygiene, graceful missing-source failures, dated release headings and complete generated-header drift checks.
+- Generator resolves paths from its script, validates the static registry without optimization-sensitive asserts, renders before writing and atomically replaces the snapshot.
+- Added isolated local tool regressions and C63–C82 acceptance definitions, all live NOT RUN. Added a Turkish evidence report and user sharing checklist, distinguishing source checks, save/readback, template details and recipient testing.
+- Official sources checked on 18 October 2026; no 6000-character rule was verified or encoded as a platform limit. No live Bot, message, routine, account connection or template publication was performed.
+
 ## [0.3.1] - 2026-10-18
 
 Text-drift and tooling fixes. No skill behavior changed.
