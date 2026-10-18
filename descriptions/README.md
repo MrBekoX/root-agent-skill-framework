@@ -4,7 +4,7 @@ Bot description'larının (sys prompt) versiyonlu kopyaları. Her dosya yalnızc
 
 | Bot | Dosya | Kaynak | Sürüm | Son satır |
 | --- | --- | --- | --- | --- |
-| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | 17 Ekim 2026 — v0.2.0: esnek ekip boyutu, user overlay, 17 skill | Onay satırı birebir |
+| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | 18 Ekim 2026 — v0.3.1: esnek ekip boyutu, user overlay, 18 skill'in tamamı skill listesinde | Onay satırı birebir |
 
 ## Kurallar
 
