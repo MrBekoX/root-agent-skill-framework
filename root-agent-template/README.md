@@ -53,6 +53,8 @@ Eighteen skills, listed in the order they normally run.
 
 Each skill uses the six content categories described in [Skills and routines](https://docs.x.ai/grok-bot/skills-routines-and-automations). These are readable instruction bodies; no undocumented import schema is claimed.
 
+Grok Bot desktop v0.68.1 and later intentionally omit the `/` skill menu; mobile retains it. On desktop, request a saved skill by name for an authorized task. Installation and read-only acceptance inspect supported library/catalog evidence instead of requiring that menu; see the [desktop compatibility guidance](INSTALL.md#2-save-and-enable-the-skills). This UI change does not prove that a particular installed definition is available or wins over a same-name copy.
+
 No live Bot, routine or public share link has been created by this repository work.
 
 ## Design authority

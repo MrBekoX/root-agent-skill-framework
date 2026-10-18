@@ -26,6 +26,8 @@ Identify this Bot from its actual profile/conversation reference. Reuse its veri
 
 Inspect actual profile editing, skill-library registration/availability, GitHub or HTTPS read access, and workspace controls. Use supported tools or UI; do not invent API names or assume that writing Markdown registers a skill. If a necessary control is missing, finish independent preparation and report that specific blocked operation. Request credentials only through secure entry or computer takeover when genuinely required.
 
+Grok Bot v0.68.1 intentionally removed the desktop composer's `/` menu; the mobile menu remains available. A missing desktop menu is expected, not an installation failure or a reason to reinstall, reset the computer or delete definitions. Inspect supported library controls or actual current-session catalog references instead. Do not require undocumented per-Bot activation records, assume an installed plugin proves its skills are available, or infer a wrong runtime solely from a Cursor label. The setup guide links the platform release notes and forum explanation for this distinction. Any later invocation by skill name is a separate task, not a substitute for installation readback or permission to execute work during setup.
+
 ## 2. Fetch a complete, consistent source snapshot
 
 Fetch `main`, record its full SHA, and obtain the repository at that SHA in a new, collision-checked staging directory owned by this instance. Use Git when available, otherwise supported GitHub/HTTPS retrieval that can prove complete file contents and the same commit. Do not pull into, reset, clean or overwrite an unrelated or dirty checkout. Do not rely on a publisher's local computer path.
