@@ -9,6 +9,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 ## Contents
 
 - [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all eighteen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
+- [GitHub self-install prompt](SETUP-INSTRUCTIONS-PROMPT.md): one-time instructions for the existing Root Agent to fetch a consistent current source commit, install/read back the full configuration, and clean up verified obsolete Root-only versions. Preserves private records and shared consumers; not an additional skill or a live-tested installer.
 - [Description](description.md): paste its complete contents into the Bot's description.
 - [Canonical specialist description](templates/specialist-description.md): for a Specialist or Reviewer. The same template is embedded in roster-management, so the saved skill carries it without relying on this repository.
 - [Canonical Lead description](templates/lead-description.md): for a Lead. Also embedded in roster-management. A Lead created from it manages its own domain and briefs its own members.
