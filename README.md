@@ -31,7 +31,7 @@ Root Agent is the user's single entry point. The user writes what they want and 
 
 ```mermaid
 flowchart TD
-    GS["getting-started<br/>first conversation only: one question at a time"] -.-> P
+    GS["getting-started<br/>one goal question only if no task exists"] -.-> P
     P["User request"] --> IC["intake-clarify<br/>outcome, scope, sources, external effects"]
     IC --> SG["scope-guard<br/>P0 / P1 / deferred, effort bound"]
     SG --> WC["work-control<br/>queue, priority, dependencies, checkpoint-due"]
@@ -55,11 +55,11 @@ flowchart TD
 
 ## Tier model
 
-Root Agent chooses the structure based on **the work itself**, not on how the request is worded. A large-sounding request with a single deliverable is tier 1.
+Root Agent chooses the structure based on **the whole accepted scope**, not how the request is worded. Apply distinct domains first, then parallel work or independent review, then the tier 0 exception, otherwise tier 1. A large-sounding single-domain request with one deliverable and no independent review can be tier 1.
 
 | Tier | Condition | Structure | Managed by |
 | --- | --- | --- | --- |
-| **0** | No external effects, one deliverable, ~10 minutes | No Bot | Root does it itself |
+| **0** | No external effects, one deliverable, ~10 minutes, no independent-review gate | No Bot or self-send | Root does it itself |
 | **1** | One domain, one accountable deliverable, no independent review required | 1 Specialist | **Root**, directly |
 | **2** | 2+ parallel work units in one domain **or** independent review required | 1 Lead + as many Specialists as the work needs (no fixed headcount, within the actual group limit) | **The Lead** |
 | **3** | 2+ distinct domains | 1 Lead per domain | Each **Lead** manages its own domain; Root manages across domains |
@@ -74,21 +74,22 @@ Task messages are sent by two skills: `route-and-dispatch` and `lead-handoff`. T
 
 ```text
 Recipient resolution (identical text in route-and-dispatch and lead-handoff)
-Open domains.md for this work unit's domain.
-  Domain has a verified Lead (actual Bot reference plus profile readback)? -> lead-handoff
-  No verified Lead?                                                        -> route-and-dispatch
+Open domains.md for this work unit's domain and peer team.
+  Explicit transfer made Root the current dispatch owner?                 -> route-and-dispatch
+  Otherwise current designated Lead has actual reference/profile readback? -> lead-handoff
+  No current verified Lead?                                               -> route-and-dispatch
 Always route-and-dispatch, regardless of any Lead:
   (a) a newly created Bot's one-time setup or access-check stage
-  (b) an out-of-team independent Reviewer stage
-An unverified Lead is not a Lead: use route-and-dispatch and record the gap.
+  (b) any independent Reviewer stage, including a Reviewer in the domain group
+An unverified or former Lead is not the current Lead: record the gap or transfer evidence.
 Never send the same work unit through both.
 ```
 
 | Sender | Recipient | When |
 | --- | --- | --- |
-| Root → `route-and-dispatch` | Specialist | Tier 0/1 work |
+| Root → `route-and-dispatch` | Specialist | Tier 1 work; tier 0 has no recipient or send |
 | Root → `route-and-dispatch` | New Bot | First setup / access-check stage (any tier) |
-| Root → `route-and-dispatch` | Out-of-team Reviewer | Independent review (any tier) |
+| Root → `route-and-dispatch` | Independent Reviewer, in or out of the group | Independent review (any tier) |
 | Root → `lead-handoff` | Lead | Management of a tier 2/3 domain, scope changes, corrections |
 | Lead | Its own Specialists | All task prompts in a Lead-managed domain |
 
@@ -121,7 +122,7 @@ sequenceDiagram
 
 > Root does not send specialist kickoffs for this domain. You compose and send them.
 
-**The readback gate:** the domain stays `handoff-pending` until the Lead's readback shows it can see the current handoff package and roster by naming the member references and deliverables from that package. A Lead that cannot see the package or roster does not start a first run, does not assign a member, and does not invent the missing roster. The readback counts only when Root records a verbatim quote of the Lead's message with its timestamp and sender; a status string or a paraphrase does not. Every package carries a `checkpoint-due` date (default 7 days); if no readback arrives by then, Root resends the package once or escalates. Until the readback counts, Root does not call the domain delegated and does not send specialist kickoffs for it.
+**The readback gate:** the verified Lead replies in the destination conversation with the current task/stage/scope/package revisions, member references, deliverables and checkpoint. An old revision, another sender or a paraphrase cannot release new work. Preserve the actual quote/time/sender, redacting sensitive spans with a label. Each package has a delivery key; after inspecting the destination and prior effects, at most one transport resend retains that key and cannot authorize duplicate execution. A successful send with a failed log needs record repair, never a second kickoff. Checkpoints are proportionate to deadlines/effort; seven days is only a fallback. Pending production never causes Root to brief the Lead's members. A separate initialization/access-check stage may precede the production roster.
 
 | Management state | Meaning |
 | --- | --- |
@@ -154,7 +155,7 @@ sequenceDiagram
 | Reporting | [`result-relay`](root-agent-template/skills/result-relay.md) | Carries a deliverable to the user with its evidence paths, without rewriting it |
 | Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; decision digest and effort report; closes only when every criterion has evidence |
 | Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Closes deleted or cancelled work, stops tracking it, deletes its own files after a saved list and the user's approval in Root's own chat |
-| Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | First conversation: short intro, one question at a time starting with the first concrete goal, first useful result |
+| Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | One goal question when no task exists; clear work starts immediately with grouped material questions |
 
 Every skill uses the same six sections: *When to use, Required inputs and access, Sequence of work, Validate the result, What to return, What requires approval.*
 
@@ -166,17 +167,17 @@ Every skill uses the same six sections: *When to use, Required inputs and access
 
 **Scope never narrows silently.** "Do all of it" is not a priority. Every requirement stays in a P0, P1 or deferred band, and deferred work gets a revisit condition. Dropping a requirement or loosening acceptance criteria requires a user decision. A Lead may propose extra work but cannot start it; an unanswered proposal is not approval.
 
-**Stalled work is classified.** Causes: access, decision, dependency, owner, effort limit, approval, unknown. A failed approach is not retried without new evidence or a new method. Default limits: at most one safe repair attempt after an execution failure, and at most two repair + re-review cycles in review.
+**Stalled work is classified.** Causes: access, decision, dependency, owner, execution, effort limit, approval, unknown. A failed approach is not retried without new evidence or a new method. Default limits: at most one safe repair attempt after an execution failure, and at most two repair + re-review cycles in review.
 
 **Every stage has one owner, and every file has one writer.** The same work is never given to two Bots.
 
-**Overdue work is flagged, not assumed.** Every queue record and handoff package carries a `checkpoint-due` date (default 7 days after dispatch). On every turn, whatever woke it, Root compares open records with today; an overdue record without newer evidence becomes `stalled?` and goes to blocker-escalation. "In progress" needs fresh owner evidence inside the checkpoint window. This check rides on turns that already happen; it is not a routine.
+**Overdue work is flagged, not assumed.** On existing turns, Root checks dispatched work awaiting current owner evidence against a proportionate `checkpoint-due`; seven days is only a fallback. Unsent/deferred work keeps readiness/revisit conditions, continuous work needs an evidence-freshness window, and an explicit stop takes priority. Progress requires the actual tier 1 owner or domain Lead's matching evidence, or Root's actual tier 0 artifact/check. This is not a routine or a scheduled follow-up.
 
-**Every send leaves evidence.** Each dispatch gets a `dispatch-log.md` line with the tool's verbatim result in the same turn. A state change cites that line; otherwise the task is `not-dispatched` or `unverified`. Tasks opened in the same turn are dispatched and confirmed separately.
+**Every send leaves evidence.** Actual sends retain their receipts and task/stage/revision delivery keys; sensitive spans are redacted. Local work and unready stages do not need fabricated send lines. Other state changes cite their own evidence. Failed local logging never invalidates a real send receipt or justifies resending; unavailable storage is explicit conversation-only state. Preserved User overlay text has explicit scoped exceptions in work-control and lead-handoff.
 
-**Measured, never invented.** Effort reports and performance cards show only logged counts (Bots, dispatches, Lead turns, review rounds, repair cycles, retries, calendar time; deliveries, first-pass review rate, stalls). Missing values read `not logged`; a new Bot reads `none yet`. There are no token or money figures without a real platform meter, and no scores or rankings. The decision digest is built from `decisions.md` only, and missing fields read `not recorded`.
+**Measured, never invented.** Effort reports and performance cards use logged events with a stated task/stage population and interval. Counts, elapsed time, median timestamp samples and conclusive first-review rates are defined separately; transport resends, revised outputs and repeated stall observations do not inflate deliveries or stall episodes. Missing values read `not logged`; a new Bot reads `none yet`. No token or money figures without a real platform meter, scores or rankings. The decision digest uses only recorded decisions and labels missing fields `not recorded`.
 
-**Closed work leaves the board.** Cancelled work, or work whose owner Bot was deleted, is closed and moved to the queue's `## Archive` section in the same turn, with its todo items and dependent steps. `deleted-work-cleanup` deletes its files only after saving the exact file list and getting the user's approval in Root's own chat. Root cannot delete Bots; it asks the user to delete them from the sidebar and rereads the roster.
+**Closure and shutdown are separate.** Explicitly cancelled work or confirmed owner deletion is archived immediately, cancelling only exclusive production dependencies. A separate shutdown record tracks stop acknowledgements, active writers and routine pause evidence; unreachable owners and deleted groups do not prove cancellation. Late outputs never reopen scope. Cleanup waits for verified shutdown, rechecks current ownership and the exact approved list, and never recursively removes unlisted/new/shared files. Bot deletion uses supported authorized controls or the user, without assuming a deletion tool.
 
 **Capacity.** No permanent 20-Bot budget applies; the platform's current limit is what counts. For reference: about 50 Bots per account and 6 Bots per group; these are not guaranteed quotas. The roster is sized flexibly to the work's difficulty and complexity. A domain team is 1 Lead plus as many Specialists as the work needs, with no fixed headcount, within the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. A Reviewer inside the team takes one Specialist seat.
 
@@ -244,7 +245,7 @@ root-agent-template/            Canonical source — everything that goes to Gro
   validation/
     structural_check.py         Source consistency checks
     generate_setup.py           Generator for SETUP-INSTRUCTIONS.md
-    acceptance.md               Behavior scenarios (C01–C62)
+    acceptance.md               Behavior scenarios (C01–C82)
 lead-template/                  Optional skill pack for Lead Bots
 descriptions/                   Versioned copies of Bot descriptions
 VERSION, CHANGELOG.md           Current version and release notes
@@ -266,7 +267,7 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 2. Attach [`root-agent-template/SETUP-INSTRUCTIONS.md`](root-agent-template/SETUP-INSTRUCTIONS.md) from the composer.
 3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 18 skills and enable them for itself, then reopen the saved records to verify them.
 
-For details and sharing (**Share template**), see [`root-agent-template/INSTALL.md`](root-agent-template/INSTALL.md). Optional skills for Lead Bots are in [`lead-template/`](lead-template/README.md). A Bot cannot register skills for another Bot, so these skills are installed on a Lead Bot by hand.
+For setup and sharing (**Share template**), see the [instructions](root-agent-template/INSTALL.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md). [Optional Lead skills](lead-template/README.md) use supported library/availability controls; cross-Bot registration is not assumed. The canonical Lead description carries required behavior without them. Updating sources does not update the existing share link; its packaged version must be checked separately. See the [Turkish analysis](analysis/ROOT-AGENT-ANALYSIS-2026-10-18.md) for official requirements, findings and length measurements. No official 6000-character limit was verified, and none is enforced locally.
 
 ---
 
@@ -279,13 +280,15 @@ python validation/generate_setup.py     # regenerates SETUP-INSTRUCTIONS.md from
 python validation/structural_check.py   # expect 0 FAIL
 ```
 
+Both scripts also resolve their sources correctly from another working directory. Run local tool regressions from the repository root with `python -m unittest discover -s tests -v`. These test synthetic fixtures, not live Bot behavior.
+
 The check verifies that:
 
-- Every skill has the six sections
+- Every Root and optional Lead skill has exactly six sections in the required order
 - Descriptions end with the exact approval line
 - The canonical templates match their copies inside `roster-management`
 - The recipient-resolution block is identical in both sending skills
-- The snapshot matches the sources
+- The complete snapshot, including setup instructions, matches the generator output
 - Texts sent to the Bot contain no URLs, email addresses, user names or absolute paths
 - The description, both README files and the contributor guides name or count every skill in `skills/`
 - `VERSION` matches the newest `CHANGELOG.md` entry
@@ -306,13 +309,14 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 | 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |
 | 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
 | 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
+| 0.3.2 | 18 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82 and local tool regressions |
 
 ---
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 152, FAIL 0 (version 0.3.1). The count grows as checks are added; the script itself fails if this line falls out of date.
-- **Live behavior is untested:** scenarios C01–C62 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
+- **Source texts are consistent:** `structural_check.py` → PASS 165, FAIL 0 (version 0.3.2). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 
 ---
 

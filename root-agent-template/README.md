@@ -13,7 +13,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 - [Canonical specialist description](templates/specialist-description.md): for a Specialist or Reviewer. The same template is embedded in roster-management, so the saved skill carries it without relying on this repository.
 - [Canonical Lead description](templates/lead-description.md): for a Lead. Also embedded in roster-management. A Lead created from it manages its own domain and briefs its own members.
 - [Lead package](../lead-template/README.md): the Lead description plus two optional Lead-side skills the user can install by hand.
-- [Desktop setup and sharing](INSTALL.md): use the configured Bot's native sharing action.
+- [Desktop setup and sharing](INSTALL.md) and [sharing checklist](SHARING-CHECKLIST.md): inspect full packaged content, dependencies, audience and recipient setup before the user shares.
 - [Acceptance checks](validation/acceptance.md): source coverage and suggested live checks; live results remain unverified.
 
 ## What Root Agent coordinates
@@ -22,7 +22,7 @@ Root Agent keeps a prioritized work queue with dependencies and effort checkpoin
 
 Root Agent sizes the structure to the work rather than to the request's wording: tier 0 it does itself, tier 1 is one Specialist it manages directly, tier 2 is a Lead plus as many Specialists as the work's difficulty and complexity need, managed by that Lead, and tier 3 is one Lead per domain. The user never has to design a team.
 
-Root Agent writes the role-specific description for every Bot it creates, and the task prompt for every recipient it addresses directly: a tier 0 or tier 1 owner, a Lead receiving a handoff package, a new Bot's setup or access-check stage, and an out-of-team independent Reviewer. In a tier 2 or tier 3 structure the Lead composes and sends its own members' prompts. Root Agent keeps roster creation, the review gate and accountability for the whole request. route-and-dispatch sends what Root Agent manages itself; lead-handoff sends to a Lead, and only treats a domain as delegated once that Lead's readback, quoted verbatim, shows it can see the current package and roster by naming the member references and deliverables from that package. Private task prompts are not part of the public configuration.
+Root Agent writes the role-specific description for every Bot it creates, and the task prompt for every recipient it addresses directly: a tier 1 owner, a Lead receiving a handoff package, a new Bot's setup or access-check stage, and an independent Reviewer, including one in the domain group. In a tier 2 or tier 3 structure the Lead composes and sends its own members' prompts. Root Agent keeps roster creation, the review gate and accountability for the whole request. route-and-dispatch sends what Root Agent manages itself; lead-handoff sends to a Lead, and only treats a domain as delegated once that Lead's readback, quoted verbatim, shows it can see the current package and roster by naming the member references and deliverables from that package. Private task prompts are not part of the public configuration.
 
 Proactive monitoring is supported through a specialist-owned routine after its scope, schedule/time zone or event rule and reporting destination are actually specified and tested. Adding the monitoring workflow does not turn on an unspecified schedule.
 
@@ -47,7 +47,7 @@ Eighteen skills, listed in the order they normally run.
 - [result-relay](skills/result-relay.md): carry a finished deliverable to the user with its evidence paths intact.
 - [user-report](skills/user-report.md): report one task's status, give a decision digest or effort report when asked, and close it only when every criterion has evidence.
 - [deleted-work-cleanup](skills/deleted-work-cleanup.md): close and archive deleted or cancelled work and delete its own files only after a saved file list and the user's approval in Root Agent's own chat.
-- [getting-started](skills/getting-started.md): run the first conversation with one question at a time, starting with the first concrete goal.
+- [getting-started](skills/getting-started.md): ask one goal question if no task exists; start a clear task immediately and group only material missing inputs.
 
 Each skill uses the six content categories described in [Skills and routines](https://docs.x.ai/grok-bot/skills-routines-and-automations). These are readable instruction bodies; no undocumented import schema is claimed.
 
