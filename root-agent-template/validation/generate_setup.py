@@ -18,9 +18,11 @@ def norm(s: str) -> str:
 check = (ROOT / "validation" / "structural_check.py").read_text(encoding="utf-8")
 m = re.search(r"SKILLS = \[(.*?)\]", check, re.S)
 SKILLS = re.findall(r'"([^"]+)"', m.group(1))
-assert len(SKILLS) == 18, SKILLS
+assert len(SKILLS) == len(set(SKILLS)) and SKILLS, SKILLS
+assert sorted(SKILLS) == sorted(p.stem for p in (ROOT / "skills").glob("*.md")), "SKILLS list and skills/ differ"
 
-count_word = "eighteen"
+WORDS = {16: "sixteen", 17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty"}
+count_word = WORDS.get(len(SKILLS), str(len(SKILLS)))
 
 header = f"""# Root Agent — current setup instructions
 

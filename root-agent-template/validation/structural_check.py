@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Structural checks against shipped Root Agent source texts (not live Grok Bot).
 
-Reads description.md, SETUP-INSTRUCTIONS.md, the ten skills, and the canonical
-specialist description. Does not call Grok Bot and does not simulate C01–C42.
+Reads description.md, SETUP-INSTRUCTIONS.md, the eighteen skills, the canonical
+Lead and specialist descriptions, the repository docs (skill lists, counts, links,
+VERSION/CHANGELOG) and the behavioral case table. Does not call Grok Bot and does
+not simulate the C-numbered behavioral cases.
 """
 from __future__ import annotations
 
@@ -459,6 +461,141 @@ if paste.is_file() and norm(paste.read_text(encoding="utf-8")) == desc_file:
     ok("descriptions/root-agent.md matches description.md")
 else:
     fail("descriptions/root-agent.md drift")
+
+# --- Repository consistency (0.3.1) -------------------------------------------------
+REPO = ROOT.parent
+NUM_WORDS = {
+    "seven": 7, "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
+}
+
+# The canonical SKILLS list and the skills/ folder must agree.
+_on_disk = sorted(p.stem for p in (ROOT / "skills").glob("*.md"))
+if _on_disk == sorted(SKILLS):
+    ok(f"skills/ folder matches the SKILLS list ({len(SKILLS)})")
+else:
+    fail(f"skills/ folder {_on_disk} != SKILLS list")
+
+# The description's skill-list sentence must name every skill.
+_m = re.search(r"Use (intake-clarify[^.]*?) for their matching workflows\.", desc)
+if not _m:
+    fail("description skill-list sentence missing")
+else:
+    _listed = re.split(r",\s*|\s+and\s+", _m.group(1))
+    _missing = [n for n in SKILLS if n not in _listed]
+    _extra = [n for n in _listed if n not in SKILLS]
+    if _missing or _extra:
+        fail(f"description skill list missing {_missing} extra {_extra}")
+    else:
+        ok("description skill-list sentence names every skill")
+
+# Both README files link every skill.
+for _rel, _prefix in [("README.md", "root-agent-template/skills/"), ("root-agent-template/README.md", "skills/")]:
+    _t = (REPO / _rel).read_text(encoding="utf-8")
+    _miss = [n for n in SKILLS if f"]({_prefix}{n}.md)" not in _t]
+    if _miss:
+        fail(f"{_rel} does not link skills {_miss}")
+    else:
+        ok(f"{_rel} links every skill")
+
+# Stated skill counts in current docs must equal the real count. Upgrade notes
+# about an existing older setup ("ten-skill setup") are allowed.
+_count_re = re.compile(r"\b(\d+|" + "|".join(NUM_WORDS) + r")[- ](?:skill|instruction bodies)(?!s? setup)", re.I)
+for _rel in ["README.md", "AGENTS.md", "CLAUDE.md", "root-agent-template/README.md",
+             "root-agent-template/INSTALL.md", "root-agent-template/ROOT-AGENT-SETUP.md"]:
+    _t = (REPO / _rel).read_text(encoding="utf-8")
+    _bad = []
+    for _hit in _count_re.finditer(_t):
+        _w = _hit.group(1).lower()
+        _n = int(_w) if _w.isdigit() else NUM_WORDS[_w]
+        if _n != len(SKILLS):
+            _bad.append(_hit.group(0))
+    if _bad:
+        fail(f"{_rel} states a stale skill count: {_bad}")
+    else:
+        ok(f"{_rel} skill counts match {len(SKILLS)}")
+
+# AGENTS.md and CLAUDE.md say they carry the same text.
+if (REPO / "AGENTS.md").read_text(encoding="utf-8") == (REPO / "CLAUDE.md").read_text(encoding="utf-8"):
+    ok("AGENTS.md and CLAUDE.md identical")
+else:
+    fail("AGENTS.md and CLAUDE.md differ")
+
+# Superseded sizing wording must not return to the current docs.
+for _rel in ["README.md", "AGENTS.md", "root-agent-template/README.md", "root-agent-template/INSTALL.md", "root-agent-template/description.md"]:
+    _t = (REPO / _rel).read_text(encoding="utf-8")
+    _stale = [s for s in ("smallest structure", "smallest useful structure", "2–5 Specialists", "two to five Specialists", "at most five Specialists") if s in _t]
+    if _stale:
+        fail(f"{_rel} keeps superseded sizing wording {_stale}")
+    else:
+        ok(f"{_rel} has no fixed-headcount sizing wording")
+
+# VERSION matches the newest CHANGELOG entry, and entries run newest first.
+_version = (REPO / "VERSION").read_text(encoding="utf-8").strip()
+_changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+_entries = re.findall(r"(?m)^## \[(\d+\.\d+\.\d+)\]", _changelog)
+_all_heads = re.findall(r"(?m)^## (?!Unreleased)(.*)$", _changelog)
+if len(_entries) != len(_all_heads):
+    fail(f"CHANGELOG has headings outside the '## [x.y.z] - date' form: {_all_heads}")
+elif _entries and _entries[0] == _version:
+    ok(f"VERSION {_version} matches newest CHANGELOG entry")
+else:
+    fail(f"VERSION {_version} != newest CHANGELOG entry {_entries[:1]}")
+_keys = [tuple(int(x) for x in v.split(".")) for v in _entries]
+if _keys == sorted(_keys, reverse=True) and len(set(_keys)) == len(_keys):
+    ok("CHANGELOG entries are unique and newest first")
+else:
+    fail(f"CHANGELOG entries out of order: {_entries}")
+_paste_readme = (REPO / "descriptions" / "README.md").read_text(encoding="utf-8")
+if f"v{_version}" in _paste_readme:
+    ok("descriptions/README.md names the current version")
+else:
+    fail(f"descriptions/README.md does not name v{_version}")
+
+# Behavioral case IDs are unique and consecutive; README states the current range.
+_ids = [int(x) for x in re.findall(r"(?m)^\| C(\d+) \|", acc)]
+if _ids and _ids == list(range(1, len(_ids) + 1)):
+    ok(f"behavioral cases C01–C{len(_ids):02d} unique and consecutive")
+else:
+    fail("behavioral case IDs are not unique and consecutive")
+_range = f"C01–C{len(_ids):02d}"
+for _rel in ["README.md"]:
+    _t = (REPO / _rel).read_text(encoding="utf-8")
+    _ranges = set(re.findall(r"C01–C\d+", _t))
+    if _ranges == {_range}:
+        ok(f"{_rel} states case range {_range}")
+    else:
+        fail(f"{_rel} case ranges {sorted(_ranges)} != {_range}")
+
+# Relative Markdown links resolve.
+_link_re = re.compile(r"\]\(([^)\s]+)\)")
+_checked = 0
+_broken = []
+for _md in sorted(REPO.rglob("*.md")):
+    if ".git" in _md.parts:
+        continue
+    _text = _md.read_text(encoding="utf-8")
+    _text = re.sub(r"````.*?````", "", _text, flags=re.S)
+    _text = re.sub(r"```.*?```", "", _text, flags=re.S)
+    for _target in _link_re.findall(_text):
+        if re.match(r"[a-z][a-z0-9+.-]*:", _target) or _target.startswith("#"):
+            continue
+        _path = _target.split("#", 1)[0]
+        _checked += 1
+        if not (_md.parent / _path).exists():
+            _broken.append(f"{_md.relative_to(REPO)} -> {_target}")
+if _broken:
+    fail(f"broken relative links: {_broken}")
+else:
+    ok(f"{_checked} relative Markdown links resolve")
+
+# README states the current check total (this check included).
+_total = len(passes) + len(fails) + 1
+_readme = (REPO / "README.md").read_text(encoding="utf-8")
+if f"PASS {_total}, FAIL 0" in _readme:
+    ok(f"README.md states the current check total ({_total})")
+else:
+    fail(f"README.md does not state 'PASS {_total}, FAIL 0'")
 
 print(f"PASS {len(passes)}  FAIL {len(fails)}")
 for msg in passes:
