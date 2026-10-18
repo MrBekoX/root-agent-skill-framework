@@ -29,3 +29,7 @@ Source updates, local checks, installed save/readback, template details, recipie
 ## Optional verification reference
 
 [Acceptance checks](validation/acceptance.md) contains suggested behavioral scenarios and the source coverage review. Local checks have been performed; live Bot behavior and public-preview contents have not been verified from this workspace. You do not need to return installation logs to complete the description and skill-writing work.
+
+## GitHub self-install and upgrade
+
+For a GitHub-based self-install or upgrade, attach [SETUP-INSTRUCTIONS-PROMPT.md](SETUP-INSTRUCTIONS-PROMPT.md) to the existing Root Agent's conversation. It directs that Bot to fetch current `main` at one resolved commit, derive the version and Root skill set, apply the full configuration through supported controls, and verify readback before removing proven obsolete Root-only installation artifacts. It preserves private working records, User overlays and shared consumers; required platform deletion approvals remain in that conversation. This prompt is a one-time user setup request, not an additional installed skill or a replacement for the generated attachment. Its availability does not establish that self-installation has been tested in Grok Bot.
