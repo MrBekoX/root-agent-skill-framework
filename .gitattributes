@@ -2,3 +2,8 @@
 *.py text eol=lf
 *.txt text eol=lf
 VERSION text eol=lf
+
+# Keep local reports out of archives even if someone force-adds them.
+/analysis export-ignore
+/security-reports export-ignore
+/ROOT-AGENT-ANALYSIS-PROMPT.md export-ignore
