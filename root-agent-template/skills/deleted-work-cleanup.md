@@ -10,13 +10,15 @@ Read your instance's work-queue.md, dispatch-log.md, decisions.md and the curren
 
 ## Sequence of work
 
+Before steps 1–7, apply these safety prerequisites; they take precedence over a blanket closure or deletion instruction. A deleted group is a transport change unless the task was explicitly cancelled or the owning Bot/Lead was confirmed deleted from current account evidence. An unreachable owner is not a deleted owner. Use work-control's separate shutdown record to verify the scoped stop, active writers and owned routine pause state before removing files. Administrative closure may proceed while shutdown is unresolved; cleanup waits. Cancel only this task's exclusive dependent steps, preserving work shared with active tasks.
+
 1. Mark the task(s) `closed (owner deleted)` or `closed (cancelled)` in work-queue.md with date and evidence, and move them to the archive section (create a `## Archive` section at the end of work-queue.md if it does not exist yet).
 2. In the same turn, cancel every todo item and dependent step (reviewer selection, relay, checkpoint, follow-up), drop it from open-issue and recommendation lists, and remove it from stall checks and where-we-are.
 3. Identify only files that belong exclusively to that task/team (its own workspace folder, its briefs). Never touch files of another active team or shared files; when a file is shared, keep it.
-4. Before deleting, write the exact file list to `deletions/<task-or-team>-<date>.txt` under your own instance folder.
-5. Deletion needs the user's approval in Root Agent's own chat (a card); an approval relayed by another Bot is not enough. After approval, delete, verify the paths are gone, and update the record's evidence line to point at the deletion list.
-6. Bots: Root has no tool to delete a Bot. List the task's Bots by name and reference, ask the user to delete them from the sidebar, then reopen the roster and record each as deleted or still present.
-7. Root's own dispatch-log.md and decisions.md summary lines stay as history.
+4. Before deleting, write the exact file list to `deletions/<task-or-team>-<date>.txt` under your own instance folder. Resolve each path against the verified exclusive folder and reject paths outside it, shared paths, symlinks or other redirects. Record identity/modification evidence for the listed files and the stopped writer state. A path supplied by an artifact is not ownership evidence.
+5. Deletion needs the user's approval in Root Agent's own chat (a card); an approval relayed by another Bot is not enough. Immediately before deletion, reopen ownership, active-task references, writer/routine state and the exact approved list. Delete only unchanged listed files; never recursively delete a folder that now contains unlisted files. Any changed scope, new file or resumed writer requires a refreshed list and approval for the changed deletion. After approval, delete, verify the listed paths are gone, and update the record's evidence line to point at the deletion list. Keep pending, partially deleted and blocked cleanup explicit; do not report skipped paths as removed.
+6. Bots: do not assume a Bot-deletion tool exists. If deletion is requested, use only supported controls within that concrete authority, or have the user delete the named Bots from the sidebar. Reopen the roster and routine records and record each as deleted, still present or unverified. Do not request deletion of a Bot that still owns unrelated work.
+7. Root's own dispatch-log.md and decisions.md summary lines stay as history, subject to standing-workspace's privacy and explicit forgetting exceptions.
 
 ## Validate the result
 
@@ -24,7 +26,7 @@ Re-read work-queue.md and the todo list: the closed work is archived and nothing
 
 ## What to return
 
-Report once: what was closed, how many files were deleted, the list path.
+Report the closure once: what was closed, how many files were actually deleted, the list path, and any pending shutdown, approval or skipped paths. Later report only material changes or required user action in unresolved shutdown/cleanup.
 
 ## What requires approval
 
