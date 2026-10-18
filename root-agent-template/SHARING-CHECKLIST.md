@@ -3,6 +3,7 @@
 Bu liste kullanıcı tarafından Grok Bot içinde uygulanır. Yerel doğrulama; kurulum, template önizlemesi veya canlı davranış testi sayılmaz. Aşağıdaki adımlar bu çalışmada **yapılmadı**.
 
 - [ ] Mevcut Bot'a tam description ve güncel on sekiz skill kaydedildi; her birinin tamamı ve kullanılabilirliği yeniden açılarak karşılaştırıldı. User overlay metinleri ve açık istisna kuralları birlikte korundu.
+- [ ] Masaüstü Grok Bot v0.68.1 ve sonrasında `/` menüsünün kasıtlı olarak kaldırıldığı dikkate alındı. Kayıt, kullanılabilirlik ve aynı adlı tanımın seçimi desteklenen kütüphane/katalog kanıtlarıyla ayrı değerlendirildi; menünün yokluğu kurulum hatası sayılmadı. Mobildeki görünürlük veya plugin'in kurulu olması bütün skill'lerin doğrulandığı anlamına getirilmedi. [Uyumluluk açıklaması](INSTALL.md#2-save-and-enable-the-skills).
 - [ ] Template detaylarında beklenen description, her skill'in tam içeriği ve roster-management içindeki iki kanonik description denetlendi. Template oluşturulması tek başına tam aktarım kanıtı sayılmadı.
 - [ ] Memories, plugins, routines ve kimlik içeriği elle incelendi; kişisel bilgiler, özel görev/roster kayıtları, sırlar, iç URL'ler ve paylaşım hakkı olmayan içerik çıkarıldı. Root Agent'a ait routine bulunmadığı doğrulandı.
 - [ ] Gerekli bağlantılar ve desteklenen Bot mesajlaşması alıcının ortamında doğrulandı. Yayıncının repository, script, özel MCP, dosya veya oturumlarına runtime bağımlılığı bulunmadığı kontrol edildi. İsteğe bağlı Lead skill'leri olmadan zorunlu davranışın description'da bulunduğu görüldü.
