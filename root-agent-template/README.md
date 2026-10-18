@@ -8,7 +8,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 
 ## Contents
 
-- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all seventeen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
+- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all eighteen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
 - [Description](description.md): paste its complete contents into the Bot's description.
 - [Canonical specialist description](templates/specialist-description.md): for a Specialist or Reviewer. The same template is embedded in roster-management, so the saved skill carries it without relying on this repository.
 - [Canonical Lead description](templates/lead-description.md): for a Lead. Also embedded in roster-management. A Lead created from it manages its own domain and briefs its own members.
@@ -55,4 +55,4 @@ No live Bot, routine or public share link has been created by this repository wo
 
 The files in this folder are the canonical source. Root Agent uses the current platform capacity rather than a fixed Bot budget and creates necessary specialists under the user's standing authorization; group changes and consequential external actions still need their own authorization. Only Root Agent is distributed. The instruction language is English; conversation replies follow the user's language.
 
-The description belongs in Grok Bot's profile description field and the seventeen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.
+The description belongs in Grok Bot's profile description field and the eighteen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.
