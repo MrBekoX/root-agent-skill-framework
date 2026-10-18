@@ -4,6 +4,17 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.0] - 2026-10-18
+
+Additive behavior in the shipped instruction texts. No fixed headcounts; no token or cost figures.
+
+- roster-management: the capability card gains a measured performance card per Bot (deliveries, median dispatch-to-delivery time from dispatch-log timestamps, first-pass review rate, repair cycles, `stalled?` count), from logged evidence only, `none yet` for new Bots, no scores or rankings.
+- route-and-dispatch: performance-card counts are cited as owner-choice evidence; they never override capability, access or ownership.
+- user-report: on request, a one-page decision digest from decisions.md (date, choice, reason, decider, active/superseded status, revisit condition; user decisions separate from Root choices; never invented); effort report on request or at closure.
+- work-control: effort report of measured counts only (Bots, dispatches, Lead turns/readbacks, review rounds, repair cycles, retries, calendar time); no token or money figures without a real platform meter.
+- getting-started: added to the repo as the 18th skill (was template-only); intro drops tier jargon and states no invented token/cost figures; the first question is the concrete goal, name and language are optional; recurring goals get one real run before any schedule via bind-routine-via-owner.
+- access-probe: health scan mode, one safe read-only probe per installed connector reported as a table; no writes or sends.
+
 ## 0.2.0 — 2026-10-17 (proposed, not yet tagged)
 
 Behavior changes in the shipped instruction texts. Each item is the previous rule, then the current rule.
