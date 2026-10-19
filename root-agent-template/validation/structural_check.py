@@ -293,10 +293,10 @@ def main() -> int:
         fail(f"cannot render setup for comparison: {exc}")
 
     desc = (ROOT / "description.md").read_text(encoding="utf-8")
-    if "never to Root Agent" in desc and "Recurring work belongs to its specialist owner" in desc:
-        ok("description forbids Root-owned routine")
+    if "Root never owns routines that control, audit or supervise a team's work" in desc and "Root may own routines that concern only itself" in desc:
+        ok("description scopes Root-owned routines to self only")
     else:
-        fail("description missing Root-owned routine prohibition")
+        fail("description missing Root routine scope rule")
 
     if "create a necessary specialist Bot for the requested task without asking again" in desc:
         ok("standing specialist-create authority present")
