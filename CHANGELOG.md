@@ -4,6 +4,9 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+### Changed
+- Root description: Root may own routines that concern only itself (e.g. daily self-improvement review); routines that control, audit or supervise a team's work belong to that team's owners via their Lead. Onboarding now says Root does not own *team* routines. Added a user overlay addendum: relay every active team's Lead briefing when the team finishes its work, and an end-of-day self-improvement review that produces approval-ready proposals. Structural check updated to the new routine-scope wording.
+
 ### Repository maintenance
 - Keep Markdown link validation offline: reject network, absolute and repository-escaping targets before any link-selected filesystem access. Validate against a local inventory and reject symlinks and Windows reparse points before reading source files.
 - Preserve ordinary relative files, directories, fragments and external URL handling; validate angle-delimited and percent-encoded filenames with spaces and uppercase Markdown extensions. Added seven focused security and compatibility regressions.
