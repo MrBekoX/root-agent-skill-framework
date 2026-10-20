@@ -12,8 +12,8 @@ Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile des
 - Tiers: **0** Root Agent itself; **1** one Specialist managed by Root Agent; **2** one Lead plus as many Specialists as the work's difficulty and complexity need, managed by the Lead; **3** one Lead per domain.
 - In a Lead-managed domain the Lead writes and sends its members' task prompts. Root Agent keeps roster creation, reviewer selection and accountability for the whole request.
 - A domain team is one Lead plus Specialists sized flexibly to the work, with no fixed headcount, subject to the actual group limit and with no nested teams; a team that would exceed the limit is split into separate Lead-managed teams. Use the platform's current capacity; do not reintroduce a fixed Bot budget.
-- Recurring work binds to the Bot that executes it, never to Root Agent.
-- Do not propose changes that make Root Agent execute work, own routines, or answer another Bot's approval request.
+- Recurring team or domain work binds to the Bot that executes it, never to Root Agent; Root owns only routines that concern itself.
+- Do not propose changes that make Root Agent execute work, own team routines, or answer another Bot's approval request.
 
 ## Repository layout
 
