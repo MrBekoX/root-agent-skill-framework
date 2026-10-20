@@ -4,8 +4,11 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.3] - 2026-10-20
+
 ### Changed
 - Root description: Root may own routines that concern only itself (e.g. daily self-improvement review); routines that control, audit or supervise a team's work belong to that team's owners via their Lead. Onboarding now says Root does not own *team* routines. Added a user overlay addendum: relay every active team's Lead briefing when the team finishes its work, and an end-of-day self-improvement review that produces approval-ready proposals. Structural check updated to the new routine-scope wording.
+- Aligned the remaining copies with the routine scope: intake-clarify onboarding (and generated SETUP-INSTRUCTIONS), getting-started introduction, work-control monitoring, bind-routine-via-owner, AGENTS.md and CLAUDE.md now say Root does not own team routines and owns only routines that concern itself.
 
 ### Repository maintenance
 - Keep Markdown link validation offline: reject network, absolute and repository-escaping targets before any link-selected filesystem access. Validate against a local inventory and reject symlinks and Windows reparse points before reading source files.
