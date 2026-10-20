@@ -4,7 +4,7 @@ Bot description'larının (sys prompt) versiyonlu kopyaları. Her dosya yalnızc
 
 | Bot | Dosya | Kaynak | Sürüm | Son satır |
 | --- | --- | --- | --- | --- |
-| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | 18 Ekim 2026 — v0.3.2: açık overlay istisnaları, güvenli stop, bootstrap ve template aktarım kontrolleri; 18 skill | Onay satırı birebir |
+| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | 20 Ekim 2026 — v0.3.3: Root yalnızca kendisiyle ilgili rutinlere sahip olur; ekip brifingi ve gün sonu kendini geliştirme kuralları; 18 skill | Onay satırı birebir |
 
 ## Kurallar
 
