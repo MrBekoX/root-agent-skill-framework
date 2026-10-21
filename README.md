@@ -6,7 +6,7 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
-**Current source version: [0.3.3](VERSION)** — 20 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+**Current source version: [0.3.4](VERSION)** — 22 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
 
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
 
@@ -339,6 +339,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
+| 0.3.4 | 22 Oct 2026 | Recurring-work ownership line in the lead-handoff package; README Bot-id check before every standing-workspace write; end-of-turn dispatch-log/work-queue record rule in the Root description |
 | 0.3.3 | 20 Oct 2026 | Routine scope: Root owns only routines that concern itself, never team control/audit routines; team briefing relay on completion and end-of-day self-improvement rules; aligned onboarding, getting-started, work-control, bind-routine-via-owner, AGENTS.md/CLAUDE.md |
 | 0.3.2 | 19 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82, local tool regressions, GitHub setup/read-only acceptance prompts and desktop menu compatibility |
 | 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
@@ -351,7 +352,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.3). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.4). The count grows as checks are added; the script itself fails if this line falls out of date.
 - **Local tools are regression-tested:** twenty synthetic-fixture tests passed for the current validation tools. These exercise local tooling and do not establish live Bot behavior.
 - **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 - **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.
