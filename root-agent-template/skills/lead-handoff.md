@@ -40,6 +40,7 @@ Read the accepted brief and current task revision in work-queue.md, the domain r
    Decision authority: what the Lead may decide, sequence, re-assign or repair inside this scope without asking.
    Escalation: what must come back to Root Agent instead - scope change, new owner, external effect, access failure, effort limit reached, conflicting ownership.
     Effort and checkpoints: the inherited effort, retry and checkpoint budget, explicit checkpoint-due with time zone, and what changed evidence permits another attempt.
+    Recurring work: this domain's routines are owned by the executing specialist you assign, never by you or Root; set them up via bind-routine-via-owner and report the owner's Bot reference and routine id.
    Review gate: whether an independent review is required, who owns selecting the reviewer, and the artifact revision rule. Root Agent keeps reviewer selection and dispatch.
    Timing: actual deadline and time zone if given, or no committed deadline. Never invent an ETA.
    Reporting contract: what to report, on which events, to which destination, in what evidence format, normally 5-10 lines.

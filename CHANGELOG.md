@@ -4,6 +4,13 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.4] - 2026-10-22
+
+### Changed
+- lead-handoff: the handoff package template now carries a "Recurring work" line after "Effort and checkpoints": domain routines are owned by the executing specialist the Lead assigns (never the Lead or Root), set up via bind-routine-via-owner, with the owner's Bot reference and routine id reported.
+- standing-workspace: before every write, Root confirms the Bot id recorded in the folder's README matches its own id, and stops otherwise.
+- Root description: added an end-of-turn record rule — in any turn where Root messages another Bot, it updates dispatch-log.md and work-queue.md in its own verified instance folder before closing the turn. Approval sentence remains last. SETUP-INSTRUCTIONS regenerated.
+
 ## [0.3.3] - 2026-10-20
 
 ### Changed
