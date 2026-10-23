@@ -1,6 +1,6 @@
 # Root Agent v0.3.3 — read-only acceptance test prompt
 
-Run a limited acceptance check of **this installed Root Agent v0.3.3** after installation and cleanup. Perform the permitted checks and return the results in Turkish. This is a one-time test request, not a new skill, profile rule, production assignment or cleanup approval.
+Run a limited acceptance check of **this installed Root Agent v0.3.3** after installation and cleanup. Perform the permitted checks and return the results in the user's language. This is a one-time test request, not a new skill, profile rule, production assignment or cleanup approval.
 
 Verify what can actually be observed without changing the installation or external systems. Keep three evidence classes separate: **LIVE-READBACK**, **LIVE-RESPONSE**, and **SCENARIO**. A correct hypothetical answer is not proof that a real handoff, review, routine or deletion worked.
 
@@ -67,7 +67,7 @@ Use supported read-only evidence to inspect whether this Root owns routines. Do 
 
 ### B01 — Small local deliverable, no dispatch
 
-Produce one Markdown table and a two-sentence Turkish explanation from these supplied values only:
+Produce one Markdown table and a two-sentence explanation in the user's language from these supplied values only:
 
 | Item | Quantity | Unit value |
 | --- | ---: | ---: |
@@ -102,7 +102,7 @@ For every scenario, return the fixture decision/state, the next permitted action
 
 ## Final report in this conversation
 
-Return a short Turkish summary followed by these tables:
+Return a short summary in the user's language followed by these tables:
 
 1. **Installation table:** profile plus all eighteen skills; actual object/reference, body comparison result, overlay result, registration/active-resolution evidence, Unicode/UTF-8 units where measured, and PASS/FAIL/NOT VERIFIED. Do not print full private profiles or repeated skill bodies.
 2. **Test table:** A01–A05, B01 and S01–S14; evidence class, actual observation/fixture decision, expected result, verdict, evidence reference and any limitation.
