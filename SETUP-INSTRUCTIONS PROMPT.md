@@ -1,6 +1,6 @@
 # SETUP-INSTRUCTIONS PROMPT — Root Agent self-install and upgrade
 
-Install or upgrade **this existing Bot** as Root Agent from the repository below. Execute the setup and verified cleanup; do not stop at a plan or instructions for me to perform. Reply in Turkish.
+Install or upgrade **this existing Bot** as Root Agent from the repository below. Execute the setup and verified cleanup; do not stop at a plan or instructions for me to perform. Reply in the user's language.
 
 This is my one-time installation request, not a permanent description or a new skill. Keep it out of the installed profile, skill bodies and public template. Do not create another Root Agent or a team for this setup.
 
@@ -82,7 +82,7 @@ Verify actual removal through fresh library/file listings. Recheck that the curr
 
 ## Completion report
 
-Return a Turkish summary, normally 5–10 lines, and a compact per-skill status table or accessible installation report:
+Return a summary in the user's language, normally 5–10 lines, and a compact per-skill status table or accessible installation report:
 
 - Actual Bot identity; source repository, full commit SHA and installed version.
 - Source checks performed, their real results and any NOT RUN checks.

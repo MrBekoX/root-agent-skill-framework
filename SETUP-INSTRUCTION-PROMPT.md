@@ -1,6 +1,6 @@
 # SETUP-INSTRUCTION-PROMPT — Root Agent v0.3.3 from the cleaned repository
 
-Install or upgrade **this existing Root Agent** to **v0.3.3 from merge #14**, using the exact source commit below. Fetch the repository from GitHub, perform the installation yourself through supported controls, verify the actual saved configuration, and report in Turkish. Do not stop at a plan or give me installation steps you can execute yourself.
+Install or upgrade **this existing Root Agent** to **v0.3.3 from merge #14**, using the exact source commit below. Fetch the repository from GitHub, perform the installation yourself through supported controls, verify the actual saved configuration, and report in the user's language. Do not stop at a plan or give me installation steps you can execute yourself.
 
 This is a one-time installation request. Keep this prompt out of the installed description, skills and public template. Use the existing Bot and its verified instance; do not create another Root Agent, a Lead or a team for setup.
 
@@ -86,7 +86,7 @@ After verification, identify genuinely obsolete Root-only artifacts by exact ide
 
 For an already-approved removal, record the exact list before deletion and recheck identity/content, exclusive ownership and references immediately before acting. Reject changed, redirected, shared or out-of-scope paths. Do not recursively remove a folder containing unlisted files. Verify the actual outcome and read back the installed configuration again after any authorized cleanup.
 
-## 8. Completion report in Turkish
+## 8. Completion report in the user's language
 
 Return a short summary and a table covering the description and all eighteen skills:
 
