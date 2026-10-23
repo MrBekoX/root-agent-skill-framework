@@ -29,6 +29,7 @@ Read the accepted request and current task revision in work-queue.md, roster cap
    Acceptance criteria: observable checks for this stage, with required evidence and any separate review gate.
    Dependencies: prerequisite stages, artifact revisions, readiness and safe independent work before they are ready.
     Effort and checkpoints: inherited effort/retry/review limits, explicit checkpoint-due with time zone, evidence-freshness window when no date applies, and what changed evidence permits another attempt.
+    Recurring work: routines for this work are owned by the executing specialist, never by a coordinating Lead or Root; set them up via bind-routine-via-owner and report the owner's Bot reference and routine id.
    Timing: actual deadline/time zone if given, or no committed deadline; never invent an ETA or timer.
    Authority: concrete authorized internal actions and external-action approval boundaries, including the acting Bot's own approval conversation.
    Return: destination, artifact references/revisions, checks performed, unresolved criteria, blockers and next needed action.
