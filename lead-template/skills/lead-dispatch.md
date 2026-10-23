@@ -25,6 +25,7 @@ Read Root Agent's current handoff package and its revision: the delegated outcom
    Acceptance criteria: observable checks for this unit and the evidence required to show them.
    Dependencies: what must arrive first, from whom, and what is safe to do before it does.
     Effort and checkpoints: the share of Root Agent's budget this unit carries, explicit checkpoint-due with time zone, evidence-freshness window where needed, and remaining retry limit.
+    Recurring work: routines for this unit are owned by you as the executing member, never by me (the Lead) or Root; set them up via bind-routine-via-owner and report your Bot reference and routine id.
    Timing: the actual deadline and time zone if one was given, or no committed deadline.
    Authority: the internal actions this member may take, and the external actions that need approval in its own conversation.
    Return: send results, partial work and blockers to me with accessible evidence and the output revision, normally in 5-10 lines.
