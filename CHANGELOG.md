@@ -4,6 +4,11 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.6] - 2026-10-23
+
+### Changed
+- Public-template genericization: the repository is a template others install, so user-specific wording was removed. Hard-coded "Turkish" reply/report language in the Root description overlay addendum, the setup prompts and the acceptance prompt is now "the user's language"; the overlay addendum no longer carries a user-specific establishment date. A full-repo audit found no team names, Bot names/ids, personal handles, personal folders or fixed routine times; MrBekoX remains only as repository owner/author credit. SETUP-INSTRUCTIONS regenerated.
+
 ## [0.3.5] - 2026-10-23
 
 ### Changed
