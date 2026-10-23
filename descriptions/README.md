@@ -4,7 +4,7 @@ Bot description'larının (sys prompt) versiyonlu kopyaları. Her dosya yalnızc
 
 | Bot | Dosya | Kaynak | Sürüm | Son satır |
 | --- | --- | --- | --- | --- |
-| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | 22 Ekim 2026 — v0.3.4: tur sonu kayıt kuralı (dispatch-log + work-queue); v0.3.3 rutin kapsamı, ekip brifingi ve gün sonu kendini geliştirme kuralları; 18 skill | Onay satırı birebir |
+| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | v0.3.5 (23 Ekim 2026): açıklama metni değişmedi, yalnız skill şablonları; 22 Ekim 2026 — v0.3.4: tur sonu kayıt kuralı (dispatch-log + work-queue); v0.3.3 rutin kapsamı, ekip brifingi ve gün sonu kendini geliştirme kuralları; 18 skill | Onay satırı birebir |
 
 ## Kurallar
 

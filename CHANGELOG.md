@@ -4,6 +4,15 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 
 ## Unreleased
 
+## [0.3.5] - 2026-10-23
+
+### Changed
+- team-prompting: the stage-brief contract now carries a "Recurring work" line after "Effort and checkpoints": routines are owned by the executing specialist, never by a coordinating Lead or Root, set up via bind-routine-via-owner, with the owner's Bot reference and routine id reported. Same rule as the v0.3.4 lead-handoff line.
+- lead-dispatch (optional Lead skill): member prompt contract carries the matching "Recurring work" line, phrased for the member as routine owner. SETUP-INSTRUCTIONS regenerated.
+
+### Repository maintenance
+- Setup and acceptance prompts are pinned to an immutable commit and state "do not bump VERSION / move a tag" for the *installing* Bot. They are therefore not edited inline inside a content release: the pin can only name a commit that already exists. After this release merges, a follow-up commit re-points them to the v0.3.5 merge commit (and the `v0.3.5` tag, which resolves to it), with a freshly computed source-ZIP SHA-256, following the v0.3.3 precedent (#15). v0.3.4 is skipped as a pin target because v0.3.5 supersedes it; a `v0.3.4` tag is created on 2149e4a for history.
+
 ## [0.3.4] - 2026-10-22
 
 ### Changed
