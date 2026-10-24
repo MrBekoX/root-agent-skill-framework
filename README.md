@@ -6,7 +6,7 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
-**Current source version: [0.3.6](VERSION)** — 23 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+**Current source version: [0.3.7](VERSION)** — 24 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
 
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
 
@@ -339,6 +339,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
+| 0.3.7 | 24 Oct 2026 | Generic end-of-day self-improvement routine; private per-user profile folder; same-turn Bot relay rule; no Bot co-author rule; remaining non-English docs translated to English |
 | 0.3.6 | 23 Oct 2026 | Public-template genericization: reply/report language is the user's language instead of a fixed language; no user-specific dates in overlays |
 | 0.3.5 | 23 Oct 2026 | Recurring-work routine-ownership line added to the team-prompting stage brief and the optional lead-dispatch member prompt |
 | 0.3.4 | 22 Oct 2026 | Recurring-work ownership line in the lead-handoff package; README Bot-id check before every standing-workspace write; end-of-turn dispatch-log/work-queue record rule in the Root description |
