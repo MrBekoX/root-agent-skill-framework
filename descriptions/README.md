@@ -1,14 +1,14 @@
 # descriptions
 
-Bot description'larının (sys prompt) versiyonlu kopyaları. Her dosya yalnızca description metnini içerir. İçine başlık veya not eklenmez, böylece dosya Grok Bot'un **Edit Profile → Description** alanına olduğu gibi, tek parça yapıştırılabilir. Açıklamalar bu dosyada tutulur.
+Versioned copies of the Bot descriptions (system prompts). Each file contains only the description text. No heading or notes are added inside it, so the file can be pasted as-is, in one piece, into Grok Bot's **Edit Profile → Description** field. Notes are kept in this file.
 
-| Bot | Dosya | Kaynak | Sürüm | Son satır |
+| Bot | File | Source | Version | Last line |
 | --- | --- | --- | --- | --- |
-| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | v0.3.6 (23 Ekim 2026): yanıt dili "kullanıcının dili" olarak genelleştirildi; v0.3.5: yalnız skill şablonları; 22 Ekim 2026 — v0.3.4: tur sonu kayıt kuralı (dispatch-log + work-queue); v0.3.3 rutin kapsamı, ekip brifingi ve gün sonu kendini geliştirme kuralları; 18 skill | Onay satırı birebir |
+| Root Agent | [`root-agent.md`](root-agent.md) | [`root-agent-template/description.md`](../root-agent-template/description.md) | v0.3.7 (24 October 2026): skill templates only (end-of-day self-improvement routine, private user profile folder, same-turn Bot relay, no Bot co-author); v0.3.6 (23 October 2026): reply language generalized to "the user's language"; v0.3.5: skill templates only; 22 October 2026 — v0.3.4: end-of-turn record rule (dispatch-log + work-queue); v0.3.3 routine scope, team briefing and end-of-day self-improvement rules; 18 skills | Approval line verbatim |
 
-## Kurallar
+## Rules
 
-- **Kaynak şablondur.** `root-agent.md`, `root-agent-template/description.md` ile birebir aynı tutulur. Birini değiştirirken diğerini de aynı commit'te güncelleyin. Şablonu değiştirdikten sonra `root-agent-template/` içinde `python validation/generate_setup.py` ve `python validation/structural_check.py` çalıştırın.
-- **Eski sürümler git geçmişinde kalır.** Ayrı bir `archive/` kopyası tutulmaz. Davranışı değiştiren her satır `eski satır → yeni satır` olarak listelenir.
-- **Her description aynı satırla biter:** `Sending messages, publishing, deleting, purchasing, and production or account changes always require approval.`
-- **Özel veri girmez.** Kişisel ad, şifre, token, iç URL ya da görev metni description'a yazılmaz; görev mesajla verilir.
+- **The template is the source.** `root-agent.md` is kept identical to `root-agent-template/description.md`. When you change one, update the other in the same commit. After changing the template, run `python validation/generate_setup.py` and `python validation/structural_check.py` inside `root-agent-template/`.
+- **Old versions stay in git history.** No separate `archive/` copy is kept. Every line that changes behavior is listed as `old line → new line`.
+- **Every description ends with the same line:** `Sending messages, publishing, deleting, purchasing, and production or account changes always require approval.`
+- **No private data.** Personal names, passwords, tokens, internal URLs or task text are never written into a description; tasks are given by message.
