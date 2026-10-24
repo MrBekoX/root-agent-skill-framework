@@ -7,10 +7,26 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 ### Repository maintenance
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
+## [0.3.7] - 2026-10-24
+
+### Added
+- Generic end-of-day self-improvement routine (`root-agent-template/routines/root-end-of-day-self-improvement.md`): the only routine Root owns; daily, default 22:00 in the user's own time zone and language; eight sections (task status, pending questions, rule compliance, team briefings, Bot report relay check, cleanup proposals, learning, tomorrow's top 3); no team names; it applies, deletes or publishes nothing.
+- Private per-user profile folder: each installation keeps facts about its own user only in `<instance folder>/user/profile.md` (Root is the single writer); contact details, cards and logins stay in the vault. Shareable skills, memory and templates stay generic.
+- `root-agent-template/memory-notes.md`: the generic memory notes shipped with the template.
+
+### Changed
+- result-relay step 5: same-turn Bot relay rule — every message from another Bot is relayed to the user in the same turn it arrives; logging, verifying or replying to the Bot is not a substitute; each turn ends with a relay check recorded in dispatch-log.
+- standing-workspace: new step 10, no Bot co-author rule — commits use only the identity the user approved and never carry a Co-authored-by line or identity for Root or another Bot; record list adds daily-log/, learning/, deletions/ and user/profile.md.
+- getting-started step 3: first contact creates the instance records and the user profile file, and confirms or creates the end-of-day self-improvement routine in the user's time zone.
+- Documentation that was not yet in English (descriptions/README.md, lead-template/README.md, SHARING-CHECKLIST.md) and the remaining non-English status words in the user-report and work-control overlays were translated to English without changing meaning. SETUP-INSTRUCTIONS regenerated.
+
+### Repository maintenance
+- The pinned setup and acceptance prompts still point at v0.3.6; as in earlier releases they are re-pointed in a separate follow-up commit once the v0.3.7 merge commit exists. The work-control body length changed in this release.
+
 ## [0.3.6] - 2026-10-23
 
 ### Changed
-- Public-template genericization: the repository is a template others install, so user-specific wording was removed. Hard-coded "Turkish" reply/report language in the Root description overlay addendum, the setup prompts and the acceptance prompt is now "the user's language"; the overlay addendum no longer carries a user-specific establishment date. A full-repo audit found no team names, Bot names/ids, personal handles, personal folders or fixed routine times; MrBekoX remains only as repository owner/author credit. SETUP-INSTRUCTIONS regenerated.
+- Public-template genericization: the repository is a template others install, so user-specific wording was removed. A hard-coded fixed reply/report language in the Root description overlay addendum, the setup prompts and the acceptance prompt is now "the user's language"; the overlay addendum no longer carries a user-specific establishment date. A full-repo audit found no team names, Bot names/ids, personal handles, personal folders or fixed routine times; MrBekoX remains only as repository owner/author credit. SETUP-INSTRUCTIONS regenerated.
 
 ## [0.3.5] - 2026-10-23
 
@@ -59,7 +75,7 @@ Source-level workflow corrections and template-sharing preparation; not live-tes
 ### Tooling and distribution
 - Exact ordered skill sections, raw-byte recipient comparison, optional Lead payload hygiene, graceful missing-source failures, dated release headings and complete generated-header drift checks.
 - Generator resolves paths from its script, validates the static registry without optimization-sensitive asserts, renders before writing and atomically replaces the snapshot.
-- Added isolated local tool regressions and C63–C82 acceptance definitions, all live NOT RUN. Added a Turkish evidence report and user sharing checklist, distinguishing source checks, save/readback, template details and recipient testing.
+- Added isolated local tool regressions and C63–C82 acceptance definitions, all live NOT RUN. Added an evidence report and user sharing checklist, distinguishing source checks, save/readback, template details and recipient testing.
 - Added the repository-root `SETUP-INSTRUCTIONS PROMPT.md` for pinned-commit GitHub installation/upgrade and scoped cleanup, and `ACCEPTANCE-TEST-PROMPT.md` for read-only installation checks, one bounded response and isolated scenarios.
 - Finalized desktop compatibility guidance on 19 October 2026: Grok Bot v0.68.1 intentionally removed the desktop `/` menu while mobile retains it. Setup, acceptance, both READMEs and the sharing checklist distinguish expected menu absence from actual registration, availability and duplicate-resolution evidence. No canonical profile or skill body changed for this correction. See the [platform release notes](https://x.ai/changelog/bot#v0.68.1) and [forum explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932).
 - Official sources checked on 18 October 2026; no 6000-character rule was verified or encoded as a platform limit. No live Bot, message, routine, account connection or template publication was performed.
