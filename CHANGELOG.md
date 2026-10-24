@@ -5,6 +5,7 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 ## Unreleased
 
 ### Repository maintenance
+- Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
 ## [0.3.7] - 2026-10-24
