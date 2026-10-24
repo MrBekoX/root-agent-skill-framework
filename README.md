@@ -355,7 +355,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.6). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.7). The count grows as checks are added; the script itself fails if this line falls out of date.
 - **Local tools are regression-tested:** twenty synthetic-fixture tests passed for the current validation tools. These exercise local tooling and do not establish live Bot behavior.
 - **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 - **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.

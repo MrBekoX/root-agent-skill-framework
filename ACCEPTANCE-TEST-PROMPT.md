@@ -1,6 +1,6 @@
-# Root Agent v0.3.6 — read-only acceptance test prompt
+# Root Agent v0.3.7 — read-only acceptance test prompt
 
-Run a limited acceptance check of **this installed Root Agent v0.3.6** after installation and cleanup. Perform the permitted checks and return the results in the user's language. This is a one-time test request, not a new skill, profile rule, production assignment or cleanup approval.
+Run a limited acceptance check of **this installed Root Agent v0.3.7** after installation and cleanup. Perform the permitted checks and return the results in the user's language. This is a one-time test request, not a new skill, profile rule, production assignment or cleanup approval.
 
 Verify what can actually be observed without changing the installation or external systems. Keep three evidence classes separate: **LIVE-READBACK**, **LIVE-RESPONSE**, and **SCENARIO**. A correct hypothetical answer is not proof that a real handoff, review, routine or deletion worked.
 
@@ -18,7 +18,7 @@ All fictional cases below live **only in this conversation**. Their Bot labels, 
 
 - Use **PASS**, **FAIL**, **NOT VERIFIED** or **NOT RUN**, always with the evidence class. `PASS / SCENARIO` is never a live workflow pass.
 - For LIVE-READBACK, cite the actual object/source, check time if available, operation and observed comparison. A prior completion report or local staged copy alone is insufficient.
-- Compare actual saved instruction bodies against the existing pinned installation commit for version 0.3.6. Do not fetch a newer commit or silently change the target. Missing local source/provenance leaves the relevant comparison NOT VERIFIED.
+- Compare actual saved instruction bodies against the existing pinned installation commit for version 0.3.7. Do not fetch a newer commit or silently change the target. Missing local source/provenance leaves the relevant comparison NOT VERIFIED.
 - Distinguish platform-managed frontmatter from the instruction body. State any extraction or newline normalization; do not trim, paraphrase or silently ignore a differing overlay. Claim byte equality only when actual encoded bytes were compared.
 - Report Unicode code points, UTF-8 bytes and hashes with their proper labels. Do not treat these units as interchangeable or invent missing measurements.
 - Observe only the visible tool trace. If the trace cannot establish that prohibited calls were absent, say that limit; do not claim an account-wide no-change audit.
@@ -29,7 +29,7 @@ All fictional cases below live **only in this conversation**. Their Bot labels, 
 
 ### A01 — Version and source provenance
 
-Read the existing installation manifest and pinned local source when available. Report the installed version, full commit SHA, actual current Bot reference and source used for comparisons. Confirm VERSION is 0.3.6 and all compared bodies come from the same commit. A remembered version string or source checkout alone cannot establish the installed version. Do not silently repair a mismatch.
+Read the existing installation manifest and pinned local source when available. Report the installed version, full commit SHA, actual current Bot reference and source used for comparisons. Confirm VERSION is 0.3.7 and all compared bodies come from the same commit. A remembered version string or source checkout alone cannot establish the installed version. Do not silently repair a mismatch.
 
 ### A02 — Profile, all Root skills and active resolution
 
@@ -41,11 +41,11 @@ Check complete contents, ordered six-section structure, exact final approval sen
 
 Desktop compatibility: Grok Bot v0.68.1 (7 October 2026) intentionally removed the desktop composer's `/` menu. Its absence is expected and is not FAIL, missing-registration evidence or, by itself, a reason to mark availability NOT VERIFIED. The mobile menu remains available. Use supported read-only library controls or current-session catalog references to inspect registration and availability; distinguish these from menu visibility and same-name definition resolution. A partial or inaccessible catalog leaves only the unsupported claim NOT VERIFIED. Do not require an undocumented per-Bot activation record or invoke a skill to test this read-only check. Attribute user-supplied mobile/UI observations to the user rather than claiming to have inspected their screen.
 
-The [v0.68.1 release notes](https://x.ai/changelog/bot#v0.68.1) and [platform forum explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932) establish this UI distinction; checked on 23 October 2026. These are explanatory references, not permission to fetch them during the test. An `@` entry or installed plugin alone does not prove all of its skill bodies are registered, available or correctly resolved.
+The [v0.68.1 release notes](https://x.ai/changelog/bot#v0.68.1) and [platform forum explanation](https://forum.cursor.com/t/grok-bot-macos-unable-to-use-see-slash-commands/174932) establish this UI distinction; checked on 24 October 2026. These are explanatory references, not permission to fetch them during the test. An `@` entry or installed plugin alone does not prove all of its skill bodies are registered, available or correctly resolved.
 
 Check the preserved overlays: description Team operating rule; work-control steps 14–19; lead-handoff step 13; user-report step 10; deleted-work-cleanup's overlay marker and current safety prerequisites. Its seven steps and deletion-list requirement must remain present.
 
-For the unmodified canonical work-control body in the v0.3.6 installation source, distinguish **19,797 Unicode code points** from **19,813 UTF-8 bytes**. If platform wrappers, newline handling or additional user overlays change the measurement, show the specific difference rather than treating unlike units as corruption or claiming an unexplained exact match.
+For the unmodified canonical work-control body in the v0.3.7 installation source, distinguish **19,784 Unicode code points** from **19,798 UTF-8 bytes**. If platform wrappers, newline handling or additional user overlays change the measurement, show the specific difference rather than treating unlike units as corruption or claiming an unexplained exact match.
 
 Look for retained duplicate names, shortened shadow copies or competing definitions. Prove which definition this Bot resolves through actual binding/registration evidence where supported. A correct canonical file does not prove it wins over a same-name old alias. If resolution cannot be inspected, mark that part NOT VERIFIED. Do not execute, disable or delete a skill to test resolution.
 
