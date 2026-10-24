@@ -1,28 +1,28 @@
 # Lead — description and optional skills
 
-Bu klasör, Root Agent'ın kurduğu **Lead** Bot'ları için kaynak metinleri tutar. Root Agent tier 2 ve tier 3 yapılarda alanın günlük yönetimini Lead'e devreder: Uzman'ların görev prompt'larını Lead yazar ve gönderir, çıktıları Lead birleştirir, Root Agent'a tek entegre sonuç döner.
+This folder holds the source texts for the **Lead** Bots that Root Agent sets up. In tier 2 and tier 3 structures Root Agent hands the day-to-day management of a domain to the Lead: the Lead writes and sends the Specialists' task prompts, integrates their outputs, and returns a single integrated result to Root Agent.
 
-## Ne zorunlu, ne opsiyonel
+## What is required, what is optional
 
-| Parça | Nerede | Zorunlu mu |
+| Part | Where | Required? |
 | --- | --- | --- |
-| Kanonik Lead description | [`../root-agent-template/templates/lead-description.md`](../root-agent-template/templates/lead-description.md) | **Evet.** Root Agent, Lead Bot'u yaratırken bunu uygular. Tek başına çalışır. |
-| `lead-dispatch` skill | [`skills/lead-dispatch.md`](skills/lead-dispatch.md) | Hayır. Elle kurulur, derinlik katar. |
-| `lead-integrate` skill | [`skills/lead-integrate.md`](skills/lead-integrate.md) | Hayır. Elle kurulur, derinlik katar. |
+| Canonical Lead description | [`../root-agent-template/templates/lead-description.md`](../root-agent-template/templates/lead-description.md) | **Yes.** Root Agent applies it when creating the Lead Bot. It works on its own. |
+| `lead-dispatch` skill | [`skills/lead-dispatch.md`](skills/lead-dispatch.md) | No. Installed manually; adds depth. |
+| `lead-integrate` skill | [`skills/lead-integrate.md`](skills/lead-integrate.md) | No. Installed manually; adds depth. |
 
-Bot'lar arası skill kaydı veya enable etme kabiliyeti varsayılmaz; güncel uygulamanın desteklediği library ve Bot kullanılabilirliği kontrolleri doğrulanır. Zorunlu dispatch, revision/duplicate, stop ve routine sınırları kanonik Lead description içinde bulunur. Buradaki iki skill ancak kurulmuş ve kullanılabilirliği doğrulanmışsa devreye girer; tek birinin eksik olması zorunlu davranışları durdurmaz.
+No ability to register or enable skills across Bots is assumed; the library and Bot availability checks the current app supports are verified. The mandatory dispatch, revision/duplicate, stop and routine limits are in the canonical Lead description. The two skills here take effect only if they are installed and their availability is verified; a missing one does not stop the mandatory behavior.
 
-## Kurulum
+## Setup
 
-1. Root Agent önce Lead'i yaratır ve profilini doğrular, sonra üyeleri gerçek Lead referansıyla oluşturur. Değişken üye roster'ı kalıcı description'a değil handoff'a konur. Ayrı setup/access-check, production roster'ı oluşmadan Lead'in kendi klasörünü başlatabilir. Son onay satırı birebir korunur.
-2. İstersen `skills/` altındaki iki gövdeyi Grok Bot'un skill kütüphanesine kaydet ve **yalnızca o Lead Bot için** enable et. Root Agent'a veya Uzman'lara enable etme.
-3. Production handoff'unda Lead, güncel task/stage/scope/package revision ve delivery key ile üyeleri, teslimleri ve checkpoint'i doğrulayan **readback** döner. Yanıt aynı alıcı konuşmasından gelmelidir; eski revision ve duplicate paket yeni execution başlatmaz. Root Agent zamanı ve göndereni kaydeder; hassas veri varsa alıntıyı redakte edilmiş diye işaretler. Geçerli readback olmadan devredilen yeni kapsam bekler.
+1. Root Agent first creates the Lead and verifies its profile, then creates the members with the real Lead reference. The variable member roster goes in the handoff, not the permanent description. A separate setup/access-check can initialize the Lead's own folder before the production roster exists. The final approval line is kept verbatim.
+2. Optionally, save the two bodies under `skills/` to Grok Bot's skill library and enable them **only for that Lead Bot**. Do not enable them for Root Agent or the Specialists.
+3. In the production handoff, the Lead returns a **readback** confirming the members, deliverables and checkpoint with the current task/stage/scope/package revision and delivery key. The reply must come from the same recipient conversation; an old revision or a duplicate package does not start a new execution. Root Agent records the time and sender; if sensitive data is present, the quote is marked redacted. Newly delegated scope waits until there is a valid readback.
 
-## Sınırlar
+## Limits
 
-- Lead Bot açmaz, group açmaz, alt ekip kurmaz.
-- Lead kendi alanının bağımsız reviewer'ını seçmez ve brief'lemez — review gate Root Agent'ta kalır. Lead'in entegre ettiği işi kendi kontrol etmesi bağımsız review sayılmaz.
-- Lead devredilen kapsamı kendi başına büyütmez; gerekçe ve maliyetle **önerir**, kararı Root Agent verir. Yanıtlanmamış öneri onay değildir.
-- Routine, işi fiilen koşan Uzman'a bağlanır; yalnızca koordine eden Lead'e veya Root Agent'a bağlanmaz.
+- The Lead does not create Bots, groups or sub-teams.
+- The Lead does not choose or brief the independent reviewer for its own domain — the review gate stays with Root Agent. The Lead checking its own integrated work does not count as independent review.
+- The Lead does not expand the delegated scope on its own; it **proposes** with reasons and cost, and Root Agent decides. An unanswered proposal is not approval.
+- A routine is bound to the Specialist who actually runs the work; it is not bound only to the coordinating Lead or to Root Agent.
 
-Root Agent tarafındaki karşılık: [`lead-handoff`](../root-agent-template/skills/lead-handoff.md).
+Root Agent counterpart: [`lead-handoff`](../root-agent-template/skills/lead-handoff.md).
