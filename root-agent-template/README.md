@@ -8,7 +8,7 @@ The template follows the current platform capacity rather than imposing a 20-Bot
 
 ## Contents
 
-- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all eighteen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
+- [Setup instructions for remote use](SETUP-INSTRUCTIONS.md): current description and all nineteen skill bodies in one readable attachment, generated from the individual sources; sharing still uses Share template. Regenerate this snapshot whenever a source text changes.
 - [GitHub self-install prompt](<../SETUP-INSTRUCTIONS PROMPT.md>): one-time instructions in the repository root for the existing Root Agent to fetch a consistent current source commit, install/read back the full configuration, and clean up verified obsolete Root-only versions. Preserves private records and shared consumers; not an additional skill or a live-tested installer.
 - [Read-only acceptance prompt](../ACCEPTANCE-TEST-PROMPT.md): post-installation readback, a bounded local response and isolated scenarios, with no deletion or external actions and no claim of full live acceptance.
 - [Description](description.md): paste its complete contents into the Bot's description.
@@ -30,7 +30,7 @@ Proactive monitoring is supported through a specialist-owned routine after its s
 
 ## Skills
 
-Eighteen skills, listed in the order they normally run.
+Nineteen skills, listed in the order they normally run.
 
 - [intake-clarify](skills/intake-clarify.md): establish the outcome and ask only questions that change the next action.
 - [scope-guard](skills/scope-guard.md): band the request into P0, P1 and deferred, set the effort bound, and rule on proposed expansions.
@@ -50,6 +50,7 @@ Eighteen skills, listed in the order they normally run.
 - [user-report](skills/user-report.md): report one task's status, give a decision digest or effort report when asked, and close it only when every criterion has evidence.
 - [deleted-work-cleanup](skills/deleted-work-cleanup.md): close and archive deleted or cancelled work and delete its own files only after a saved file list and the user's approval in Root Agent's own chat.
 - [getting-started](skills/getting-started.md): ask one goal question if no task exists; start a clear task immediately and group only material missing inputs.
+- [secret-hygiene](skills/secret-hygiene.md): keep every credential out of URLs, commands, configs, files, logs, messages and templates in any app; check with masked output; report exposures and wait for approval before changing anything.
 
 Each skill uses the six content categories described in [Skills and routines](https://docs.x.ai/grok-bot/skills-routines-and-automations). These are readable instruction bodies; no undocumented import schema is claimed.
 
@@ -61,4 +62,4 @@ No live Bot, routine or public share link has been created by this repository wo
 
 The files in this folder are the canonical source. Root Agent uses the current platform capacity rather than a fixed Bot budget and creates necessary specialists under the user's standing authorization; group changes and consequential external actions still need their own authorization. Only Root Agent is distributed. The instruction language is English; conversation replies follow the user's language.
 
-The description belongs in Grok Bot's profile description field and the eighteen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.
+The description belongs in Grok Bot's profile description field and the nineteen skills belong in its skill library. Keep private instance data out of public configuration. The earlier ROOT-AGENT-SETUP.md helper is superseded by the desktop Share template workflow and is not a source for current instructions.

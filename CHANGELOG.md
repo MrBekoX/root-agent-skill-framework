@@ -8,6 +8,23 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
+## [0.3.8] - 2026-10-26
+
+### Added
+- `secret-hygiene` skill (19th Root skill): secrets (tokens, API keys, passwords, cookies, verification codes, card details, private keys, connection strings, secret URLs) never appear in a URL, command, config, git remote, file, log, record, prompt, message, skill, template, commit or PR, in any app or service, not only source control. Checks use presence tests, counts or masked output only; exposures are reported to the user in the same turn with a containment plan (remove, rotate or revoke, check history), and nothing is changed before approval. Removing a secret does not make it safe until it is rotated or revoked.
+
+### Changed
+- Root description: new user overlay addendum "Secrets rule" (before the approval sentence), and `secret-hygiene` added to the skill-list sentence.
+- One-line secret-hygiene references added to access-probe, lead-handoff, route-and-dispatch, standing-workspace and team-prompting (delegates carry the rule; records hold only redacted notes).
+- Skill counts in README, AGENTS/CLAUDE, INSTALL and setup docs updated to nineteen. SETUP-INSTRUCTIONS regenerated.
+- Public-template genericization check: the release content was scanned with masked output for personal data and secrets; instance-specific names, folder ids and dates were replaced with generic placeholders before commit.
+
+### Notes
+- Installed Bots that already carry a live profile need a separate, user-approved profile update to add `secret-hygiene` to their skill-list sentence; this release only changes the source template.
+
+### Repository maintenance
+- The pinned setup and acceptance prompts still point at v0.3.7; as in earlier releases they are re-pointed in a separate follow-up commit once the v0.3.8 merge commit exists.
+
 ## [0.3.7] - 2026-10-24
 
 ### Added

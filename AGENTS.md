@@ -4,7 +4,7 @@ Rules for people and AI agents changing this repository. `AGENTS.md` and `CLAUDE
 
 ## What this repository is
 
-Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile description, eighteen skills, canonical Lead and Specialist descriptions, and two validation scripts. This is a prompt and skill engineering project, not an application. The texts are pasted into Grok Bot or given to a Bot as a setup attachment. Nothing in this repository runs a live Bot.
+Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile description, nineteen skills, canonical Lead and Specialist descriptions, and two validation scripts. This is a prompt and skill engineering project, not an application. The texts are pasted into Grok Bot or given to a Bot as a setup attachment. Nothing in this repository runs a live Bot.
 
 ## The model the texts must preserve
 
@@ -20,7 +20,7 @@ Source texts for **Root Agent**, a coordinator Bot for Grok Bot: its profile des
 ```text
 root-agent-template/     Everything that goes to Grok Bot (canonical source)
   description.md         Root Agent profile description
-  skills/                Eighteen skill bodies
+  skills/                Nineteen skill bodies
   templates/             Canonical Lead and Specialist descriptions
   SETUP-INSTRUCTIONS.md  Generated; never edit by hand
   validation/            structural_check.py, generate_setup.py, acceptance.md

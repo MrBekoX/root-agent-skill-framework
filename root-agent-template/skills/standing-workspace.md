@@ -41,6 +41,8 @@ Never persist or relay credentials, verification codes or unnecessary personal d
 
 Before relying on an imported template, verify the full installed description, every required skill and the embedded role templates in the recipient's own library. Template creation is not proof of complete transfer. Runtime coordination must work without the publisher's repository, scripts, custom MCP servers, records or logins. Discover supported messaging, profile, library and workspace controls; unsupported capabilities remain blocked. Initialize the recipient's own instance and access checks without importing publisher records or approvals.
 
+Secret handling follows the secret-hygiene skill for every app and service: records, logs and workspace files hold no credential, only a redacted note of location, type, time and status.
+
 ## Validate the result
 
 Check the setup binding, nonpersonal unique slug, single writer, actual write/readback, source/check times, current versus archived status and private/public separation. Check task/revision and message references across queue, decisions, capability cards, prompts and dispatch history; unresolved mismatches remain visible. For a new copy, check that it does not inherit another copy's profile or working records. Treat unavailable storage as a stated limitation, not successful persistence.
