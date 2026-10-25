@@ -5,6 +5,7 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 ## Unreleased
 
 ### Repository maintenance
+- Pinned setup and acceptance prompts re-pointed from v0.3.7 to v0.3.8 at merge commit 60b9ea8 (tag v0.3.8 resolves to it), with a freshly computed commit-ZIP SHA-256; the skill count and list now include `secret-hygiene` (nineteen skills). The work-control body (19,784 code points / 19,798 bytes) is unchanged since v0.3.7.
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
@@ -23,7 +24,7 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 - Installed Bots that already carry a live profile need a separate, user-approved profile update to add `secret-hygiene` to their skill-list sentence; this release only changes the source template.
 
 ### Repository maintenance
-- The pinned setup and acceptance prompts still point at v0.3.7; as in earlier releases they are re-pointed in a separate follow-up commit once the v0.3.8 merge commit exists.
+- The pinned setup and acceptance prompts were re-pointed at merge commit 60b9ea8 (tag v0.3.8) in a separate follow-up commit, as in earlier releases (see Unreleased).
 
 ## [0.3.7] - 2026-10-24
 
