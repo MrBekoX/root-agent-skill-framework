@@ -6,7 +6,7 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
-**Current source version: [0.3.7](VERSION)** — 24 October 2026. The framework contains eighteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+**Current source version: [0.3.8](VERSION)** — 26 October 2026. The framework contains nineteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
 
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
 
@@ -156,7 +156,7 @@ sequenceDiagram
 
 ---
 
-## The 18 skills
+## The 19 skills
 
 | Phase | Skill | What it does |
 | --- | --- | --- |
@@ -178,6 +178,7 @@ sequenceDiagram
 | Reporting | [`user-report`](root-agent-template/skills/user-report.md) | Single-task status; decision digest and effort report; closes only when every criterion has evidence |
 | Cleanup | [`deleted-work-cleanup`](root-agent-template/skills/deleted-work-cleanup.md) | Archives cancelled or confirmed owner-deleted scope; retains shutdown safety checks; deletes only unchanged, exclusive files on the approved list |
 | Onboarding | [`getting-started`](root-agent-template/skills/getting-started.md) | One goal question when no task exists; clear work starts immediately with grouped material questions |
+| Safety | [`secret-hygiene`](root-agent-template/skills/secret-hygiene.md) | Secrets never appear in URLs, commands, configs, files, logs, messages or templates in any app; masked checks only; exposures reported with a containment plan before any change |
 
 Every skill uses the same six sections: *When to use, Required inputs and access, Sequence of work, Validate the result, What to return, What requires approval.*
 
@@ -263,11 +264,11 @@ Serialize updates by the owning instance and check the current record revision b
 ```text
 root-agent-template/            Canonical description, skill and role sources
   description.md                Root Agent profile description
-  skills/                       18 skill bodies
+  skills/                       19 skill bodies
   templates/
     lead-description.md         Canonical Lead description
     specialist-description.md   Canonical Specialist / Reviewer description
-  SETUP-INSTRUCTIONS.md         Description + 18 skills in one file (generated)
+  SETUP-INSTRUCTIONS.md         Description + 19 skills in one file (generated)
   INSTALL.md                    Setup and sharing
   SHARING-CHECKLIST.md           User checks before native template sharing
   validation/
@@ -300,7 +301,7 @@ CODE_OF_CONDUCT.md, LICENSE     Project policies
 
 1. Open the Root Agent conversation in the Grok Bot desktop app.
 2. Attach [`root-agent-template/SETUP-INSTRUCTIONS.md`](root-agent-template/SETUP-INSTRUCTIONS.md) from the composer.
-3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 18 skills and enable them for itself, then reopen the saved records to verify them.
+3. Ask the Bot to follow the file's "Authorized setup" steps: save the description exactly, save the 19 skills and enable them for itself, then reopen the saved records to verify them.
 
 For setup and sharing (**Share template**), see the [instructions](root-agent-template/INSTALL.md) and [sharing checklist](root-agent-template/SHARING-CHECKLIST.md). [Optional Lead skills](lead-template/README.md) use supported library/availability controls; cross-Bot registration is not assumed. The canonical Lead description carries required behavior without them. Updating sources does not update the existing share link; its packaged version must be checked separately. No official 6000-character limit was verified, and none is enforced locally.
 
@@ -339,13 +340,14 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
+| 0.3.8 | 26 Oct 2026 | New `secret-hygiene` skill (secrets in any app or service); Secrets rule in the Root description; secret-hygiene one-liners in five skills |
 | 0.3.7 | 24 Oct 2026 | Generic end-of-day self-improvement routine; private per-user profile folder; same-turn Bot relay rule; no Bot co-author rule; remaining non-English docs translated to English |
 | 0.3.6 | 23 Oct 2026 | Public-template genericization: reply/report language is the user's language instead of a fixed language; no user-specific dates in overlays |
 | 0.3.5 | 23 Oct 2026 | Recurring-work routine-ownership line added to the team-prompting stage brief and the optional lead-dispatch member prompt |
 | 0.3.4 | 22 Oct 2026 | Recurring-work ownership line in the lead-handoff package; README Bot-id check before every standing-workspace write; end-of-turn dispatch-log/work-queue record rule in the Root description |
 | 0.3.3 | 20 Oct 2026 | Routine scope: Root owns only routines that concern itself, never team control/audit routines; team briefing relay on completion and end-of-day self-improvement rules; aligned onboarding, getting-started, work-control, bind-routine-via-owner, AGENTS.md/CLAUDE.md |
 | 0.3.2 | 19 Oct 2026 | Reconciled onboarding, tiers, bootstrap, review routing, delivery keys, stop/shutdown, privacy and routine boundaries; sharing checklist, C63–C82, local tool regressions, GitHub setup/read-only acceptance prompts and desktop menu compatibility |
-| 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names all 18 skills, README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
+| 0.3.1 | 18 Oct 2026 | Text-drift fixes: the description names every skill (eighteen at that release), README and guides updated, C10 aligned with flexible sizing, scenarios C55–C62 added, more validator checks. No skill behavior change |
 | 0.3.0 | 18 Oct 2026 | Measured performance card, decision digest, effort report of measured counts, read-only connector health scan, `getting-started` added as the 18th skill |
 | 0.2.1 | 17 Oct 2026 | Removed leftover "smallest" sizing wording; cleanup creates the queue's `## Archive` section and asks the user to delete Bots, then rereads the roster |
 | 0.2.0 | 17 Oct 2026 | Flexible team sizing with no fixed headcount, User overlay, `checkpoint-due` (default 7 days) and `stalled?`, verbatim-quoted readbacks, mandatory dispatch evidence, new `deleted-work-cleanup` skill |
@@ -355,7 +357,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 166, FAIL 0 (version 0.3.7). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Source texts are consistent:** `structural_check.py` → PASS 169, FAIL 0 (version 0.3.8). The count grows as checks are added; the script itself fails if this line falls out of date.
 - **Local tools are regression-tested:** twenty synthetic-fixture tests passed for the current validation tools. These exercise local tooling and do not establish live Bot behavior.
 - **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 - **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structural checks against shipped Root Agent source texts (not live Grok Bot).
 
-Reads description.md, SETUP-INSTRUCTIONS.md, the eighteen skills, the canonical
+Reads description.md, SETUP-INSTRUCTIONS.md, the nineteen skills, the canonical
 Lead and specialist descriptions, the repository docs (skill lists, counts, links,
 VERSION/CHANGELOG) and the behavioral case table. Does not call Grok Bot and does
 not simulate the C-numbered behavioral cases.
@@ -46,6 +46,7 @@ SKILLS = [
     "user-report",
     "deleted-work-cleanup",
     "getting-started",
+    "secret-hygiene",
 ]
 RESOLUTION_FIRST = "Recipient resolution (identical text in route-and-dispatch and lead-handoff)"
 RESOLUTION_LAST = "Never send the same work unit through both."
