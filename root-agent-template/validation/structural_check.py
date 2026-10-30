@@ -713,13 +713,15 @@ def main() -> int:
     # Static guardrails: phrase presence only, not execution of a Bot workflow.
     _contracts = {
         "skills/getting-started.md": ("start intake-clarify immediately", "existing standing authority"),
-        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required"),
+        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required", "20. Queue freshness"),
         "skills/lead-handoff.md": ("one delivery key", "current task, stage, scope and package revision"),
         "skills/deleted-work-cleanup.md": ("Immediately before deletion", "unchanged listed files"),
         "skills/standing-workspace.md": ("Evidence privacy and portability", "Serialize updates"),
         "templates/lead-description.md": ("never to you as a coordinating Lead", "An exact duplicate package"),
         "templates/specialist-description.md": ("Root Agent is the assigning coordinator", "A required unverified check prevents pass"),
-        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled"),
+        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled", "11. Pending user decisions"),
+        "skills/result-relay.md": ("5a. Inbound log",),
+        "skills/blocker-escalation.md": ("11. Missing briefings",),
     }
     for _rel, _phrases in _contracts.items():
         _text = (ROOT / _rel).read_text(encoding="utf-8")
