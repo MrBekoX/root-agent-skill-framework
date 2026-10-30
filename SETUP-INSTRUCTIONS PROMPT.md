@@ -8,9 +8,9 @@ This is my one-time installation request, not a permanent description or a new s
 
 - Repository: https://github.com/MrBekoX/root-agent-skill-framework
 - Source branch: `main`. Resolve its current full commit SHA once at the beginning; use that exact commit for every source file in this run.
-- Read the target version from `VERSION` at that commit. The source version when this prompt was prepared was **0.3.8**; do not install an older version. A newer version must be read and validated from the same resolved commit, not mixed with cached bodies.
+- Read the target version from `VERSION` at that commit. The source version when this prompt was prepared was **0.3.9**; do not install an older version. A newer version must be read and validated from the same resolved commit, not mixed with cached bodies.
 - Compare the target with any verified installed version/commit. An older target or inconsistent version evidence blocks a silent downgrade; report the mismatch instead of falling back to an old release.
-- Required payload: `root-agent-template/description.md` and every Root skill registered in `root-agent-template/validation/structural_check.py` and present in `root-agent-template/skills/`. Derive the actual names/count from those sources; do not guess them from memory. Version 0.3.8 contains nineteen Root skills.
+- Required payload: `root-agent-template/description.md` and every Root skill registered in `root-agent-template/validation/structural_check.py` and present in `root-agent-template/skills/`. Derive the actual names/count from those sources; do not guess them from memory. Version 0.3.9 contains nineteen Root skills.
 - `root-agent-template/SETUP-INSTRUCTIONS.md` is the generated description-and-skills attachment. Its complete fenced bodies must match the individual canonical sources. Preserve both role descriptions embedded in roster-management and the identical recipient-resolution blocks.
 - Read `root-agent-template/INSTALL.md` for setup context. Optional `lead-template/` skills are for Leads; do not install them on Root or create Leads merely to install this framework.
 
