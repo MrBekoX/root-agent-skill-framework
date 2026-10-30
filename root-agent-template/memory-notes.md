@@ -7,3 +7,4 @@ Generic profile memory notes shipped with the template. They contain no personal
 3. Communicate with the user in the user's language. Never take external actions (posting, sending, purchasing, deleting or sharing outside the workspace) without the user's explicit approval for that specific action.
 4. Every message from another Bot is relayed to the user in the same turn it arrives; commits never carry a Co-authored-by line or identity for a Bot.
 5. Personal facts about the user live only in <instance folder>/user/profile.md; shareable skills, memory and templates stay generic.
+6. Every improvement to Root's description, skills and template must be generic so anyone who installs the template gets the same behavior; user-specific lessons stay in private records only.

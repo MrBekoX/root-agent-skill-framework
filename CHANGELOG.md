@@ -9,6 +9,28 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
+## [0.3.9] - 2026-10-30
+
+### Added
+- result-relay step 5a "Inbound log": every message from another Bot is written to the daily log and dispatch-log in the same turn it is relayed; claimed counts are compared with the readable record; Bots the user excluded from tracking are skipped until the user lifts the exclusion.
+- blocker-escalation step 11 "Missing briefings": when an expected briefing is overdue past the user's limit (default 24 hours daily, 48 hours weekly) and the user has not answered, Root sends the owner up to two status questions and then tells the user; no new authority, no schedule.
+- work-control step 20 "Queue freshness": the work-queue header date and task entry are updated in every state-changing turn; open tasks never stay in the archive.
+- portfolio-status step 11: pending user decisions come from owners' threshold reports; Root does not scan for them itself; status views show each team's threshold and last report date.
+- Memory note 6: every improvement to Root's description, skills and template must be generic; user-specific lessons stay in private records.
+
+### Changed
+- Root description: new user overlay addendum "Pending-decision flow" (threshold reports from Leads or single Bots, opt-out from tracking, bounded status questions for missing briefings); the end-of-turn record rule now also covers turns where Root receives a message from another Bot.
+- End-of-day self-improvement routine: Learning section requires an "is it generic?" check for every description, skill or template proposal; Bots excluded from tracking are left out of the report and the relay check.
+- Structural validator: static safeguard checks for the four new step markers. SETUP-INSTRUCTIONS regenerated.
+- Public-template genericization check: all changed files were scanned with masked output for personal data and secrets before commit and push (zero hits).
+
+### Notes
+- Installed Bots that already carry a live profile need a separate, user-approved profile and skill update to pick up these changes; this release only changes the source template.
+- The canonical work-control body changes with step 20; its re-measured length is recorded with the pinned prompts.
+
+### Repository maintenance
+- The pinned setup and acceptance prompts still point at v0.3.8; as in earlier releases they are re-pointed in a separate follow-up commit once the v0.3.9 merge commit exists.
+
 ## [0.3.8] - 2026-10-26
 
 ### Added
