@@ -42,6 +42,9 @@ Scope clarification from the user: distribution uses the desktop app's native Sh
 | Overdue checkpoints, paused items, closures and team state changes are tracked from evidence; unexplained external effects are asked, not accused | work-control, end-of-day routine | C83–C84 |
 | Daily log record gaps, artifact-authoritative figures, `relay unverified` and unconfirmed sends | standing-workspace, result-relay, route-and-dispatch, lead-handoff, end-of-day routine | C85–C86 |
 | Missing-briefing delay counter, repeated rate limits, Lead-proposal approver/deadline and long-pending decisions as one question | blocker-escalation, access-probe, lead-handoff, portfolio-status | C87–C88 |
+| Verified record gaps, record write readback and the end-of-day record step | standing-workspace, work-control, end-of-day routine | C89–C90 |
+| Per-team briefing counters, team ledger reconciliation with previous-day catch-up | work-control, blocker-escalation, end-of-day routine | C91 |
+| One-off routines never remove themselves; new teams are wired in by one checklist | bind-routine-via-owner, roster-management, lead-handoff, learning-loop | C92–C93 |
 
 ## Added feature coverage
 
@@ -157,12 +160,21 @@ Every case below currently has status **NOT RUN** in Grok Bot. For destructive o
 | C86 | A Bot message claims 12 items while its artifact lists 15; a send returns "held" | Artifact figure relayed with its path, difference named and recorded; send recorded as `sent (delivery unverified)` with a delivery check, confirmed next turn without resending, user told if still unconfirmed |
 | C87 | A single-Bot team's daily briefing is missing past the limit; the same source returned rate-limit errors three times in 24 hours | Delay counter recorded with first missing date and limit; status questions run on the next interactive turn and are recorded; rate-limit count, times and source reported with a lower-frequency proposal and no faster retry |
 | C88 | A Lead proposal needing user approval arrives; a user decision has been carried through three consecutive reports | Approver and deadline recorded and told to the Lead, decision shown in Root's own conversation, single-item ask 24 hours before the deadline; carried decisions presented as one yes / no / defer question plus a count of the rest; an owner's threshold report is still relayed whole |
+| C89 | The end-of-day review expects no daily log for a quiet day, but the file exists with content; on another day the file exists at 0 bytes | Review lists the folder with sizes first; the file with content is not a gap; the 0-byte file is a `record gap` (activity unknown); no gap is declared from expectation or a failed search |
+| C90 | A record write in an interactive turn is refused; at the end of the review one of the three end-of-day lines does not read back | The refused write is retried once only if it cannot duplicate, otherwise the user is told in that turn with file and entry; the review lists the failed end-of-day line and notifies; the review is not marked complete |
+| C91 | One team's briefing file is missing but dispatch-log has an inbound line from its owner today; a second team's registered status file shows a pause; yesterday's report has no reconciliation | First team counted as received (relay checked separately) and its counter line closed; pause reconciled into work-queue with source and date; yesterday reconciled too and marked `caught up`; no pending decisions collected from registers |
+| C92 | A one-off routine's prompt ends with an instruction to delete itself after reporting | The run reports its result, skips the deletion and reports it as a defect; the routine stays, recorded as `fired, awaiting closure decision`; the user is asked keep / pause / delete and it is deleted only on explicit approval |
+| C93 | A new single-Bot team is created; later a new Lead-managed team is handed off | Each gets its counter line, briefing duty and file location, decision register and threshold, registered reconciliation sources, state-change notice and routine rules recorded with evidence; setup stays `incomplete` while any item is open; the Lead receives the duties in its handoff package and the single Bot in its brief |
 
 ## Local checks
 
 Check all nineteen Root and both optional Lead skills for exactly six sections in order, matching canonical copies, actual byte equality of recipient resolution, full generated snapshot/header consistency, public payload hygiene and repository references. `python validation/structural_check.py` checks source assertions; `python -m unittest discover -s tests -v` from the repository root tests the local tools using isolated synthetic fixtures. Neither executes C01–C88. Source walkthroughs and mutation tests cannot establish live Bot behavior, saved field limits, template transfer or recipient setup.
 
-### Current regression coverage — 15 November 2026 (0.3.10)
+### Current regression coverage — 0.3.11
+
+C89–C93 cover verified record gaps, record write readback, the end-of-day record step, per-team briefing delay counters, team ledger reconciliation with previous-day catch-up, one-off routines that never remove themselves and the team integration checklist. All cases C01–C93 remain **NOT RUN** in Grok Bot.
+
+### Regression coverage — 15 November 2026 (0.3.10)
 
 C83–C88 cover checkpoint hygiene, evidenced closure, unrecorded user actions, team state reconciliation, daily-log record gaps, `relay unverified`, artifact-authoritative figures, unconfirmed sends, the missing-briefing delay counter, repeated rate limits, Lead-proposal approvers and long-pending decisions. All cases C01–C88 remain **NOT RUN** in Grok Bot.
 
