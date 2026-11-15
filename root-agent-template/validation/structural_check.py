@@ -713,15 +713,18 @@ def main() -> int:
     # Static guardrails: phrase presence only, not execution of a Bot workflow.
     _contracts = {
         "skills/getting-started.md": ("start intake-clarify immediately", "existing standing authority"),
-        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required", "20. Queue freshness"),
-        "skills/lead-handoff.md": ("one delivery key", "current task, stage, scope and package revision"),
+        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required", "20. Queue freshness", "21. Checkpoint hygiene", "22. Evidenced closure", "23. Unrecorded user actions", "24. State reconciliation"),
+        "skills/lead-handoff.md": ("one delivery key", "current task, stage, scope and package revision", "follows route-and-dispatch step 11", "record who approves it"),
         "skills/deleted-work-cleanup.md": ("Immediately before deletion", "unchanged listed files"),
-        "skills/standing-workspace.md": ("Evidence privacy and portability", "Serialize updates"),
+        "skills/standing-workspace.md": ("Evidence privacy and portability", "Serialize updates", "`record gap`"),
         "templates/lead-description.md": ("never to you as a coordinating Lead", "An exact duplicate package"),
         "templates/specialist-description.md": ("Root Agent is the assigning coordinator", "A required unverified check prevents pass"),
-        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled", "11. Pending user decisions"),
-        "skills/result-relay.md": ("5a. Inbound log",),
-        "skills/blocker-escalation.md": ("11. Missing briefings",),
+        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled", "11. Pending user decisions", "12. Long-pending decisions"),
+        "skills/result-relay.md": ("5a. Inbound log", "`relay unverified`", "the artifact is authoritative"),
+        "skills/blocker-escalation.md": ("11. Missing briefings", "12. Briefing delay counter"),
+        "skills/access-probe.md": ("11. Repeated rate limits",),
+        "skills/route-and-dispatch.md": ("`sent (delivery unverified)`",),
+        "routines/root-end-of-day-self-improvement.md": ("file audit only", "relay unverified", "record gap"),
     }
     for _rel, _phrases in _contracts.items():
         _text = (ROOT / _rel).read_text(encoding="utf-8")
