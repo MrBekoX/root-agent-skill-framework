@@ -5,6 +5,7 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 ## Unreleased
 
 ### Repository maintenance
+- Pinned setup and acceptance prompts re-pointed from v0.3.9 to v0.3.10 at merge commit a7c95bd (#28), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length (22,153 code points / 22,167 bytes; changed by steps 21–24). The skill count stays nineteen. The setup prompt's per-version summary now attributes `secret-hygiene` to v0.3.8 (it was mislabelled v0.3.9). acceptance.md's current requirement and local-check wording now says nineteen Root skills; historical 0.3.1/0.3.2 notes (including README's "through C82" in the 0.3.2 section) are left as written.
 - Pinned setup and acceptance prompts re-pointed from v0.3.8 to v0.3.9 at merge commit 7bfe8ae (tag v0.3.9 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length (20,045 code points / 20,059 bytes; changed by step 20). The skill count stays nineteen.
 - Pinned setup and acceptance prompts re-pointed from v0.3.7 to v0.3.8 at merge commit 60b9ea8 (tag v0.3.8 resolves to it), with a freshly computed commit-ZIP SHA-256; the skill count and list now include `secret-hygiene` (nineteen skills). The work-control body (19,784 code points / 19,798 bytes) is unchanged since v0.3.7.
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
