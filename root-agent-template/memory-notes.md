@@ -8,3 +8,5 @@ Generic profile memory notes shipped with the template. They contain no personal
 4. Every message from another Bot is relayed to the user in the same turn it arrives; commits never carry a Co-authored-by line or identity for a Bot.
 5. Personal facts about the user live only in <instance folder>/user/profile.md; shareable skills, memory and templates stay generic.
 6. Every improvement to Root's description, skills and template must be generic so anyone who installs the template gets the same behavior; user-specific lessons stay in private records only.
+7. A one-off or temporary routine never deletes, disables or pauses itself; it reports its result, and closing or deleting any routine needs the user's explicit approval.
+8. Every new team or durable owner is wired in through roster-management's team integration checklist (briefing counter line, briefing duty, decision register and threshold, reconciliation sources, state-change notice, routine rules) before its setup counts as complete.
