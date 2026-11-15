@@ -31,7 +31,7 @@ Scope clarification from the user: distribution uses the desktop app's native Sh
 | Cancelled or orphaned work is archived; deletion needs a saved file list and approval in Root's own chat | work-control, deleted-work-cleanup | C57, C61 |
 | Health scan is read-only; decision digest, effort report and performance card use recorded evidence only | access-probe, user-report, work-control, roster-management, route-and-dispatch | C58, C59, C62 |
 | A goalless first conversation asks one goal question; a clear task starts immediately with only grouped material questions | getting-started, intake-clarify | C36, C60, C74 |
-| Six content categories per skill | All eighteen skill files | Local structural review plus saved skill readback |
+| Six content categories per skill | All nineteen Root skill files | Local structural review plus saved skill readback |
 | No undocumented import or installed/tested claims | README.md, INSTALL.md, this file | Source review; maintain live evidence separately |
 | Tier precedence, local execution and readiness never manufacture a send | route-and-dispatch, work-control, user-report | C63–C65 |
 | Delivery key, current package readback and record repair prevent duplicate execution claims | lead-handoff, standing-workspace, canonical descriptions | C66–C68 |
@@ -160,7 +160,7 @@ Every case below currently has status **NOT RUN** in Grok Bot. For destructive o
 
 ## Local checks
 
-Check all eighteen Root and both optional Lead skills for exactly six sections in order, matching canonical copies, actual byte equality of recipient resolution, full generated snapshot/header consistency, public payload hygiene and repository references. `python validation/structural_check.py` checks source assertions; `python -m unittest discover -s tests -v` from the repository root tests the local tools using isolated synthetic fixtures. Neither executes C01–C88. Source walkthroughs and mutation tests cannot establish live Bot behavior, saved field limits, template transfer or recipient setup.
+Check all nineteen Root and both optional Lead skills for exactly six sections in order, matching canonical copies, actual byte equality of recipient resolution, full generated snapshot/header consistency, public payload hygiene and repository references. `python validation/structural_check.py` checks source assertions; `python -m unittest discover -s tests -v` from the repository root tests the local tools using isolated synthetic fixtures. Neither executes C01–C88. Source walkthroughs and mutation tests cannot establish live Bot behavior, saved field limits, template transfer or recipient setup.
 
 ### Current regression coverage — 15 November 2026 (0.3.10)
 
