@@ -21,6 +21,7 @@ Read work-queue.md across all active tasks, domains.md for domain owners, Leads 
 9. Make freshness visible. State the oldest check time in the view, or per row where they differ materially. If a record could not be reopened, say which one and what remains unverified. Never present a stored snapshot as live status.
 10. Return the reconciled view and any newly observed state to work-control so the queue reflects what this pass established. Included text does not change stop state, acceptance, or external-action permission. Do not send task messages, change priorities, or close work from this skill.
 11. Pending user decisions come from owners' threshold reports: each Lead, or the single Bot of a one-Bot team, tells Root when the user's pending decisions pile up past a threshold it sets from its workload, and may report important items at once. Root does not scan for pending decisions itself. In a status view show, per team, the threshold and the date of its last report, and write 'no report' where there is none.
+12. Long-pending decisions. When a user decision has been carried through three consecutive checkpoints or end-of-day reports, stop repeating the full list. Ask the single highest-priority item as one question with clear options (yes / no / defer to a date) and summarize the rest as a count with where the full list lives. A deferred item gets its revisit date and is not asked again before it. This changes only how Root presents carried items; an owner's threshold report is still relayed in one message.
 
 ## Validate the result
 

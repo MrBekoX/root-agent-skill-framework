@@ -39,6 +39,9 @@ Scope clarification from the user: distribution uses the desktop app's native Sh
 | Lead-first bootstrap works without optional skills; all independent review is Root-managed | roster-management, templates, quality-review | C74–C75 |
 | Routine run/report evidence, unknown connector inventory and concurrent record recovery | bind-routine-via-owner, access-probe, standing-workspace | C76–C78 |
 | Evidence minimization, template readback, fallback delivery and defined metric populations | standing-workspace, result-relay, roster-management | C79–C82 |
+| Overdue checkpoints, paused items, closures and team state changes are tracked from evidence; unexplained external effects are asked, not accused | work-control, end-of-day routine | C83–C84 |
+| Daily log record gaps, artifact-authoritative figures, `relay unverified` and unconfirmed sends | standing-workspace, result-relay, route-and-dispatch, lead-handoff, end-of-day routine | C85–C86 |
+| Missing-briefing delay counter, repeated rate limits, Lead-proposal approver/deadline and long-pending decisions as one question | blocker-escalation, access-probe, lead-handoff, portfolio-status | C87–C88 |
 
 ## Added feature coverage
 
@@ -148,12 +151,22 @@ Every case below currently has status **NOT RUN** in Grok Bot. For destructive o
 | C80 | Template omits a skill, truncates a body or lacks required messaging/connection capability | Full installed configuration and availability checked; affected execution stays gated, recipient initializes its own instance/access, no publisher script/MCP assumed, no numerical limit invented |
 | C81 | Attachment creation fails or owner's path is not user-accessible | Verify an accessible artifact or deliver attributed content inline with stated limitation; preserve identifiers and review gate, redact sensitive spans without re-authoring content |
 | C82 | Logs contain transport resends, revised outputs, one repeated stall and blocked reviews | Unique deliveries/stall episodes counted once; median uses complete timestamp pairs with sample count/units; first-pass rate gives conclusive numerator/denominator, zero denominator is not applicable and missing timing is not logged |
+| C83 | End-of-day review finds an open record past its `checkpoint-due` with no newer evidence, a paused default without a date, and an owner who reports "done" without an artifact | Overdue record marked `stalled?` with owner and proposed date in that pass; paused item gets new `checkpoint-due` and owner in the same turn; closure recorded as `closed by owner statement (unverified)` with a follow-up date |
+| C84 | Records check finds a post nobody recorded; a team's own record shows a restart that Root's queue still lists as stopped | One short question asks the user whether they did it, answer recorded with source, not reported as a violation meanwhile; queue updated from the team record with source and date and mentioned once; no pending-decision scan, excluded Bots not read |
+| C85 | Day's daily log is missing; an unattended review cannot read the conversation; a Bot message has no relay line | Review reports `record gap` (not 'no activity') and marks the message `relay unverified` (not `not relayed`); next interactive turn backfills marked lines and confirms or corrects the relay record |
+| C86 | A Bot message claims 12 items while its artifact lists 15; a send returns "held" | Artifact figure relayed with its path, difference named and recorded; send recorded as `sent (delivery unverified)` with a delivery check, confirmed next turn without resending, user told if still unconfirmed |
+| C87 | A single-Bot team's daily briefing is missing past the limit; the same source returned rate-limit errors three times in 24 hours | Delay counter recorded with first missing date and limit; status questions run on the next interactive turn and are recorded; rate-limit count, times and source reported with a lower-frequency proposal and no faster retry |
+| C88 | A Lead proposal needing user approval arrives; a user decision has been carried through three consecutive reports | Approver and deadline recorded and told to the Lead, decision shown in Root's own conversation, single-item ask 24 hours before the deadline; carried decisions presented as one yes / no / defer question plus a count of the rest; an owner's threshold report is still relayed whole |
 
 ## Local checks
 
-Check all eighteen Root and both optional Lead skills for exactly six sections in order, matching canonical copies, actual byte equality of recipient resolution, full generated snapshot/header consistency, public payload hygiene and repository references. `python validation/structural_check.py` checks source assertions; `python -m unittest discover -s tests -v` from the repository root tests the local tools using isolated synthetic fixtures. Neither executes C01–C82. Source walkthroughs and mutation tests cannot establish live Bot behavior, saved field limits, template transfer or recipient setup.
+Check all eighteen Root and both optional Lead skills for exactly six sections in order, matching canonical copies, actual byte equality of recipient resolution, full generated snapshot/header consistency, public payload hygiene and repository references. `python validation/structural_check.py` checks source assertions; `python -m unittest discover -s tests -v` from the repository root tests the local tools using isolated synthetic fixtures. Neither executes C01–C88. Source walkthroughs and mutation tests cannot establish live Bot behavior, saved field limits, template transfer or recipient setup.
 
-### Current regression coverage — 18 October 2026 (0.3.2)
+### Current regression coverage — 15 November 2026 (0.3.10)
+
+C83–C88 cover checkpoint hygiene, evidenced closure, unrecorded user actions, team state reconciliation, daily-log record gaps, `relay unverified`, artifact-authoritative figures, unconfirmed sends, the missing-briefing delay counter, repeated rate limits, Lead-proposal approvers and long-pending decisions. All cases C01–C88 remain **NOT RUN** in Grok Bot.
+
+### Regression coverage — 18 October 2026 (0.3.2)
 
 C63–C82 cover tier precedence, local/unsent work, delivery correlation and idempotence, administrative closure versus shutdown, cleanup scope, bootstrap without optional skills, review coordination, routine reporting, connector uncertainty, record concurrency, evidence privacy, template portability, fallback delivery and metric populations. All cases C01–C82 remain **NOT RUN** in Grok Bot. Earlier source-review notes below describe their historical versions, not the current configuration or a live result.
 
