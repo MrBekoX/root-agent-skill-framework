@@ -713,18 +713,21 @@ def main() -> int:
     # Static guardrails: phrase presence only, not execution of a Bot workflow.
     _contracts = {
         "skills/getting-started.md": ("start intake-clarify immediately", "existing standing authority"),
-        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required", "20. Queue freshness", "21. Checkpoint hygiene", "22. Evidenced closure", "23. Unrecorded user actions", "24. State reconciliation"),
+        "skills/work-control.md": ("explicit exceptions to steps 14–19", "separate shutdown record", "delivery: not-required", "20. Queue freshness", "21. Checkpoint hygiene", "22. Evidenced closure", "23. Unrecorded user actions", "24. State reconciliation", "25. Briefing delay counters", "26. Team ledger reconciliation", "27. End-of-day record step"),
         "skills/lead-handoff.md": ("one delivery key", "current task, stage, scope and package revision", "follows route-and-dispatch step 11", "record who approves it"),
         "skills/deleted-work-cleanup.md": ("Immediately before deletion", "unchanged listed files"),
-        "skills/standing-workspace.md": ("Evidence privacy and portability", "Serialize updates", "`record gap`"),
+        "skills/standing-workspace.md": ("Evidence privacy and portability", "Serialize updates", "`record gap`", "zero bytes", "12. Record write and readback"),
         "templates/lead-description.md": ("never to you as a coordinating Lead", "An exact duplicate package"),
         "templates/specialist-description.md": ("Root Agent is the assigning coordinator", "A required unverified check prevents pass"),
-        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled", "11. Pending user decisions", "12. Long-pending decisions"),
+        "skills/portfolio-status.md": ("unknown, `stalled?`", "Archived/completed/cancelled", "11. Pending user decisions", "12. Long-pending decisions", "13. Decision cards, defaults and aging", "14. User-only tasks and weekly cleanup"),
         "skills/result-relay.md": ("5a. Inbound log", "`relay unverified`", "the artifact is authoritative"),
-        "skills/blocker-escalation.md": ("11. Missing briefings", "12. Briefing delay counter"),
+        "skills/blocker-escalation.md": ("11. Missing briefings", "12. Briefing delay counter", "work-control step 25"),
+        "skills/bind-routine-via-owner.md": ("16. One-off and temporary routines", "fired, awaiting closure decision"),
+        "skills/roster-management.md": ("11. Team integration checklist",),
+        "skills/learning-loop.md": ("9. Before a release", "team integration checklist"),
         "skills/access-probe.md": ("11. Repeated rate limits",),
         "skills/route-and-dispatch.md": ("`sent (delivery unverified)`",),
-        "routines/root-end-of-day-self-improvement.md": ("file audit only", "relay unverified", "record gap"),
+        "routines/root-end-of-day-self-improvement.md": ("file audit only", "relay unverified", "record gap", "0 bytes", "Record step (mandatory, last)", "never deletes, disables or pauses itself", "not integrated"),
     }
     for _rel, _phrases in _contracts.items():
         _text = (ROOT / _rel).read_text(encoding="utf-8")

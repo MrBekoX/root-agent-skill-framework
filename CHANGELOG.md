@@ -11,6 +11,44 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
+## [0.3.11] - 2026-11-15
+
+Generic safeguards so that every current and future team is wired into Root's records the same way. Every added line was written without personal names or handles, Bot or team names, language or time-zone specifics, instance paths or IDs.
+
+### Added
+- standing-workspace step 12 "Record write and readback": every durable record write is read back in the same turn; a failed, refused or mismatched write is retried once only when that cannot duplicate an entry, otherwise the user is told with file and entry; a turn never closes on an unread-back write.
+- work-control step 25 "Briefing delay counters": one counter line per active team (Lead-managed or single-Bot) in work-queue.md; a briefing counts as received when the team's registered briefing file exists or dispatch-log has an inbound line from its owner in the period; closed, paused or excluded teams keep a marked line that is never counted or deleted; new teams get their line at setup.
+- work-control step 26 "Team ledger reconciliation": each team registers its reconciliation sources (status file, decision register, approval-match record for an external channel) in domains.md; the end-of-day review reads only those, reconciles state changes, closures and recorded publishes, and catches up a missed previous day; reading a registered source is not collecting the team's pending decisions.
+- work-control step 27 "End-of-day record step": the review ends by writing and reading back one end-of-day line in dispatch-log, work-queue and the daily log; a failed write is a reason to notify.
+- bind-routine-via-owner step 16 "One-off and temporary routines": no routine, Root's own included, deletes, disables or pauses itself or another routine as part of its run; a fired one-off stays, is recorded as `fired, awaiting closure decision`, and is deleted only on the user's explicit approval.
+- roster-management step 11 "Team integration checklist": briefing counter line, briefing duty and file location, decision register and threshold, registered reconciliation sources, state-change notice and routine rules are recorded with evidence for every new team or durable owner, and once for existing teams; an open item keeps setup `incomplete`.
+- learning-loop step 10: a correction about how one team or routine was wired in is checked against the team integration checklist so current and future teams receive it.
+- Memory notes 7 and 8 for the routine-lifetime rule and the team integration checklist.
+
+### Carried over from installed, user-approved generic fixes
+- work-control step 20 (edit entries in place; no dated blocks below the archive heading), step 21 (a pending user decision's new date is offered to the user), step 23 (team-owned approval-match record for external channels).
+- standing-workspace record `decisions-pending.md` for Root's own pending decisions and a 'your tasks' section.
+- portfolio-status step 12 (improvement proposals as one package, closed items dropped, no self-renewed due dates), step 13 "Decision cards, defaults and aging" and step 14 "User-only tasks and weekly cleanup" (wording now allows reconciliation of registered sources under work-control step 26).
+- result-relay step 5a: every inbound dispatch-log line ends with a relay field (`relayed: yes`, `relayed: no` with reason, or `relay pending`).
+- lead-handoff step 4 package: decision register duties, a same-turn state-change notice, and the new integration duties line.
+- learning-loop step 9: compare installed text with approved text before a release; tag releases like the previous one.
+
+### Changed
+- Root description: the end-of-turn record rule also covers the day's daily log and reads each write back, reporting a failed write in that turn; one sentence on routine lifetime (no self-removal; closure needs the user's approval); one sentence wiring every new team or durable owner in through the team integration checklist. User overlay text is unchanged.
+- blocker-escalation step 12: the delay counter is the team's line under work-control step 25 and closes when a briefing is received.
+- standing-workspace daily-log record: a `record gap` is declared only after a listing with sizes shows the file missing or at zero bytes.
+- End-of-day self-improvement routine: team-agnostic inputs from the counter lines and registered sources; size-checked record-gap test; team ledger reconciliation with previous-day catch-up; date-bounded compliance checks where a failing command is 'not verified'; 'not integrated' report for a team missing its checklist items; Root's decision-register sections; a mandatory final record step with readback; the routine never deletes, disables or pauses itself or another routine.
+- Structural validator: static safeguard markers for the new and carried-over steps. SETUP-INSTRUCTIONS regenerated.
+- Acceptance definitions: behavioral cases C89–C93 (NOT RUN).
+
+### Notes
+- Installed Bots need a separate, user-approved skill, routine and profile update to pick these changes up; this release changes only the source template. Existing teams are wired in once through the checklist after installation.
+- New text alone does not prove changed behavior; live cases stay NOT RUN.
+- The canonical work-control body changes with steps 20, 21, 23 and 25–27; its re-measured length is recorded with the pinned prompts in the follow-up commit.
+
+### Repository maintenance
+- The pinned setup and acceptance prompts still point at v0.3.10; they are re-pointed in a separate follow-up commit once the v0.3.11 merge commit exists.
+
 ## [0.3.10] - 2026-11-15
 
 ### Added
