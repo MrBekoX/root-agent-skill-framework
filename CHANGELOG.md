@@ -10,6 +10,35 @@ Versions follow [Semantic Versioning](https://semver.org/). The current version 
 - Pinned setup and acceptance prompts re-pointed from v0.3.6 to v0.3.7 at merge commit 1395e9a (tag v0.3.7 resolves to it), with a freshly computed commit-ZIP SHA-256 and the re-measured work-control length.
 - Pinned setup and acceptance prompts re-pointed from v0.3.3 (f8266ee) to v0.3.6 at merge commit 1256636 (tag v0.3.6 resolves to it), with a freshly computed commit-ZIP SHA-256. The prompts forbid the installing Bot from bumping VERSION or moving tags, so the pin is updated here in a separate post-release commit that names an already-existing commit, as in #15. v0.3.4 and v0.3.5 are not used as pin targets because v0.3.6 supersedes them; the work-control body (19,797 code points / 19,813 bytes) is unchanged since v0.3.3.
 
+## [0.3.10] - 2026-11-15
+
+### Added
+- work-control step 21 "Checkpoint hygiene": step 14's overdue-checkpoint check also runs inside Root's own end-of-day review (or on the next day's first turn where no review exists); overdue open records are marked `stalled?` with owner and proposed new date; a paused, stopped, deferred or superseded item gets a new `checkpoint-due` and owner in the same turn.
+- work-control step 22 "Evidenced closure": a task or stage closes only with the owner's statement plus a verifiable evidence reference; otherwise it is `closed by owner statement (unverified)` with a follow-up date.
+- work-control step 23 "Unrecorded user actions": an external effect that no record or approval explains is first asked of the user as one short question, not reported as unapproved.
+- work-control step 24 "State reconciliation": stop, restart, pause and rule-change entries in active teams' own records are reconciled with work-queue.md and domains.md at end of day; no scanning for pending decisions and no reading of Bots excluded from tracking.
+- blocker-escalation step 12 "Briefing delay counter": a missing briefing starts a recorded delay counter; once the limit passes, step 11's status questions run on the next interactive turn, for single-Bot and Lead-managed teams alike.
+- access-probe step 11 "Repeated rate limits": two or more rate-limit errors from the same source within 24 hours are reported with count, times and source, plus a proposal to lower frequency; no faster retries.
+- portfolio-status step 12 "Long-pending decisions": a decision carried through three consecutive checkpoints or reports is asked as one highest-priority question (yes / no / defer to a date) and the rest are summarized as a count.
+
+### Changed
+- standing-workspace: the `daily-log/<date>.md` record entry now defines one file per local day written in the same turn as dispatch-log and work-queue; an empty or missing log is a `record gap` (activity unknown), backfilled on the next day's first turn and marked as backfilled or `unverified`.
+- result-relay step 5a: relayed counts and figures come from the owner's artifact with its path, and the artifact is authoritative when a Bot's claim differs; a message that cannot be relayed in its turn gets a `not relayed` line; a check that cannot read the conversation marks unlogged messages `relay unverified`, never `not relayed`.
+- route-and-dispatch step 11 and lead-handoff step 5: a held, queued, deferred or otherwise uncertain send result is `sent (delivery unverified)` until confirmed on the next turn; no resend for a cleaner receipt.
+- lead-handoff step 9: when a Lead proposal arrives, Root records who approves it (the user, or Root within delegated authority) and a decision deadline and tells the Lead; a user-owned decision is shown in Root's own conversation.
+- End-of-day self-improvement routine: now a file audit only (it does not read the conversation); relay verification is completed by Root on its next interactive turn; unmatched Bot messages are `relay unverified`, never `not relayed`; an empty or missing daily log is a `record gap`; sections 1–5 reference work-control 21/23/24, portfolio-status 12, blocker-escalation 12 and result-relay 5a; `relay unverified` lines alone do not trigger a notification.
+- Structural validator: static safeguard checks for the new step markers and the routine's file-audit mode. SETUP-INSTRUCTIONS regenerated.
+- Acceptance definitions: behavioral cases C83–C88 for the new behavior (NOT RUN).
+- Public-template genericization check: all added text was scanned for personal names, Bot or team names, language or time-zone specifics, instance paths or IDs, and secrets with masked output before commit (zero hits in added lines).
+
+### Notes
+- The Root description is unchanged. Installed Bots need a separate, user-approved skill and routine update to pick up these changes; this release only changes the source template.
+- Several of these rules extend existing ones (work-control 14, result-relay 5/5a, blocker-escalation 11) that were not consistently applied; new text alone does not prove changed behavior, so live cases stay NOT RUN.
+- The canonical work-control body changes with steps 21–24; its re-measured length is recorded with the pinned prompts.
+
+### Repository maintenance
+- The pinned setup and acceptance prompts still point at v0.3.9; as in earlier releases they are re-pointed in a separate follow-up commit once the v0.3.10 merge commit exists.
+
 ## [0.3.9] - 2026-10-30
 
 ### Added

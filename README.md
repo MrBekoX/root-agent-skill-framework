@@ -6,7 +6,7 @@ This repository is the source for the description, skills and templates of **Roo
 
 The canonical source is the [`root-agent-template/`](root-agent-template/) folder. Texts sent to the Bot are in English; the Bot replies to the user in the user's language.
 
-**Current source version: [0.3.9](VERSION)** — 30 October 2026. The framework contains nineteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
+**Current source version: [0.3.10](VERSION)** — 15 November 2026. The framework contains nineteen Root skills and two optional Lead skills. Source validation and local tool tests have passed; live Grok Bot behavior and the configuration behind the share link have not been verified against this version.
 
 **Get Root Agent:** open the [Root Agent share link](https://x.ai/bot/1pTKHkJIEgxD9MjlPYE4P) and choose **Add to Grok Bot**.
 
@@ -274,7 +274,7 @@ root-agent-template/            Canonical description, skill and role sources
   validation/
     structural_check.py         Source consistency checks
     generate_setup.py           Generator for SETUP-INSTRUCTIONS.md
-    acceptance.md               Behavior scenarios (C01–C82)
+    acceptance.md               Behavior scenarios (C01–C88)
 lead-template/                  Optional skill pack for Lead Bots
 descriptions/                   Versioned copies of Bot descriptions
 tests/                          Local validation-tool regression tests
@@ -340,6 +340,7 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 | Version | Date | What changed |
 | --- | --- | --- |
+| 0.3.10 | 15 Nov 2026 | Tighter follow-up, relay verification and decision presentation: checkpoint hygiene, evidenced closure, unrecorded user actions and state reconciliation (work-control 21–24); daily-log record gaps (standing-workspace); artifact-authoritative figures and `relay unverified` (result-relay 5a); briefing delay counter (blocker-escalation 12); repeated rate limits (access-probe 11); held sends are `sent (delivery unverified)` (route-and-dispatch 11, lead-handoff 5); Lead-proposal approver and deadline (lead-handoff 9); long-pending decisions as one question (portfolio-status 12); file-audit end-of-day routine |
 | 0.3.9 | 30 Oct 2026 | Generic improvements: inbound Bot-message log and opt-out (result-relay 5a), missing-briefing status questions (blocker-escalation 11), queue freshness (work-control 20), threshold-based pending decisions (portfolio-status 11); pending-decision flow addendum and two-way end-of-turn record rule in the Root description; "is it generic?" check in the end-of-day routine; new memory note |
 | 0.3.8 | 26 Oct 2026 | New `secret-hygiene` skill (secrets in any app or service); Secrets rule in the Root description; secret-hygiene one-liners in five skills |
 | 0.3.7 | 24 Oct 2026 | Generic end-of-day self-improvement routine; private per-user profile folder; same-turn Bot relay rule; no Bot co-author rule; remaining non-English docs translated to English |
@@ -358,9 +359,9 @@ The current version is in [`VERSION`](VERSION); details are in [`CHANGELOG.md`](
 
 ## Status and limits
 
-- **Source texts are consistent:** `structural_check.py` → PASS 171, FAIL 0 (version 0.3.9). The count grows as checks are added; the script itself fails if this line falls out of date.
+- **Source texts are consistent:** `structural_check.py` → PASS 174, FAIL 0 (version 0.3.10). The count grows as checks are added; the script itself fails if this line falls out of date.
 - **Local tools are regression-tested:** twenty synthetic-fixture tests passed for the current validation tools. These exercise local tooling and do not establish live Bot behavior.
-- **Live behavior is untested:** scenarios C01–C82 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
+- **Live behavior is untested:** scenarios C01–C88 are NOT RUN. Saving the texts to a Bot and reading them back is a setup check, not a behavior test. No scenario counts as passed until it runs in Grok Bot with evidence.
 - **Distribution checks remain open:** installed save/readback, native template details and a fresh recipient copy have not been verified here. Follow the [sharing checklist](root-agent-template/SHARING-CHECKLIST.md); local length measurements do not prove host field support or complete transfer. The 18 October official-source review did not verify a 6000-character limit, so none is enforced by the framework.
 
 ---
